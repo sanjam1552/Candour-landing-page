@@ -1886,6 +1886,12 @@ function startExperience() {
     let videoElement = null;
     let isPlaying = false;
 
+    function getYouTubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
     // Both play button and clicking the placeholder frame triggers full screen
     playBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -1905,14 +1911,28 @@ function startExperience() {
         lenisInstance.stop();
       }
 
-      // Create video element
-      videoElement = document.createElement('video');
-      videoElement.src = "https://archive.org/download/kikTXNL6MvX6ZpRXM/kikTXNL6MvX6ZpRXM.mp4";
-      videoElement.autoplay = true;
-      videoElement.controls = true;
-      videoElement.playsInline = true;
-      videoElement.style.outline = "none";
-      cinemaFrame.appendChild(videoElement);
+      const videoUrl = frame.getAttribute('data-video-url') || "https://archive.org/download/kikTXNL6MvX6ZpRXM/kikTXNL6MvX6ZpRXM.mp4";
+      const ytId = getYouTubeId(videoUrl);
+
+      if (ytId) {
+        // Create YouTube iframe player
+        videoElement = document.createElement('iframe');
+        videoElement.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+        videoElement.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        videoElement.allowFullscreen = true;
+        videoElement.style.border = "none";
+        videoElement.style.outline = "none";
+        cinemaFrame.appendChild(videoElement);
+      } else {
+        // Create standard video element (direct mp4 links)
+        videoElement = document.createElement('video');
+        videoElement.src = videoUrl;
+        videoElement.autoplay = true;
+        videoElement.controls = true;
+        videoElement.playsInline = true;
+        videoElement.style.outline = "none";
+        cinemaFrame.appendChild(videoElement);
+      }
     }
 
     function stopCinemaMode() {
@@ -1926,11 +1946,19 @@ function startExperience() {
         lenisInstance.start();
       }
 
-      // Pause and unload video immediately to stop audio playback
+      // Pause and unload video or iframe immediately to stop audio playback
       if (videoElement) {
-        videoElement.pause();
-        videoElement.src = "";
-        videoElement.load();
+        if (videoElement.tagName.toLowerCase() === 'video') {
+          try {
+            videoElement.pause();
+            videoElement.src = "";
+            videoElement.load();
+          } catch (e) {
+            console.error("Error pausing video:", e);
+          }
+        } else if (videoElement.tagName.toLowerCase() === 'iframe') {
+          videoElement.src = "";
+        }
       }
 
       setTimeout(() => {
