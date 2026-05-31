@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candour Creative Engine 2030 | Building the Future of Creative Excellence</title>
+    <meta name="description" content="An immersive presentation experience exploring Candour's creative vision for 2030.">
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="style.css?v=4.28">
+    <!-- CDN scripts (deferred for page speed and scroll performance) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js" defer></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+</head>
+<body>
+    <!-- Background grid spotlight follow -->
+    <div id="bg-spotlight" class="bg-spotlight"></div>
+    <div id="bg-grid-glow" class="bg-grid-glow">
+        <div id="grid-glow-spotlight" class="grid-glow-spotlight"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">CANDOUR</div>
+            <div class="loader-bar-track">
+                <div class="loader-bar-fill"></div>
+            </div>
+            <div class="loader-text">Loading Presentation</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor Follower -->
+    <div id="cursor-follower" class="cursor-follower"></div>
+    <div id="cursor-dot" class="cursor-dot"></div>
+
+    <!-- Floating Navigation Bar -->
+    <nav id="main-nav" class="glass-nav">
+        <div class="nav-logo">CANDOUR</div>
+        <div class="nav-links">
+            <a href="#section-question" class="nav-link" data-section="section-question">Vision</a>
+            <a href="#section-shift" class="nav-link" data-section="section-shift">The Shift</a>
+            <a href="#section-challenge" class="nav-link" data-section="section-challenge">Challenges</a>
+            <a href="#section-engine" class="nav-link" data-section="section-engine">Engine</a>
+            <a href="#section-culture" class="nav-link" data-section="section-culture">Culture</a>
+            <a href="#section-closing" class="nav-link" data-section="section-closing">2030</a>
+        </div>
+        <div class="nav-progress">
+            <div class="nav-progress-fill" id="scroll-progress"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content Presentation -->
+    <main id="main-content">
+
+        <!-- SECTION 1 — HERO -->
+        <section id="section-hero" class="section section-hero">
+            <div class="section-inner">
+                <div class="layout-split">
+                    <!-- Left: Typography -->
+                    <div class="hero-text-content">
+                        <div class="hero-badge">Leadership Presentation 2030</div>
+                        <h1 class="hero-title">
+                            <span>THE CANDOUR</span>
+                            <span class="accent-text">CREATIVE ENGINE</span>
+                            <span>FOR 2030</span>
+                        </h1>
+                        <p class="hero-subtitle" style="font-weight: 700; font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.75rem;">Building the agency clients seek out.</p>
+                        <p class="hero-subtitle" style="font-size: 0.95rem; line-height: 1.6; max-width: 520px;">In a world where access to technology becomes universal, creative excellence becomes the competitive advantage.</p>
+                        <div class="hero-cta-box">
+                            <button class="cta-button" id="begin-btn">
+                                <span>Begin Presentation</span>
+                                <span class="cta-arrow">→</span>
+                            </button>
+                            <a href="#section-engine" class="cta-secondary-button">Explore Engine</a>
+                        </div>
+                    </div>
+                    <!-- Right: Visual Placeholder (For Hero Canvas) -->
+                    <div class="hero-visual-content" style="display: flex; align-items: center; justify-content: center; position: relative; min-height: 500px; width: 100%;">
+                        <canvas id="hero-engine-canvas" style="width: 100%; height: 500px; display: block; background: transparent; pointer-events: auto; z-index: 1;"></canvas>
+                    </div>
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 2 — THE QUESTION -->
+        <section id="section-question" class="section section-question">
+            <div class="section-inner">
+                <!-- Top container centering the main question to answer it below -->
+                <div class="question-top-row reveal-text" style="max-width: 850px; margin-bottom: 3.5rem;">
+                    <div class="section-label">1. The Question</div>
+                    <h2 class="question-title-big" style="font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--text-primary); line-height: 1.15; margin-top: 0.5rem; margin-bottom: 1.5rem; letter-spacing: -0.03em;">What actually makes an agency unforgettable?</h2>
+                    <div class="question-intro-sub" style="display: flex; gap: 32px; margin-top: 1rem; flex-wrap: wrap;">
+                        <p class="reveal-text fade-point" style="font-size: 1.15rem; font-weight: 600; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem; line-height: 1;">🔑</span>
+                            Access is no longer the differentiator.
+                        </p>
+                        <p class="reveal-text fade-point" style="font-size: 1.15rem; font-weight: 600; color: var(--text-muted); display: inline-flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem; line-height: 1;">⏱️</span>
+                            Speed is no longer the differentiator.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bottom Grid showing the three pillars shifted to bottom and made much bigger -->
+                <div class="question-bottom-grid reveal-text" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; width: 100%; margin-bottom: 4rem;">
+                    
+                    <!-- Card 1: Think Better -->
+                    <div class="infographic-card glass-card" data-pillar="think" style="padding: 2rem; display: flex; flex-direction: column; gap: 20px;">
+                        <div class="infographic-shapes">
+                            <div class="shape-block shape-rose shape-rect"></div>
+                            <div class="shape-block shape-tan shape-small-rect"></div>
+                        </div>
+                        <div class="infographic-icon" style="height: 60px; width: 60px;">
+                            <svg viewBox="0 0 100 100" class="line-art-svg" style="width: 100%; height: 100%;">
+                                <path class="line-path main-path" d="M 50,20 C 66,20 70,32 64,44 C 58,54 55,60 55,70 L 45,70 C 45,60 42,54 36,44 C 30,32 34,20 50,20 Z" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                <path class="line-path detail-path" d="M 50,26 C 54,30 54,34 50,38 C 46,34 46,30 50,26 Z M 40,75 L 60,75 M 43,80 L 57,80 M 50,20 L 50,26" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="infographic-text">
+                            <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Think Better</h3>
+                            <p style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary);">Access is universal. Deep, strategic and creative thinking is the ultimate differentiator.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2: Transcend Output -->
+                    <div class="infographic-card glass-card" data-pillar="work" style="padding: 2rem; display: flex; flex-direction: column; gap: 20px;">
+                        <div class="infographic-shapes">
+                            <div class="shape-block shape-tan shape-triangle"></div>
+                            <div class="shape-block shape-ochre shape-small-rect"></div>
+                        </div>
+                        <div class="infographic-icon" style="height: 60px; width: 60px;">
+                            <svg viewBox="0 0 100 100" class="line-art-svg" style="width: 100%; height: 100%;">
+                                <path class="line-path main-path" d="M 20,50 L 80,20 L 50,80 L 44,52 Z" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                <path class="line-path detail-path" d="M 80,20 L 44,52 M 20,50 L 44,52 M 50,80 L 44,52 M 25,65 L 12,78 M 35,72 L 22,85" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="infographic-text">
+                            <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Transcend Output</h3>
+                            <p style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary);">Moving beyond basic execution to create memorable visual and interactive caliber.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3: Build Trust -->
+                    <div class="infographic-card glass-card" data-pillar="trust" style="padding: 2rem; display: flex; flex-direction: column; gap: 20px;">
+                        <div class="infographic-shapes">
+                            <div class="shape-block shape-rose shape-circle"></div>
+                            <div class="shape-block shape-ochre shape-small-rect"></div>
+                        </div>
+                        <div class="infographic-icon" style="height: 60px; width: 60px;">
+                            <svg viewBox="0 0 100 100" class="line-art-svg" style="width: 100%; height: 100%;">
+                                <path class="line-path main-path" d="M 50,18 L 80,25 C 80,55 65,75 50,85 C 35,75 20,55 20,25 Z" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                <path class="line-path detail-path" d="M 50,26 L 72,31 C 72,52 61,68 50,76 C 39,68 28,52 28,31 Z M 50,36 L 54,46 L 64,50 L 54,54 L 50,64 L 46,54 L 36,50 L 46,46 Z" fill="none" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="infographic-text">
+                            <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Build Trust</h3>
+                            <p style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary);">Establishing authority and caliber before the first conversation starts.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Centered quote at the bottom, made much bigger and highly editorial -->
+                <div class="question-quote-block reveal-text" style="max-width: 900px; margin: 3rem auto 0 auto; text-align: center;">
+                    <blockquote style="font-size: clamp(1.4rem, 3.2vw, 2.2rem); font-family: var(--font-family); font-weight: 800; color: var(--accent-primary); line-height: 1.3; border: none; padding: 0; margin: 0; letter-spacing: -0.02em;">
+                        "The agencies that win will be the ones that think better, create stronger work, and build trust before the first conversation even begins."
+                    </blockquote>
+                </div>
+
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 3 — OUR WORK SPEAKS FOR US -->
+        <section id="section-shift" class="section section-shift">
+            <div class="section-inner">
+                <div class="section-label">2. The Shift</div>
+                <div class="shift-content">
+                    <div class="shift-statement">
+                        <h2 class="section-title reveal-text" style="font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; margin-top: 0.5rem; margin-bottom: 2rem;">OUR WORK SPEAKS FOR US.</h2>
+                    </div>
+                    
+                    <div class="shift-sequence">
+                        <p class="reveal-text sequence-item">Every campaign.</p>
+                        <p class="reveal-text sequence-item">Every presentation.</p>
+                        <p class="reveal-text sequence-item">Every proposal.</p>
+                    </div>
+                    
+                    <div class="shift-insight reveal-text" style="margin-top: 2rem; margin-bottom: 3rem; max-width: 800px;">
+                        <p style="font-size: 1.15rem; line-height: 1.6; color: var(--text-secondary);">Before a conversation begins, our work has already introduced us.</p>
+                        <p class="accent-text" style="font-size: 1.25rem; font-weight: 700; margin-top: 0.5rem;">Creative quality is not a design conversation. It's a business conversation.</p>
+                    </div>
+
+                    <!-- Horizontal Slider with Arrow buttons -->
+                    <div class="slider-outer-wrapper reveal-text">
+                        <div class="slider-wrapper" id="social-slider">
+                            <div class="slider-track">
+                                
+                                <!-- Card 1 (Every campaign) -->
+                                <div class="glass-card card-horizontal slider-card">
+                                    <div class="glass-shine"></div>
+                                    <div class="card-text-block">
+                                        <div class="event-badge">Campaigns</div>
+                                        <h3>Every Campaign</h3>
+                                        <p style="margin-bottom: 1rem;">Establishing default quality in all outward marketing campaigns. Setting the standard for creative and visual performance across the market.</p>
+                                        <div class="deliverables-container" style="margin-top: 0.25rem; width: 100%;">
+                                            <h4 style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-primary); margin-bottom: 0.5rem; font-weight: 700;">Key Deliverables</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Social Toolkits</span>
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Display Creative</span>
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Brand Systems</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-banner-block">
+                                        <div class="media-container">
+                                            <img src="assets/shift-1.jpg" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+                                            <div class="banner-logo">
+                                                <span class="logo-ff">Candour</span>
+                                                <span class="logo-signal">⚡</span>
+                                            </div>
+                                            <div class="banner-ribbon">CAMPAIGNS</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Card 2 (Every presentation) -->
+                                <div class="glass-card card-horizontal slider-card">
+                                    <div class="glass-shine"></div>
+                                    <div class="card-text-block">
+                                        <div class="event-badge">Presentations</div>
+                                        <h3>Every Presentation</h3>
+                                        <p style="margin-bottom: 1rem;">Dynamic, responsive slides designed to command attention and present strategic ideas with flawless typographical and motion execution.</p>
+                                        <div class="deliverables-container" style="margin-top: 0.25rem; width: 100%;">
+                                            <h4 style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-primary); margin-bottom: 0.5rem; font-weight: 700;">Key Deliverables</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Keynote Decks</span>
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Motion Templates</span>
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Interactive Demos</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-banner-block">
+                                        <div class="media-container">
+                                            <img src="assets/shift-2.jpg" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+                                            <div class="banner-logo">
+                                                <span class="logo-ff">Candour</span>
+                                                <span class="logo-signal">💡</span>
+                                            </div>
+                                            <div class="banner-ribbon">PRESENTATIONS</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Card 3 (Every proposal) -->
+                                <div class="glass-card card-horizontal slider-card">
+                                    <div class="glass-shine"></div>
+                                    <div class="card-text-block">
+                                        <div class="event-badge">Proposals</div>
+                                        <h3>Every Proposal</h3>
+                                        <p style="margin-bottom: 1rem;">Translating business objectives into distinctive creative solutions that establish credibility before a single conversation starts.</p>
+                                        <div class="deliverables-container" style="margin-top: 0.25rem; width: 100%;">
+                                            <h4 style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-primary); margin-bottom: 0.5rem; font-weight: 700;">Key Deliverables</h4>
+                                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">RFP Responses</span>
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Credential Decks</span>
+                                                <span class="deliverable-tag" style="font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; background: rgba(27, 42, 207, 0.06); color: var(--accent-primary); border: 1px solid rgba(27, 42, 207, 0.15); letter-spacing: 0.02em; text-transform: uppercase;">Digital Showcases</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-banner-block">
+                                        <div class="media-container">
+                                            <img src="assets/shift-3.jpg" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+                                            <div class="banner-logo">
+                                                <span class="logo-ff">Candour</span>
+                                                <span class="logo-signal">📈</span>
+                                            </div>
+                                            <div class="banner-ribbon">PROPOSALS</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <!-- Slider controls -->
+                        <div class="slider-controls">
+                            <button class="slider-arrow-btn" id="slide-prev">←</button>
+                            <button class="slider-arrow-btn" id="slide-next">→</button>
+                        </div>
+                    </div>
+
+                    <div class="shift-closing" style="margin-top: 3rem;">
+                        <div class="glass-card shift-card" style="border-radius: 24px;">
+                            <div class="glass-shine"></div>
+                            <p>Content is everywhere. Memorable creative isn't.</p>
+                            <p class="accent-text"><strong>Unforgettable, strategically aligned work is our path forward.</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 4 — THE CHALLENGE -->
+        <section id="section-challenge" class="section section-challenge">
+            <div class="section-inner">
+                <div class="section-label">3. The Friction Crisis</div>
+                <h2 class="section-title reveal-text">THE CHALLENGE</h2>
+                
+                <div class="challenge-intro reveal-text" style="margin-bottom: 2.5rem; max-width: 800px;">
+                    <p class="large-reveal-text" style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">We don't lose creative energy because of talent. We lose it because of friction.</p>
+                </div>
+
+                <!-- Bento Box Grid of 4 Cards (Swapped Card 1 and Card 3) -->
+                <div class="bento-grid-container">
+                    <div class="bento-grid-4 reveal-text">
+                        
+                        <!-- Card 01 — Scattered Knowledge (originally Card 3) -->
+                        <div class="bento-card-wrapper">
+                            <div class="bento-card glass-card">
+                                <div class="bento-card-color-backdrop bento-gradient-1">
+                                    <span class="bento-badge-num">01</span>
+                                </div>
+                                <div class="glass-shine"></div>
+                                <div>
+                                    <div class="bento-card-header">
+                                        <span class="bento-icon">🔍</span>
+                                    </div>
+                                    <h3>Scattered Knowledge</h3>
+                                    <p>Strategic insights, visual assets, and references are hidden inside threads. Valuable creative hours are lost searching for old work and rediscovering solutions.</p>
+                                </div>
+                                <div class="bento-visual-thumb">
+                                    <svg class="bento-diagram-svg scattered-knowledge-svg" viewBox="0 0 350 110">
+                                        <defs>
+                                            <linearGradient id="hub-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#1b2acf" />
+                                                <stop offset="100%" stop-color="#4f46e5" />
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- Dotted connection lines representing network threads -->
+                                        <path class="network-path path-1" d="M 75,35 L 175,55" stroke="rgba(27, 42, 207, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" fill="none" />
+                                        <path class="network-path path-2" d="M 120,80 L 175,55" stroke="rgba(27, 42, 207, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" fill="none" />
+                                        <path class="network-path path-3" d="M 230,80 L 175,55" stroke="rgba(27, 42, 207, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" fill="none" />
+                                        <path class="network-path path-4" d="M 275,35 L 175,55" stroke="rgba(27, 42, 207, 0.3)" stroke-width="1.5" stroke-dasharray="4 4" fill="none" />
+
+                                        <!-- Pulsing sonar radar scan waves from center -->
+                                        <circle cx="175" cy="55" r="28" fill="none" stroke="rgba(27, 42, 207, 0.15)" stroke-width="1" class="radar-pulse pulse-a" />
+                                        <circle cx="175" cy="55" r="42" fill="none" stroke="rgba(27, 42, 207, 0.08)" stroke-width="1" class="radar-pulse pulse-b" />
+
+                                        <!-- Central Database Hub Node -->
+                                        <g transform="translate(175, 55)">
+                                            <g class="knowledge-hub">
+                                                <rect x="-18" y="-18" width="36" height="36" rx="8" fill="#f6f5f0" stroke="url(#hub-grad)" stroke-width="1.5" />
+                                                <!-- Database stacks -->
+                                                <g stroke="#1b2acf" fill="none" transform="translate(0, -2)">
+                                                    <ellipse cx="0" cy="-4" rx="8" ry="2.2" fill="rgba(27, 42, 207, 0.05)" stroke-width="1.2" />
+                                                    <path d="M -8,0 A 8,2.2 0 0 0 8,0 V -4 A 8,2.2 0 0 1 -8,-4 Z" fill="rgba(27, 42, 207, 0.05)" stroke-width="1.2" />
+                                                    <path d="M -8,4 A 8,2.2 0 0 0 8,4 V 0 A 8,2.2 0 0 1 -8,0 Z" fill="rgba(27, 42, 207, 0.05)" stroke-width="1.2" />
+                                                </g>
+                                                <!-- Overlay Search icon on bottom-right of the hub -->
+                                                <g transform="translate(6, 6) rotate(-45)">
+                                                    <circle cx="0" cy="0" r="3" fill="#f6f5f0" stroke="#ea580c" stroke-width="1.2" />
+                                                    <line x1="3" y1="0" x2="6" y2="0" stroke="#ea580c" stroke-width="1.2" />
+                                                </g>
+                                            </g>
+                                        </g>
+
+                                        <!-- Node 1: Image File (Left Top) -->
+                                        <g transform="translate(75, 35)">
+                                            <g class="node-img-anim" stroke="#3b82f6">
+                                                <circle cx="0" cy="0" r="13" fill="#f6f5f0" stroke-width="1.5" />
+                                                <g transform="scale(0.8)">
+                                                    <rect x="-7" y="-7" width="14" height="14" rx="1.5" fill="none" stroke-width="1.2" />
+                                                    <circle cx="-2.5" cy="-2.5" r="1.5" fill="currentColor" stroke="none" />
+                                                    <path d="M -7,4 L -3,0 L 1,4 M -1,2 L 3,-1 L 7,4" fill="none" stroke-width="1.2" stroke-linejoin="round" />
+                                                </g>
+                                            </g>
+                                        </g>
+
+                                        <!-- Node 2: Chat Message (Left Bottom) -->
+                                        <g transform="translate(120, 80)">
+                                            <g class="node-chat-anim" stroke="#a855f7">
+                                                <circle cx="0" cy="0" r="13" fill="#f6f5f0" stroke-width="1.5" />
+                                                <g transform="scale(0.8) translate(0, -1)">
+                                                    <path d="M -6,-4 H 6 V 3 A 1,1 0 0 1 5,4 H -2 L -6,8 Z" fill="none" stroke-width="1.2" stroke-linejoin="round" />
+                                                    <line x1="-3" y1="-1" x2="3" y2="-1" stroke-width="1" />
+                                                    <line x1="-3" y1="1.5" x2="1" y2="1.5" stroke-width="1" />
+                                                </g>
+                                            </g>
+                                        </g>
+
+                                        <!-- Node 3: Folder (Right Bottom) -->
+                                        <g transform="translate(230, 80)">
+                                            <g class="node-folder-anim" stroke="#ea580c">
+                                                <circle cx="0" cy="0" r="13" fill="#f6f5f0" stroke-width="1.5" />
+                                                <g transform="scale(0.8)">
+                                                    <path d="M -7,-4 H -3 L -1,-2 H 6 A 1,1 0 0 1 7,-1 V 5 A 1,1 0 0 1 6,6 H -6 A 1,1 0 0 1 -7,5 Z" fill="none" stroke-width="1.2" stroke-linejoin="round" />
+                                                </g>
+                                            </g>
+                                        </g>
+
+                                        <!-- Node 4: Document (Right Top) -->
+                                        <g transform="translate(275, 35)">
+                                            <g class="node-doc-anim" stroke="#10b981">
+                                                <circle cx="0" cy="0" r="13" fill="#f6f5f0" stroke-width="1.5" />
+                                                <g transform="scale(0.8)">
+                                                    <path d="M -5,-7 H 2 L 6,-3 V 6 A 1,1 0 0 1 5,7 H -5 A 1,1 0 0 1 -6,6 V -6 A 1,1 0 0 1 -5,-7 Z" fill="none" stroke-width="1.2" stroke-linejoin="round" />
+                                                    <path d="M 2,-7 V -3 H 6" fill="none" stroke-width="1.2" />
+                                                    <line x1="-3" y1="1" x2="3" y2="1" stroke-width="1" />
+                                                    <line x1="-3" y1="4.2" x2="1" y2="4.2" stroke-width="1" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 02 — Repetitive Execution (remains Card 2) -->
+                        <div class="bento-card-wrapper">
+                            <div class="bento-card glass-card">
+                                <div class="bento-card-color-backdrop bento-gradient-2">
+                                    <span class="bento-badge-num">02</span>
+                                </div>
+                                <div class="glass-shine"></div>
+                                <div>
+                                    <div class="bento-card-header">
+                                        <span class="bento-icon">⚙</span>
+                                    </div>
+                                    <h3>Repetitive Execution</h3>
+                                    <p>Solving the exact same layout problems and visual patterns repeatedly. Teams spend valuable energy rebuilding baseline structures from scratch instead of refining details.</p>
+                                </div>
+                                <div class="bento-visual-thumb">
+                                    <svg class="bento-diagram-svg repetitive-execution-svg" viewBox="0 0 350 110">
+                                        <defs>
+                                            <path id="tooth" d="M -3.5,0 L -2.5,-7 Q -2,-9 0,-9 L 0,-9 Q 2,-9 2.5,-7 L 3.5,0 Z" />
+                                            <linearGradient id="gear-left-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#0ea5e9" />
+                                                <stop offset="100%" stop-color="#6366f1" />
+                                            </linearGradient>
+                                            <linearGradient id="gear-center-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#a855f7" />
+                                                <stop offset="100%" stop-color="#ea580c" />
+                                            </linearGradient>
+                                            <linearGradient id="gear-right-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#ec4899" />
+                                                <stop offset="100%" stop-color="#f43f5e" />
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- Background layout grid indicating design canvas -->
+                                        <g stroke="rgba(13, 12, 27, 0.03)" stroke-width="0.8">
+                                            <line x1="80" y1="55" x2="270" y2="55" />
+                                            <line x1="121" y1="20" x2="121" y2="90" />
+                                            <line x1="175" y1="20" x2="175" y2="90" />
+                                            <line x1="229" y1="20" x2="229" y2="90" />
+                                        </g>
+
+                                        <!-- LEFT GEAR -->
+                                        <g transform="translate(121, 55)">
+                                            <g class="gear-left-anim" fill="url(#gear-left-grad)">
+                                                <g transform="rotate(0)">
+                                                    <use href="#tooth" transform="translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(45) translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(90) translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(135) translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(180) translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(225) translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(270) translate(0, -16)" />
+                                                    <use href="#tooth" transform="rotate(315) translate(0, -16)" />
+                                                </g>
+                                                <circle cx="0" cy="0" r="16" stroke="url(#gear-left-grad)" stroke-width="1.5" fill="#f6f5f0" />
+                                                <circle cx="0" cy="0" r="10" fill="none" stroke="url(#gear-left-grad)" stroke-width="1" stroke-dasharray="2 2" />
+                                                <line x1="-16" y1="0" x2="16" y2="0" stroke="url(#gear-left-grad)" stroke-width="1.5" />
+                                                <line x1="0" y1="-16" x2="0" y2="16" stroke="url(#gear-left-grad)" stroke-width="1.5" />
+                                                <circle cx="0" cy="0" r="4.5" fill="url(#gear-left-grad)" />
+                                                <circle cx="0" cy="0" r="1.5" fill="#ffffff" />
+                                            </g>
+                                        </g>
+
+                                        <!-- CENTER GEAR -->
+                                        <g transform="translate(175, 55)">
+                                            <g class="gear-center-anim" fill="url(#gear-center-grad)">
+                                                <g transform="rotate(15)">
+                                                    <use href="#tooth" transform="translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(30) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(60) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(90) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(120) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(150) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(180) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(210) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(240) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(270) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(300) translate(0, -24)" />
+                                                    <use href="#tooth" transform="rotate(330) translate(0, -24)" />
+                                                </g>
+                                                <circle cx="0" cy="0" r="24" stroke="url(#gear-center-grad)" stroke-width="1.5" fill="#f6f5f0" />
+                                                <circle cx="0" cy="0" r="16" fill="none" stroke="url(#gear-center-grad)" stroke-width="1" />
+                                                <line x1="-24" y1="0" x2="24" y2="0" stroke="url(#gear-center-grad)" stroke-width="1.5" />
+                                                <line x1="0" y1="-24" x2="0" y2="24" stroke="url(#gear-center-grad)" stroke-width="1.5" />
+                                                <circle cx="0" cy="0" r="6" fill="url(#gear-center-grad)" />
+                                                <circle cx="0" cy="0" r="2.5" fill="#ffffff" />
+                                            </g>
+                                        </g>
+
+                                        <!-- RIGHT GEAR -->
+                                        <g transform="translate(229, 55)">
+                                            <g class="gear-right-anim" fill="url(#gear-right-grad)">
+                                                <g transform="rotate(18)">
+                                                    <use href="#tooth" transform="translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(36) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(72) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(108) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(144) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(180) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(216) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(252) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(288) translate(0, -17)" />
+                                                    <use href="#tooth" transform="rotate(324) translate(0, -17)" />
+                                                </g>
+                                                <circle cx="0" cy="0" r="17" stroke="url(#gear-right-grad)" stroke-width="1.5" fill="#f6f5f0" />
+                                                <circle cx="0" cy="0" r="11" fill="none" stroke="url(#gear-right-grad)" stroke-width="1" stroke-dasharray="2 1" />
+                                                <line x1="-17" y1="0" x2="17" y2="0" stroke="url(#gear-right-grad)" stroke-width="1.5" />
+                                                <line x1="0" y1="-17" x2="0" y2="17" stroke="url(#gear-right-grad)" stroke-width="1.5" />
+                                                <circle cx="0" cy="0" r="5" fill="url(#gear-right-grad)" />
+                                                <circle cx="0" cy="0" r="2" fill="#ffffff" />
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 03 — Scattered Feedback (originally Card 1) -->
+                        <div class="bento-card-wrapper">
+                            <div class="bento-card glass-card">
+                                <div class="bento-card-color-backdrop bento-gradient-3">
+                                    <span class="bento-badge-num">03</span>
+                                </div>
+                                <div class="glass-shine"></div>
+                                <div>
+                                    <div class="bento-card-header">
+                                        <span class="bento-icon">💬</span>
+                                    </div>
+                                    <h3>Scattered Feedback</h3>
+                                    <p>Input comes from multiple departments with conflicting directions. Without a unified brief, design concepts get diluted, leading to unclear direction and endless revisions.</p>
+                                </div>
+                                <div class="bento-visual-thumb">
+                                    <svg class="bento-diagram-svg scattered-feedback-svg" viewBox="0 0 350 110">
+                                        <defs>
+                                            <linearGradient id="mktg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#f43f5e" />
+                                                <stop offset="100%" stop-color="#ea580c" />
+                                            </linearGradient>
+                                            <linearGradient id="legal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#0ea5e9" />
+                                                <stop offset="100%" stop-color="#3b82f6" />
+                                            </linearGradient>
+                                            <linearGradient id="client-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#a855f7" />
+                                                <stop offset="100%" stop-color="#ec4899" />
+                                            </linearGradient>
+                                            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15" />
+                                            </filter>
+                                        </defs>
+
+                                        <!-- Center Mockup Board -->
+                                        <g class="feedback-board">
+                                            <rect x="95" y="20" width="160" height="70" rx="8" fill="rgba(255, 255, 255, 0.65)" stroke="#e2e0d7" stroke-width="1.5" />
+                                            <rect x="107" y="32" width="45" height="22" rx="4" fill="rgba(27, 42, 207, 0.04)" stroke="rgba(27, 42, 207, 0.15)" stroke-width="1" />
+                                            <circle cx="119" cy="43" r="5" fill="#1b2acf" opacity="0.3" />
+                                            <rect x="130" y="39" width="15" height="3" rx="1.5" fill="rgba(27, 42, 207, 0.15)" />
+                                            <rect x="130" y="46" width="10" height="3" rx="1.5" fill="rgba(27, 42, 207, 0.15)" />
+                                            <rect x="160" y="32" width="80" height="6" rx="3" fill="rgba(61, 60, 74, 0.1)" />
+                                            <rect x="160" y="43" width="60" height="6" rx="3" fill="rgba(61, 60, 74, 0.1)" />
+                                            <rect x="107" y="62" width="136" height="18" rx="4" fill="rgba(27, 42, 207, 0.06)" stroke="rgba(27, 42, 207, 0.2)" stroke-width="1" stroke-dasharray="2 2" />
+                                            <rect x="117" y="69" width="116" height="4" rx="2" fill="rgba(27, 42, 207, 0.2)" />
+                                        </g>
+
+                                        <!-- Conflicting Cursors & Labels -->
+                                        <path class="feedback-line line-mktg" d="M 60,28 L 107,35" stroke="#ea580c" stroke-width="1.2" stroke-dasharray="3 3" fill="none" />
+                                        <g transform="translate(10, 16)">
+                                            <g class="cursor-mktg-anim" filter="url(#shadow)">
+                                                <rect x="0" y="0" width="55" height="16" rx="8" fill="url(#mktg-grad)" />
+                                                <text x="27.5" y="11" fill="#ffffff" font-size="7.5" font-family="Poppins" font-weight="700" text-anchor="middle">Marketing</text>
+                                                <path d="M 52,12 L 60,17 L 56,19 L 59,24 L 57,25 L 54,20 L 51,23 Z" fill="#ea580c" stroke="#ffffff" stroke-width="1" />
+                                            </g>
+                                        </g>
+
+                                        <path class="feedback-line line-legal" d="M 290,28 L 243,35" stroke="#0ea5e9" stroke-width="1.2" stroke-dasharray="3 3" fill="none" />
+                                        <g transform="translate(285, 16)">
+                                            <g class="cursor-legal-anim" filter="url(#shadow)">
+                                                <rect x="0" y="0" width="45" height="16" rx="8" fill="url(#legal-grad)" />
+                                                <text x="22.5" y="11" fill="#ffffff" font-size="7.5" font-family="Poppins" font-weight="700" text-anchor="middle">Legal</text>
+                                                <path d="M 3,12 L -5,17 L -1,19 L -4,24 L -2,25 L 1,20 L 4,23 Z" fill="#0ea5e9" stroke="#ffffff" stroke-width="1" />
+                                            </g>
+                                        </g>
+
+                                        <path class="feedback-line line-client" d="M 175,92 L 175,70" stroke="#a855f7" stroke-width="1.2" stroke-dasharray="3 3" fill="none" />
+                                        <g transform="translate(145, 80)">
+                                            <g class="cursor-client-anim" filter="url(#shadow)">
+                                                <rect x="0" y="0" width="60" height="16" rx="8" fill="url(#client-grad)" />
+                                                <text x="30" y="11" fill="#ffffff" font-size="7.5" font-family="Poppins" font-weight="700" text-anchor="middle">Client (Edit)</text>
+                                                <path d="M 30,0 L 25,-8 L 28,-6 L 23,-11 L 25,-12 L 30,-7 L 35,-6 Z" fill="#a855f7" stroke="#ffffff" stroke-width="1" />
+                                            </g>
+                                        </g>
+
+                                        <circle class="hotspot-pulse pulse-mktg" cx="107" cy="35" r="7" fill="none" stroke="#ea580c" stroke-width="1.5" />
+                                        <circle cx="107" cy="35" r="3" fill="#ea580c" />
+                                        <circle class="hotspot-pulse pulse-legal" cx="243" cy="35" r="7" fill="none" stroke="#0ea5e9" stroke-width="1.5" />
+                                        <circle cx="243" cy="35" r="3" fill="#0ea5e9" />
+                                        <circle class="hotspot-pulse pulse-client" cx="175" cy="70" r="7" fill="none" stroke="#a855f7" stroke-width="1.5" />
+                                        <circle cx="175" cy="70" r="3" fill="#a855f7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 04 — Quality Caught Late (remains Card 4) -->
+                        <div class="bento-card-wrapper">
+                            <div class="bento-card glass-card">
+                                <div class="bento-card-color-backdrop bento-gradient-4">
+                                    <span class="bento-badge-num">04</span>
+                                </div>
+                                <div class="glass-shine"></div>
+                                <div>
+                                    <div class="bento-card-header">
+                                        <span class="bento-icon">🚨</span>
+                                    </div>
+                                    <h3>Quality Caught Late</h3>
+                                    <p>Visual mistakes or misalignments are only noticed during the final stages rather than early checkpoints. This forces last-minute revisions and compromises our creative vision.</p>
+                                </div>
+                                <div class="bento-visual-thumb">
+                                    <svg class="bento-diagram-svg quality-caught-svg" viewBox="0 0 350 110">
+                                        <defs>
+                                            <linearGradient id="timeline-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#10b981" />
+                                                <stop offset="70%" stop-color="#10b981" />
+                                                <stop offset="100%" stop-color="#ea580c" />
+                                            </linearGradient>
+                                            <linearGradient id="alert-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#f43f5e" />
+                                                <stop offset="100%" stop-color="#ea580c" />
+                                            </linearGradient>
+                                        </defs>
+
+                                        <line x1="60" y1="65" x2="285" y2="65" stroke="rgba(13, 12, 27, 0.05)" stroke-width="4" stroke-linecap="round" />
+                                        <line x1="60" y1="65" x2="210" y2="65" stroke="url(#timeline-grad)" stroke-width="4" stroke-linecap="round" class="timeline-progress-line" />
+                                        <path class="loopback-arrow" d="M 285,48 Q 172.5,-12 60,48" fill="none" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="4 4" stroke-linecap="round" />
+                                        <path class="loopback-arrow-head" d="M 60,48 L 68,44 L 64,49 L 68,54 Z" fill="#f43f5e" />
+
+                                        <g transform="translate(60, 65)">
+                                            <g class="node-concept-anim">
+                                                <circle cx="0" cy="0" r="7" fill="#10b981" />
+                                                <circle cx="0" cy="0" r="12" fill="none" stroke="#10b981" stroke-width="1.2" opacity="0.3" class="node-pulse" />
+                                                <text x="0" y="-14" fill="#10b981" font-size="6.5" font-family="Poppins" font-weight="700" text-anchor="middle">CONCEPT</text>
+                                            </g>
+                                        </g>
+
+                                        <g transform="translate(135, 65)">
+                                            <circle cx="0" cy="0" r="7" fill="#10b981" />
+                                            <text x="0" y="-14" fill="#10b981" font-size="6.5" font-family="Poppins" font-weight="700" text-anchor="middle">DESIGN</text>
+                                        </g>
+
+                                        <g transform="translate(210, 65)">
+                                            <circle cx="0" cy="0" r="7" fill="#10b981" />
+                                            <text x="0" y="-14" fill="#10b981" font-size="6.5" font-family="Poppins" font-weight="700" text-anchor="middle">REVIEW</text>
+                                        </g>
+
+                                        <g transform="translate(285, 65)">
+                                            <g class="alert-node-anim">
+                                                <circle cx="0" cy="0" r="13" fill="none" stroke="#f43f5e" stroke-width="1.5" class="alert-ring-pulse" />
+                                                <circle cx="0" cy="0" r="9" fill="url(#alert-grad)" />
+                                                <text x="0" y="3" font-size="9" font-family="Poppins" font-weight="900" fill="#ffffff" text-anchor="middle">!</text>
+                                                <text x="0" y="-14" fill="#f43f5e" font-size="6.5" font-family="Poppins" font-weight="700" text-anchor="middle">RELEASE</text>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenge-conclusion reveal-text" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; width: 100%;">
+                    <div class="glass-card conclusion-card" style="margin-top: 3rem; border-radius: 20px; width: 100%; max-width: 800px;">
+                        <p class="reveal-text conclusion-reveal-text" style="text-align: center; font-size: 1.15rem; line-height: 1.6; margin: 0;">Too much creative energy goes into <strong>managing processes</strong> instead of <strong>creating exceptional work</strong>.</p>
+                    </div>
+
+                    <!-- Stacked Bar Infographic SVG indicating Energy Depletion (Friction vs Creation) -->
+                    <div class="energy-chart-container glass-card" style="width: 100%; max-width: 800px; padding: 2rem; border-radius: 24px; box-shadow: var(--glass-shadow); position: relative; overflow: visible;">
+                        <div class="glass-shine"></div>
+                        <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center; color: var(--text-primary); letter-spacing: 0.05em; text-transform: uppercase;">Creative Energy Allocation</h4>
+                        <div class="energy-chart-visual" style="position: relative; overflow: visible;">
+                            <svg viewBox="0 0 400 65" style="width: 100%; height: auto; display: block; overflow: visible;">
+                                <defs>
+                                    <linearGradient id="friction-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#f43f5e" />
+                                        <stop offset="100%" stop-color="#ea580c" />
+                                    </linearGradient>
+                                    <linearGradient id="creation-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#10b981" />
+                                        <stop offset="100%" stop-color="#0ea5e9" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Background Bar -->
+                                <rect x="0" y="15" width="400" height="18" rx="9" fill="rgba(13,12,27,0.04)" stroke="rgba(13,12,27,0.06)" stroke-width="1" />
+                                
+                                <!-- Friction Bar (70% = 280px width) -->
+                                <rect class="energy-bar-friction" x="0" y="15" width="280" height="18" rx="9" fill="url(#friction-grad)" />
+                                
+                                <!-- Creation Bar (30% = 120px width, starts at 280) -->
+                                <rect class="energy-bar-creation" x="280" y="15" width="120" height="18" rx="9" fill="url(#creation-grad)" />
+                                
+                                <!-- Divider Line -->
+                                <line x1="280" y1="11" x2="280" y2="37" stroke="#ffffff" stroke-width="2" />
+                                
+                                <!-- Legends/Labels -->
+                                <text x="140" y="52" fill="#ea580c" font-size="9.5" font-family="Poppins" font-weight="800" text-anchor="middle">70% PROCESS FRICTION (Chaos & Rebuilds)</text>
+                                <text x="340" y="52" fill="#10b981" font-size="9.5" font-family="Poppins" font-weight="800" text-anchor="middle">30% CREATION</text>
+                                
+                                <!-- Glow points inside segments -->
+                                <circle class="glow-point-friction" cx="140" cy="24" r="3" fill="#ffffff" opacity="0.9" />
+                                <circle class="glow-point-creation" cx="340" cy="24" r="3" fill="#ffffff" opacity="0.9" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 5 — THE BIG IDEA -->
+        <section id="section-engine" class="section section-engine">
+            <div class="section-inner">
+                <div class="section-label">4. The Big Idea</div>
+                <div class="engine-reveal" style="max-width: 900px; margin-bottom: 5rem;">
+                    <h2 class="engine-statement reveal-text" style="font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 800; color: var(--text-primary); line-height: 1.15; margin-bottom: 2.5rem; letter-spacing: -0.03em;">How do we make <span class="accent-text" style="background: linear-gradient(135deg, var(--accent-primary), #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">powerful creative work</span> inevitable?</h2>
+                    <p class="engine-vision reveal-text" style="font-size: 1.35rem; font-weight: 500; line-height: 1.7; color: var(--text-secondary); max-width: 720px; border-left: 3px solid var(--accent-primary); padding-left: 28px; margin-top: 2rem;">Our vision for the creative future we are building at Candour.</p>
+                </div>
+                
+                <div class="engine-pillars">
+                    
+                    <!-- Pillar 1: Learning Compounds -->
+                    <div class="pillar glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="pillar-number">01</div>
+                        <div class="pillar-icon">
+                            <svg class="svg-lightning" viewBox="0 0 48 48">
+                                <defs>
+                                    <linearGradient id="bolt-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#ea580c" />
+                                        <stop offset="100%" stop-color="#f59e0b" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M26,4 L14,24 L22,24 L18,44 L34,20 L26,20 Z" fill="url(#bolt-grad)" stroke="none" />
+                            </svg>
+                        </div>
+                        <h3>Learning Compounds</h3>
+                        <p>Every piece of strategic insight and design learning feeds back into our shared context, making the next campaign start further ahead.</p>
+                        <div class="pillar-progress">
+                            <div class="pillar-progress-fill" data-progress="92"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pillar 2: Smoother Execution -->
+                    <div class="pillar glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="pillar-number">02</div>
+                        <div class="pillar-icon">
+                            <svg class="svg-dna" viewBox="0 0 48 48">
+                                <defs>
+                                    <linearGradient id="dna-rose" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#f43f5e" />
+                                        <stop offset="100%" stop-color="#ec4899" />
+                                    </linearGradient>
+                                    <linearGradient id="dna-blue" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#06b6d4" />
+                                        <stop offset="100%" stop-color="#3b82f6" />
+                                    </linearGradient>
+                                </defs>
+                                <g class="dna-rung rung-1" style="--rung-y: 8px; animation-delay: 0s;">
+                                    <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                                    <circle cx="-12" cy="0" r="3.5" fill="url(#dna-rose)" />
+                                    <circle cx="12" cy="0" r="3.5" fill="url(#dna-blue)" />
+                                </g>
+                                <g class="dna-rung rung-2" style="--rung-y: 16px; animation-delay: -0.4s;">
+                                    <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                                    <circle cx="-12" cy="0" r="3.5" fill="url(#dna-rose)" />
+                                    <circle cx="12" cy="0" r="3.5" fill="url(#dna-blue)" />
+                                </g>
+                                <g class="dna-rung rung-3" style="--rung-y: 24px; animation-delay: -0.8s;">
+                                    <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                                    <circle cx="-12" cy="0" r="3.5" fill="url(#dna-rose)" />
+                                    <circle cx="12" cy="0" r="3.5" fill="url(#dna-blue)" />
+                                </g>
+                                <g class="dna-rung rung-4" style="--rung-y: 32px; animation-delay: -1.2s;">
+                                    <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                                    <circle cx="-12" cy="0" r="3.5" fill="url(#dna-rose)" />
+                                    <circle cx="12" cy="0" r="3.5" fill="url(#dna-blue)" />
+                                </g>
+                                <g class="dna-rung rung-5" style="--rung-y: 40px; animation-delay: -1.6s;">
+                                    <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(0,0,0,0.15)" stroke-width="1.5" />
+                                    <circle cx="-12" cy="0" r="3.5" fill="url(#dna-rose)" />
+                                    <circle cx="12" cy="0" r="3.5" fill="url(#dna-blue)" />
+                                </g>
+                            </svg>
+                        </div>
+                        <h3>Smoother Execution</h3>
+                        <p>Frictionless collaboration channels and integrated design assets that clear space for designers to focus on visual mastery.</p>
+                        <div class="pillar-progress">
+                            <div class="pillar-progress-fill" data-progress="84"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pillar 3: Scalable Quality (originally Pillar 4) -->
+                    <div class="pillar glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="pillar-number">03</div>
+                        <div class="pillar-icon">
+                            <svg class="svg-scales" viewBox="0 0 48 48">
+                                <defs>
+                                    <linearGradient id="scales-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#0ea5e9" />
+                                        <stop offset="100%" stop-color="#1b2acf" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M22,38 L26,38 M24,38 L24,16" stroke="url(#scales-grad)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                                <circle cx="24" cy="15" r="2" fill="url(#scales-grad)" />
+                                
+                                <g class="scales-beam">
+                                    <line x1="10" y1="16" x2="38" y2="16" stroke="url(#scales-grad)" stroke-width="2.5" stroke-linecap="round" />
+                                    <g class="scales-pan-left">
+                                        <path d="M10,16 L5,28 L15,28 Z" stroke="url(#scales-grad)" stroke-width="1.2" fill="none" stroke-linejoin="round" />
+                                        <path d="M3,28 C3,31 17,31 17,28 Z" fill="url(#scales-grad)" />
+                                    </g>
+                                    <g class="scales-pan-right">
+                                        <path d="M38,16 L33,28 L43,28 Z" stroke="url(#scales-grad)" stroke-width="1.2" fill="none" stroke-linejoin="round" />
+                                        <path d="M31,28 C31,31 45,31 45,28 Z" fill="url(#scales-grad)" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <h3>Scalable Quality</h3>
+                        <p>A rigorous system of peer checkpoints that ensures visual and copy caliber scales without creative burnout.</p>
+                        <div class="pillar-progress">
+                            <div class="pillar-progress-fill" data-progress="88"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pillar 4: Normalizing Experimentation (originally Pillar 3) -->
+                    <div class="pillar glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="pillar-number">04</div>
+                        <div class="pillar-icon">
+                            <svg class="svg-atom" viewBox="0 0 48 48">
+                                <defs>
+                                    <linearGradient id="atom-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#8b5cf6" />
+                                        <stop offset="100%" stop-color="#4f46e5" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="24" cy="24" r="4.5" fill="url(#atom-grad)" />
+                                <circle class="nucleus-glow" cx="24" cy="24" r="7" fill="none" stroke="#8b5cf6" stroke-width="1" opacity="0.4" />
+                                
+                                <g transform="translate(24, 24) rotate(30) scale(1, 0.35) translate(-24, -24)">
+                                    <circle cx="24" cy="24" r="16" fill="none" stroke="rgba(139, 92, 246, 0.35)" stroke-width="1.5" />
+                                    <g class="rotator-1">
+                                        <circle cx="24" cy="8" r="3.5" fill="url(#atom-grad)" />
+                                    </g>
+                                </g>
+                                <g transform="translate(24, 24) rotate(90) scale(1, 0.35) translate(-24, -24)">
+                                    <circle cx="24" cy="24" r="16" fill="none" stroke="rgba(139, 92, 246, 0.35)" stroke-width="1.5" />
+                                    <g class="rotator-2">
+                                        <circle cx="24" cy="8" r="3.5" fill="url(#atom-grad)" />
+                                    </g>
+                                </g>
+                                <g transform="translate(24, 24) rotate(150) scale(1, 0.35) translate(-24, -24)">
+                                    <circle cx="24" cy="24" r="16" fill="none" stroke="rgba(139, 92, 246, 0.35)" stroke-width="1.5" />
+                                    <g class="rotator-3">
+                                        <circle cx="24" cy="8" r="3.5" fill="url(#atom-grad)" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <h3>Normalizing Experimentation</h3>
+                        <p>Experimental web designs, dynamic animations, and interactive elements are built directly into standard outputs.</p>
+                        <div class="pillar-progress">
+                            <div class="pillar-progress-fill" data-progress="78"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 6 — WORK SMARTER (NEW VIDEO SECTION) -->
+        <section id="section-smarter" class="section section-smarter">
+            <div class="section-inner">
+                <div class="section-label">4.5. Methodology</div>
+                <h2 class="section-title reveal-text" style="text-align: center; margin-top: 0.5rem; margin-bottom: 1.5rem;">WORK SMARTER, NOT HARDER.</h2>
+                
+                <div class="smarter-video-container glass-card reveal-text" style="max-width: 900px; margin: 3rem auto; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.6); box-shadow: var(--glass-shadow);">
+                    <div class="glass-shine"></div>
+                    <div class="video-placeholder-frame" style="background: rgba(13,12,27,0.03); aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; cursor: pointer; overflow: hidden;">
+                        <!-- Breathing/Living AI Canvas Background (Light Mode Optimized) -->
+                        <canvas class="live-demo-bg-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.95;"></canvas>
+                        
+                        <div class="video-poster-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(27,42,207,0.08) 0%, rgba(234,88,12,0.06) 100%); z-index: 2;"></div>
+                        
+                        <div class="video-header-bar" style="position: absolute; top: 0; left: 0; right: 0; height: 48px; background: rgba(255,255,255,0.4); border-bottom: 1px solid rgba(255,255,255,0.5); display: flex; align-items: center; padding: 0 20px; z-index: 3; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);">
+                            <span style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; margin-right: 6px;"></span>
+                            <span style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e; margin-right: 6px;"></span>
+                            <span style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f; margin-right: 15px;"></span>
+                            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.05em; text-transform: uppercase;">Introducing Candour Creative Engine</span>
+                        </div>
+                        
+                        <div class="video-play-btn" style="width: 80px; height: 80px; border-radius: 50%; background: var(--accent-primary); display: flex; align-items: center; justify-content: center; z-index: 4; box-shadow: 0 10px 35px rgba(27, 42, 207, 0.35); cursor: pointer; transition: transform 0.3s ease; position: relative;">
+                            <span style="width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 20px solid #ffffff; margin-left: 6px; z-index: 2;"></span>
+                            <!-- Button pulsing background glow rings -->
+                            <span class="btn-glow-ring" style="position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(27, 42, 207, 0.25); animation: demo-ring-pulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; z-index: 1;"></span>
+                            <span class="btn-glow-ring" style="position: absolute; inset: -12px; border-radius: 50%; border: 1px solid rgba(27, 42, 207, 0.12); animation: demo-ring-pulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; animation-delay: 0.8s; z-index: 1;"></span>
+                        </div>
+                        
+                        <span style="z-index: 4; margin-top: 1.5rem; font-size: 0.9rem; font-weight: 800; color: var(--text-primary); letter-spacing: 0.05em; text-transform: uppercase;">Play Presentation Video</span>
+                    </div>
+                </div>
+
+
+
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7 — FUEL (CREATIVE MEMORY) -->
+        <section id="section-memory" class="section section-memory">
+            <div class="section-inner">
+                <div class="layout-split">
+                    <!-- Left Column: Typography -->
+                    <div class="memory-text-content">
+                        <div class="section-label">5. Compounding Knowledge</div>
+                        <h2 class="section-title reveal-text">THE FUEL</h2>
+                        
+                        <div class="memory-intro">
+                            <h3 class="reveal-text" style="font-size: clamp(1.3rem, 3.2vw, 1.8rem); font-weight: 800; color: var(--text-primary); line-height: 1.25; margin-top: 0.5rem; margin-bottom: 1rem; letter-spacing: -0.02em;">Building Candour's Creative Memory.</h3>
+                            <p class="reveal-text" style="font-size: 1.05rem; line-height: 1.6; color: var(--text-secondary);">A system where insights, decisions, learnings, and creative intelligence compound over time.</p>
+                        </div>
+                        
+                        <div class="memory-learnings" style="margin-top: 2rem;">
+                            <div class="memory-card glass-card" data-delay="0"><div class="glass-shine"></div><span class="memory-dot"></span>Faster onboarding</div>
+                            <div class="memory-card glass-card" data-delay="0.05"><div class="glass-shine"></div><span class="memory-dot"></span>Stronger consistency</div>
+                            <div class="memory-card glass-card" data-delay="0.1"><div class="glass-shine"></div><span class="memory-dot"></span>Smarter decisions</div>
+                            <div class="memory-card glass-card" data-delay="0.15"><div class="glass-shine"></div><span class="memory-dot"></span>Better creative outcomes</div>
+                        </div>
+                        
+                        <div class="memory-solution glass-card reveal-text" style="border-radius: 20px; margin-top: 2.5rem; text-align: center; padding: 1.25rem;">
+                            <div class="glass-shine"></div>
+                            <p style="margin: 0; font-size: 1.15rem; font-weight: 600; color: var(--text-primary);">Every new project starts with <strong>context, not guesswork</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Canvas + Visual Placeholder -->
+                    <div class="memory-visual-content">
+                        <div class="image-frame" style="height: 280px; margin-bottom: 24px;">
+                            <div class="media-container">
+                                <img src="assets/memory-archive.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/digital_network.png') === -1) { this.src='assets/digital_network.png'; } else { this.style.display='none'; }">
+                                <div class="image-placeholder fallback-placeholder">
+                                    <span class="placeholder-icon">🧬</span>
+                                    <span class="placeholder-label">
+                                        Knowledge Archive Graphic
+                                        <small>Recommended: 800 x 600px (Place memory-archive.jpg in assets/)</small>
+                                    </span>
+                                    <span class="placeholder-instr">Auto-loads from assets/ folder</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Interactive node canvas chart -->
+                        <div class="memory-network reveal-text" id="memory-network"></div>
+                    </div>
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 8 — ENGINE -->
+        <section id="section-scaling" class="section section-scaling">
+            <div class="section-inner">
+                <div class="section-label">6. Scaling Quality</div>
+                <h2 class="section-title reveal-text">THE ENGINE</h2>
+                
+                <div class="scaling-content" style="max-width: 850px; margin-bottom: 3rem;">
+                    <p class="reveal-text large-reveal-text" style="font-size: 1.25rem; line-height: 1.5; font-weight: 700; color: var(--text-primary);">Scaling without sacrificing quality through creative intelligence, cleaner workflows, faster reviews, all on a single, unified interface.</p>
+                </div>
+                
+                <div class="scaling-pipeline">
+                    <!-- Stage 1 -->
+                    <div class="pipeline-card-wrapper">
+                        <div class="pipeline-badge bento-gradient-1">01</div>
+                        <div class="pipeline-stage glass-card" data-stage="1">
+                            <div class="glass-shine"></div>
+                            <div class="pipeline-icon-box">
+                                <svg viewBox="0 0 64 64" class="pipeline-svg scanner-svg">
+                                    <defs>
+                                        <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#f43f5e" />
+                                            <stop offset="100%" stop-color="#ea580c" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M12,32 C18,20 46,20 52,32 C46,44 18,44 12,32 Z" fill="none" stroke="url(#scan-grad)" stroke-width="2.5" stroke-linejoin="round" />
+                                    <circle class="scan-eye-pupil" cx="32" cy="32" r="7" fill="url(#scan-grad)" />
+                                    <path d="M10,22 V12 H20" fill="none" stroke="url(#scan-grad)" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M54,22 V12 H44" fill="none" stroke="url(#scan-grad)" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M10,42 V52 H20" fill="none" stroke="url(#scan-grad)" stroke-width="1.5" stroke-linecap="round" />
+                                    <path d="M54,42 V52 H44" fill="none" stroke="url(#scan-grad)" stroke-width="1.5" stroke-linecap="round" />
+                                    <line class="scan-laser" x1="8" y1="32" x2="56" y2="32" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <h3>Visual Audit</h3>
+                            <p>Reviews layouts automatically to ensure flawless alignment and branding.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stage 2 -->
+                    <div class="pipeline-card-wrapper">
+                        <div class="pipeline-badge bento-gradient-2">02</div>
+                        <div class="pipeline-stage glass-card" data-stage="2">
+                            <div class="glass-shine"></div>
+                            <div class="pipeline-icon-box">
+                                <svg viewBox="0 0 64 64" class="pipeline-svg editor-svg">
+                                    <defs>
+                                        <linearGradient id="edit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#a855f7" />
+                                            <stop offset="100%" stop-color="#6366f1" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect x="14" y="10" width="36" height="44" rx="4" fill="none" stroke="url(#edit-grad)" stroke-width="2.5" />
+                                    <line x1="20" y1="20" x2="38" y2="20" stroke="url(#edit-grad)" stroke-width="2.2" stroke-linecap="round" />
+                                    <line x1="20" y1="28" x2="34" y2="28" stroke="url(#edit-grad)" stroke-width="2.2" stroke-linecap="round" />
+                                    <line x1="20" y1="36" x2="44" y2="36" stroke="url(#edit-grad)" stroke-width="2.2" stroke-linecap="round" />
+                                    <path class="edit-pencil" d="M42,12 L50,20 L30,40 H22 V32 Z" fill="none" stroke="#a855f7" stroke-width="2" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <h3>Copy Calibration</h3>
+                            <p>Polishes messaging to keep your brand voice clear, sharp, and correct.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stage 3 -->
+                    <div class="pipeline-card-wrapper">
+                        <div class="pipeline-badge bento-gradient-3">03</div>
+                        <div class="pipeline-stage glass-card" data-stage="3">
+                            <div class="glass-shine"></div>
+                            <div class="pipeline-icon-box">
+                                <svg viewBox="0 0 64 64" class="pipeline-svg research-svg">
+                                    <defs>
+                                        <linearGradient id="research-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366f1" />
+                                            <stop offset="100%" stop-color="#0ea5e9" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect class="trend-bar-1" x="12" y="32" width="6" height="18" fill="url(#research-grad)" rx="1.5" />
+                                    <rect class="trend-bar-2" x="22" y="24" width="6" height="26" fill="url(#research-grad)" rx="1.5" />
+                                    <rect class="trend-bar-3" x="32" y="16" width="6" height="34" fill="url(#research-grad)" rx="1.5" />
+                                    <circle class="glass-lens" cx="42" cy="24" r="8" fill="none" stroke="url(#research-grad)" stroke-width="2.5" />
+                                    <line class="glass-handle" x1="48" y1="30" x2="55" y2="37" stroke="url(#research-grad)" stroke-width="2.5" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <h3>B2B Trend Research</h3>
+                            <p>Analyzes top industry campaigns to help you stay ahead of market trends.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Stage 4 -->
+                    <div class="pipeline-card-wrapper">
+                        <div class="pipeline-badge bento-gradient-4">04</div>
+                        <div class="pipeline-stage glass-card" data-stage="4">
+                            <div class="glass-shine"></div>
+                            <div class="pipeline-icon-box">
+                                <svg viewBox="0 0 64 64" class="pipeline-svg creator-svg">
+                                    <defs>
+                                        <linearGradient id="create-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#0ea5e9" />
+                                            <stop offset="100%" stop-color="#10b981" />
+                                        </linearGradient>
+                                    </defs>
+                                    <line class="wand-shaft" x1="16" y1="48" x2="38" y2="26" stroke="url(#create-grad)" stroke-width="4.5" stroke-linecap="round" />
+                                    <line class="wand-tip" x1="38" y1="26" x2="42" y2="22" stroke="#10b981" stroke-width="4.5" stroke-linecap="round" />
+                                    <path class="sparkle-1" d="M46,12 L48,15 L51,16 L48,17 L46,20 L44,17 L41,16 L44,15 Z" fill="#10b981" />
+                                    <path class="sparkle-2" d="M52,22 L53,24 L55,25 L53,26 L52,28 L51,26 L49,25 L51,24 Z" fill="#0ea5e9" />
+                                    <path class="sparkle-3" d="M34,14 L35,16 L37,17 L35,18 L34,20 L33,18 L31,17 L33,16 Z" fill="#10b981" />
+                                </svg>
+                            </div>
+                            <h3>Asset Generation</h3>
+                            <p>Produces high-quality visual variations optimized for any digital channel instantly.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scaling-conclusion glass-card reveal-text" style="margin: 2.5rem auto; max-width: 800px; text-align: center; border-radius: 20px; padding: 1.5rem;">
+                    <div class="glass-shine"></div>
+                    <p style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin: 0;">Less time lost in chaos. More time for ideas.</p>
+                </div>
+
+                <div class="scaling-metrics" style="margin-bottom: 3rem;">
+                    <div class="metric-card glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="metric-value" data-count="40">0</div>
+                        <span class="metric-unit">%</span>
+                        <div class="metric-label">Reduction in Review Cycles</div>
+                    </div>
+                    
+                    <div class="metric-card glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="metric-value" data-count="60">0</div>
+                        <span class="metric-unit">%</span>
+                        <div class="metric-label">Faster Strategic Alignment</div>
+                    </div>
+                    
+                    <div class="metric-card glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="metric-value" data-count="3">0</div>
+                        <span class="metric-unit">×</span>
+                        <div class="metric-label">Increase in Award-Grade Output</div>
+                    </div>
+                </div>
+
+                <!-- Live Demo Dashboard Card -->
+                <div class="dashboard-demo-card glass-card reveal-text" style="max-width: 850px; margin: 3rem auto 0 auto; height: 260px; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.6); box-shadow: var(--glass-shadow); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <div class="glass-shine"></div>
+                    <!-- Breathing AI Canvas Background (Light Mode Optimized) -->
+                    <canvas class="dashboard-demo-bg-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.95;"></canvas>
+                    
+                    <div class="video-poster-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(27,42,207,0.06) 0%, rgba(234,88,12,0.04) 100%); z-index: 2;"></div>
+ 
+                    <!-- Live Demo Title Content with Frosted Glass Badge for Spacing and Legibility -->
+                    <div class="demo-badge-container" style="z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 36px; border-radius: 16px; background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 8px 30px rgba(13, 12, 27, 0.03);">
+                        <span style="font-size: 2.2rem; font-weight: 800; color: var(--text-primary); letter-spacing: 0.15em; text-transform: uppercase; display: flex; align-items: center; gap: 15px; margin: 0; line-height: 1;">
+                            Live Demo
+                            <span style="display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: pulse-dot 2s infinite;"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 9 — GENERATION SHIFT (NEW SECTION) -->
+        <section id="section-generation-shift" class="section section-generation-shift">
+            <div class="section-inner">
+                <div class="section-label">6.5. Transformation</div>
+                
+                <div class="transformation-header">
+                    <h2 class="section-title reveal-text">
+                        <span>GENERATION</span>
+                        <span class="accent-text">SHIFT</span>
+                    </h2>
+                    <p class="section-subtitle reveal-text">
+                        A facelift improves <strong>what</strong> we create. A generation shift improves <strong>how</strong> we create.<br><strong>The Creative Engine</strong> enables both.
+                    </p>
+                </div>
+                
+                <div class="examples-grid reveal-text">
+                    <!-- Example 1: Design Facelift -->
+                    <div class="glass-card example-frame expandable-card" data-card="facelift">
+                        <div class="glass-shine"></div>
+                        <div class="card-visible-content">
+                            <div class="media-container">
+                                <img src="assets/shift-example-1.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/creative_engine.png') === -1) { this.src='assets/creative_engine.png'; } else { this.style.display='none'; }">
+                                <div class="image-placeholder fallback-placeholder">
+                                    <span class="placeholder-icon">📐</span>
+                                    <span class="placeholder-label">Facelift Preview</span>
+                                </div>
+                            </div>
+                            <div class="example-text">
+                                <div class="title-row">
+                                    <h3>Design Facelift</h3>
+                                    <span class="expand-indicator">Compare Details <span>↗</span></span>
+                                </div>
+                                <p class="description">Visual cleanup, modern fonts, clean alignment, and refined color balance. Polishing the outer presentation wrapper.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Expanded Content -->
+                        <div class="expanded-comparison">
+                            <div class="comparison-grid">
+                                <div class="comparison-item">
+                                    <div class="comparison-media">
+                                        <img src="assets/facelift-before.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/creative_studio.png') === -1) { this.src='assets/creative_studio.png'; } else { this.style.display='none'; }">
+                                        <span class="comparison-badge before-badge">Legacy Design</span>
+                                    </div>
+                                </div>
+                                <div class="comparison-item">
+                                    <div class="comparison-media">
+                                        <img src="assets/facelift-after.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/creative_engine.png') === -1) { this.src='assets/creative_engine.png'; } else { this.style.display='none'; }">
+                                        <span class="comparison-badge after-badge">Modernized</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Example 2: Generation Shift -->
+                    <div class="glass-card example-frame expandable-card" data-card="shift">
+                        <div class="glass-shine"></div>
+                        <div class="card-visible-content">
+                            <div class="media-container">
+                                <img src="assets/shift-example-2.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/digital_network.png') === -1) { this.src='assets/digital_network.png'; } else { this.style.display='none'; }">
+                                <div class="image-placeholder fallback-placeholder">
+                                    <span class="placeholder-icon">⚙️</span>
+                                    <span class="placeholder-label">Generation Shift Preview</span>
+                                </div>
+                            </div>
+                            <div class="example-text">
+                                <div class="title-row">
+                                    <h3>Generation Shift</h3>
+                                    <span class="expand-indicator">Compare Details <span>↗</span></span>
+                                </div>
+                                <p class="description">Interactive frameworks, 3D WebGL layouts, modular asset databases, and compound knowledge. Rebuilding the creative workflow structure from the core.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Expanded Content -->
+                        <div class="expanded-comparison">
+                            <div class="comparison-grid">
+                                <div class="comparison-item">
+                                    <div class="comparison-media">
+                                        <img src="assets/shift-before.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/digital_network.png') === -1) { this.src='assets/digital_network.png'; } else { this.style.display='none'; }">
+                                        <span class="comparison-badge before-badge">Gen 0</span>
+                                    </div>
+                                </div>
+                                <div class="comparison-item">
+                                    <div class="comparison-media">
+                                        <img src="assets/shift-after.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/creative_engine.png') === -1) { this.src='assets/creative_engine.png'; } else { this.style.display='none'; }">
+                                        <span class="comparison-badge after-badge">Gen V2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 10 — HUMAN INTELLIGENCE (NEW COMPARISON TABLE SECTION) -->
+        <section id="section-human-intelligence" class="section section-human-intelligence">
+            <div class="section-inner">
+                <div class="section-label">6.6. Intelligence</div>
+                
+                <div class="intelligence-header">
+                    <h2 class="section-title reveal-text">
+                        <span>THE HUMAN</span>
+                        <span class="accent-text">DIFFERENTIATOR</span>
+                    </h2>
+                    <p class="section-subtitle reveal-text">
+                        Human intelligence remains one of the most sophisticated systems ever created—bringing context, insight, judgment, authenticity, and originality to our work.
+                    </p>
+                </div>
+                
+                <!-- Custom Comparison Table Wrapper -->
+                <div class="intelligence-table-wrapper glass-card reveal-text">
+                    <div class="glass-shine"></div>
+                    <table class="intelligence-table">
+                        <thead>
+                            <tr>
+                                <th class="col-ai">
+                                    <div class="graphic-container">
+                                        <!-- AI Animated SVG -->
+                                        <svg class="graphic-ai" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                                            <defs>
+                                                <radialGradient id="ai-glow" cx="50%" cy="50%" r="50%">
+                                                    <stop offset="0%" stop-color="var(--accent-primary)" stop-opacity="0.3"/>
+                                                    <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0"/>
+                                                </radialGradient>
+                                            </defs>
+                                            <!-- Glow background -->
+                                            <circle cx="60" cy="60" r="45" fill="url(#ai-glow)" />
+                                            <!-- Connection paths/lines -->
+                                            <path d="M 60 60 L 30 30 M 60 60 L 90 30 M 60 60 L 25 65 M 60 60 L 95 65 M 60 60 L 35 95 M 60 60 L 85 95" stroke="var(--accent-primary)" stroke-width="1" opacity="0.3" />
+                                            <path class="ai-pulse-line" d="M 60 60 L 30 30 M 60 60 L 90 30 M 60 60 L 25 65 M 60 60 L 95 65 M 60 60 L 35 95 M 60 60 L 85 95" stroke="var(--accent-primary)" stroke-width="1.5" stroke-linecap="round" />
+                                            <!-- Grid circles -->
+                                            <circle cx="60" cy="60" r="30" fill="none" stroke="var(--accent-secondary)" stroke-width="0.75" stroke-dasharray="2 4" opacity="0.4" class="ai-grid-circle" />
+                                            <circle cx="60" cy="60" r="15" fill="none" stroke="var(--accent-secondary)" stroke-width="0.75" stroke-dasharray="3 3" opacity="0.5" class="ai-grid-circle-inner" />
+                                            <!-- Satellite Nodes -->
+                                            <circle cx="30" cy="30" r="4" fill="var(--accent-secondary)" class="ai-node n1" />
+                                            <circle cx="90" cy="30" r="5" fill="var(--accent-primary)" class="ai-node n2" />
+                                            <circle cx="25" cy="65" r="3.5" fill="var(--accent-primary)" class="ai-node n3" />
+                                            <circle cx="95" cy="65" r="4.5" fill="var(--accent-secondary)" class="ai-node n4" />
+                                            <circle cx="35" cy="95" r="5" fill="var(--accent-secondary)" class="ai-node n5" />
+                                            <circle cx="85" cy="95" r="4" fill="var(--accent-primary)" class="ai-node n6" />
+                                            <!-- Core Node -->
+                                            <circle cx="60" cy="60" r="8" fill="var(--accent-primary)" class="ai-core" />
+                                            <circle cx="60" cy="60" r="12" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" class="ai-core-ring" />
+                                        </svg>
+                                    </div>
+                                    <span class="col-title">Artificial Intelligence</span>
+                                </th>
+                                <th class="col-human">
+                                    <div class="graphic-container">
+                                        <!-- Human Animated SVG -->
+                                        <svg class="graphic-human" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                                            <defs>
+                                                <radialGradient id="human-glow" cx="50%" cy="50%" r="50%">
+                                                    <stop offset="0%" stop-color="var(--accent-orange)" stop-opacity="0.35"/>
+                                                    <stop offset="100%" stop-color="var(--accent-orange)" stop-opacity="0"/>
+                                                </radialGradient>
+                                                <linearGradient id="human-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" stop-color="#f43f5e" />
+                                                    <stop offset="50%" stop-color="#ea580c" />
+                                                    <stop offset="100%" stop-color="#fbbf24" />
+                                                </linearGradient>
+                                            </defs>
+                                            <!-- Glow background -->
+                                            <circle cx="60" cy="60" r="45" fill="url(#human-glow)" />
+                                            <!-- Concentric expanding ripples -->
+                                            <circle cx="60" cy="60" r="20" fill="none" stroke="url(#human-grad)" stroke-width="1" class="human-ripple r1" />
+                                            <circle cx="60" cy="60" r="32" fill="none" stroke="url(#human-grad)" stroke-width="0.8" class="human-ripple r2" />
+                                            <circle cx="60" cy="60" r="44" fill="none" stroke="url(#human-grad)" stroke-width="0.6" class="human-ripple r3" />
+                                            <!-- Starburst spark lines -->
+                                            <path d="M 60 25 A 35 35 0 0 1 95 60 A 35 35 0 0 1 60 95 A 35 35 0 0 1 25 60 A 35 35 0 0 1 60 25 Z" fill="none" stroke="url(#human-grad)" stroke-width="0.5" opacity="0.25" stroke-dasharray="1 5" />
+                                            <!-- Spark dots orbiting or floating -->
+                                            <circle cx="48" cy="38" r="3" fill="#fbbf24" class="human-spark s1" />
+                                            <circle cx="76" cy="45" r="2.5" fill="#f43f5e" class="human-spark s2" />
+                                            <circle cx="40" cy="72" r="3.5" fill="#ea580c" class="human-spark s3" />
+                                            <circle cx="78" cy="80" r="2" fill="#fbbf24" class="human-spark s4" />
+                                            <!-- Core spark of ideas -->
+                                            <path d="M 60 46 L 63 53 L 70 56 L 63 59 L 60 66 L 57 59 L 50 56 L 57 53 Z" fill="url(#human-grad)" class="human-core" />
+                                        </svg>
+                                    </div>
+                                    <span class="col-title">Human Intelligence</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-ai">
+                                    <div class="cell-content">
+                                        <span class="cell-bullet">◆</span>
+                                        <span class="cell-text">Requires megawatts of power</span>
+                                    </div>
+                                </td>
+                                <td class="col-human">
+                                    <div class="cell-content">
+                                        <span class="cell-bullet">✦</span>
+                                        <span class="cell-text">Operates on a mere ~20 watts</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-ai">
+                                    <div class="cell-content">
+                                        <span class="cell-bullet">◆</span>
+                                        <span class="cell-text">Learns rigidly from predefined, static datasets</span>
+                                    </div>
+                                </td>
+                                <td class="col-human">
+                                    <div class="cell-content">
+                                        <span class="cell-bullet">✦</span>
+                                        <span class="cell-text">Adapts dynamically from single, real-life experiences</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-ai">
+                                    <div class="cell-content">
+                                        <span class="cell-bullet">◆</span>
+                                        <span class="cell-text">Needs continuous human direction to determine relevance</span>
+                                    </div>
+                                </td>
+                                <td class="col-human">
+                                    <div class="cell-content">
+                                        <span class="cell-bullet">✦</span>
+                                        <span class="cell-text">Filters millions of inputs to distill meaningful decisions</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 11 — DRIVER (CULTURE) -->
+        <section id="section-culture" class="section section-culture">
+            <div class="section-inner">
+                <!-- Top Row: Text Copy (left) & Widescreen Studio Image (right) -->
+                <div class="culture-top-row">
+                    <div class="culture-text-main">
+                        <div class="section-label">7. Creative Culture</div>
+                        <h2 class="section-title reveal-text">THE DRIVER</h2>
+                        <p class="reveal-text culture-desc" style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Great work is driven by great creative culture.</p>
+                        <p class="reveal-text culture-desc">
+                            Technology is available to everyone. Creative culture does not. The agencies that stand out will those who deliberately invest in stronger habits, stronger teams, and stronger creative confidence.
+                        </p>
+                    </div>
+                    <div class="culture-visual-frame">
+                        <div class="image-frame-widescreen glass-card">
+                            <div class="glass-shine"></div>
+                            <div class="media-container">
+                                <img src="assets/culture-studio.jpg" onload="this.classList.add('loaded')" onerror="if(this.src.indexOf('assets/creative_studio.png') === -1) { this.src='assets/creative_studio.png'; } else { this.style.display='none'; }">
+                                <div class="image-placeholder fallback-placeholder">
+                                    <span class="placeholder-icon">🏫</span>
+                                    <span class="placeholder-label">Culture Studio Graphic</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Accordion Cards (left) & Interactive Bubble Canvas (right) -->
+                <div class="culture-bottom-row">
+                    <div class="culture-cards-container">
+                        <div class="culture-cards">
+                            
+                            <!-- Card 1 -->
+                            <div class="culture-card glass-card" id="culture-card-1">
+                                <div class="glass-shine"></div>
+                                <div class="culture-card-header" data-toggle="culture-detail-1">
+                                    <span class="culture-icon">💡</span>
+                                    <h3>Monthly Hands-on Demo Sessions</h3>
+                                    <span class="culture-toggle">+</span>
+                                </div>
+                                <div class="culture-card-detail" id="culture-detail-1">
+                                    <p>Led by creative leaders actively using emerging tools and workflows. These sessions focus on hands-on practical guides to share immediate execution and strategy insights across departments.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 2 -->
+                            <div class="culture-card glass-card" id="culture-card-2">
+                                <div class="glass-shine"></div>
+                                <div class="culture-card-header" data-toggle="culture-detail-2">
+                                    <span class="culture-icon">🧠</span>
+                                    <h3>Structured Upskilling Pathways</h3>
+                                    <span class="culture-toggle">+</span>
+                                </div>
+                                <div class="culture-card-detail" id="culture-detail-2">
+                                    <p>Curated learning programs focused on AI, creativity, strategy, and future-ready skills, enabling teams to continuously upgrade their design and copy caliber.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="culture-card glass-card" id="culture-card-3">
+                                <div class="glass-shine"></div>
+                                <div class="culture-card-header" data-toggle="culture-detail-3">
+                                    <span class="culture-icon">📂</span>
+                                    <h3>Shared Resource Hub</h3>
+                                    <span class="culture-toggle">+</span>
+                                </div>
+                                <div class="culture-card-detail" id="culture-detail-3">
+                                    <p>A central internal space for discoveries, prompts, experiments, and best practices. Compound strategic insight and make design learnable for every designer.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="culture-card glass-card" id="culture-card-4">
+                                <div class="glass-shine"></div>
+                                <div class="culture-card-header" data-toggle="culture-detail-4">
+                                    <span class="culture-icon">🤝</span>
+                                    <h3>Creative Community</h3>
+                                    <span class="culture-toggle">+</span>
+                                </div>
+                                <div class="culture-card-detail" id="culture-detail-4">
+                                    <p>Built through internal collaboration, knowledge exchange, and cross-functional learning, creating a shared sense of visual mastery and team confidence.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="culture-canvas-container glass-card">
+                        <div class="glass-shine"></div>
+                        <div class="canvas-header">
+                            <span class="canvas-badge">Interactive Ecosystem</span>
+                            <span class="canvas-status-dot"></span>
+                        </div>
+                        <div class="culture-ecosystem reveal-text" id="culture-ecosystem"></div>
+                    </div>
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 12 — THE WORKSHOP (CANDOUR INNOVATION LAB) -->
+        <section id="section-labs" class="section section-labs">
+            <div class="section-inner">
+                <div class="section-label">8. Experimentation</div>
+                <h2 class="section-title reveal-text">THE WORKSHOP: CANDOUR INNOVATION LAB</h2>
+                
+                <div class="labs-intro reveal-text" style="max-width: 850px; margin-bottom: 3rem;">
+                    <h3 style="font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 800; color: var(--text-primary); line-height: 1.2; margin-top: 0.5rem; margin-bottom: 1rem; letter-spacing: -0.02em;">Building the Day After Tomorrow.</h3>
+                    <p style="font-size: 1.15rem; color: var(--text-secondary); line-height: 1.6;">A place to experiment with what creative work could look like next. A space to build ideas before the market even asks for them.</p>
+                </div>
+                
+                <!-- Fridays / Mondays Split -->
+                <div class="labs-split-programs reveal-text" style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 3.5rem;">
+                    <div class="program-block glass-card" style="padding: 2rem; border-radius: 20px;">
+                        <div class="glass-shine"></div>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--accent-orange); margin-bottom: 0.75rem;">Creative Thinking Fridays</h4>
+                        <p style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin: 0;">Protected time to explore new storytelling approaches, visual concepts, interactive experiences, emerging technologies, and unconventional creative thinking beyond day-to-day client work.</p>
+                    </div>
+                    <div class="program-block glass-card" style="padding: 2rem; border-radius: 20px;">
+                        <div class="glass-shine"></div>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--accent-primary); margin-bottom: 0.75rem;">Presentation Mondays</h4>
+                        <p style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin: 0;">Cross-functional pairs research and present topics shaping our clients, industries, and future opportunities, ensuring that knowledge moves across the agency, while staying sharp on our technical skills.</p>
+                    </div>
+                </div>
+                
+                <div class="labs-heading-explore reveal-text" style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.02em;">Now teams are capable of exploring:</h3>
+                </div>
+
+                <div class="labs-grid">
+                    
+                    <!-- Card 1 -->
+                    <div class="lab-card glass-card" data-lab="1">
+                        <div class="glass-shine"></div>
+                        <div>
+                            <span class="lab-icon">🎭</span>
+                            <h3>Interactive Storytelling</h3>
+                            <p>Going beyond static grids. Websites that adapt and animate in response to reader scrolling and interaction.</p>
+                        </div>
+                        <div class="lab-visual-thumb">
+                            <svg class="bento-diagram-svg storytelling-svg" viewBox="0 0 250 80">
+                                <defs>
+                                    <clipPath id="browser-clip">
+                                        <rect x="51" y="25" width="148" height="43" />
+                                    </clipPath>
+                                </defs>
+                                <!-- Web Browser Mockup Viewport -->
+                                <rect x="50" y="10" width="150" height="60" rx="6" fill="none" stroke="rgba(27,42,207,0.18)" stroke-width="1.5" />
+                                <circle cx="60" cy="17" r="1.5" fill="rgba(27,42,207,0.3)" />
+                                <circle cx="65" cy="17" r="1.5" fill="rgba(27,42,207,0.3)" />
+                                <circle cx="70" cy="17" r="1.5" fill="rgba(27,42,207,0.3)" />
+                                <line x1="50" y1="24" x2="200" y2="24" stroke="rgba(27,42,207,0.12)" stroke-width="1" />
+                                
+                                <g clip-path="url(#browser-clip)">
+                                    <!-- Scrolling Web Content -->
+                                    <g class="story-scroll-content">
+                                        <!-- Page 1 Content -->
+                                        <rect class="story-img-card" x="60" y="30" width="36" height="28" rx="4" fill="none" stroke="var(--accent-primary)" stroke-width="1.5" />
+                                        <path d="M 66,48 L 74,40 L 82,48 M 76,45 L 80,41 L 86,47" fill="none" stroke="var(--accent-primary)" stroke-width="1" stroke-linejoin="round" />
+                                        <line x1="106" y1="34" x2="185" y2="34" stroke="var(--text-primary)" stroke-width="2.5" stroke-linecap="round" />
+                                        <line x1="106" y1="42" x2="170" y2="42" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" />
+                                        <line x1="106" y1="50" x2="180" y2="50" stroke="rgba(13,12,27,0.2)" stroke-width="1.5" stroke-linecap="round" />
+                                        <line x1="106" y1="58" x2="150" y2="58" stroke="rgba(13,12,27,0.2)" stroke-width="1.5" stroke-linecap="round" />
+                                        
+                                        <!-- Page 2 Content (reveals on scroll) -->
+                                        <line x1="60" y1="72" x2="150" y2="72" stroke="var(--accent-orange)" stroke-width="2.5" stroke-linecap="round" />
+                                        <rect class="story-btn-placeholder" x="60" y="80" width="44" height="10" rx="2" fill="none" stroke="var(--accent-primary)" stroke-width="1" />
+                                        <line x1="112" y1="85" x2="180" y2="85" stroke="rgba(13,12,27,0.2)" stroke-width="1.5" stroke-linecap="round" />
+                                    </g>
+                                    
+                                    <!-- Parallax Floating Shape -->
+                                    <polygon class="story-floating-shape" points="175,48 181,42 187,48 181,54" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" />
+                                    
+                                    <!-- Scrollbar Track & Thumb -->
+                                    <line class="story-scrollbar-track" x1="196" y1="27" x2="196" y2="65" stroke="rgba(27,42,207,0.06)" stroke-width="1.5" stroke-linecap="round" />
+                                    <rect class="story-scrollbar-thumb" x="195" y="28" width="2" height="12" rx="1" fill="var(--accent-primary)" opacity="0.3" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 (Interactive Data Visuals) -->
+                    <div class="lab-card glass-card" data-lab="2">
+                        <div class="glass-shine"></div>
+                        <div>
+                            <span class="lab-icon">📊</span>
+                            <h3>Interactive Data Visuals</h3>
+                            <p>Transforming static charts and spreadsheets into animated, interactive graphics that readers can explore.</p>
+                        </div>
+                        <div class="lab-visual-thumb">
+                            <svg class="bento-diagram-svg data-visual-svg" viewBox="0 0 250 80">
+                                <line x1="30" y1="20" x2="220" y2="20" stroke="rgba(27,42,207,0.05)" stroke-width="1" />
+                                <line x1="30" y1="40" x2="220" y2="40" stroke="rgba(27,42,207,0.05)" stroke-width="1" />
+                                <line x1="30" y1="60" x2="220" y2="60" stroke="rgba(27,42,207,0.05)" stroke-width="1" />
+                                <rect class="visual-bar-1" x="50" y="35" width="20" height="35" rx="3" fill="rgba(27,42,207,0.12)" />
+                                <rect class="visual-bar-2" x="90" y="20" width="20" height="50" rx="3" fill="#1b2acf" />
+                                <rect class="visual-bar-3" x="130" y="45" width="20" height="25" rx="3" fill="rgba(27,42,207,0.12)" />
+                                <path class="visual-trend-line" d="M 50,60 L 90,40 L 130,55 L 170,25 L 210,15" fill="none" stroke="#ea580c" stroke-width="3" stroke-linecap="round" />
+                                <circle class="visual-trend-dot" cx="210" cy="15" r="4.5" fill="#ea580c" stroke="#ffffff" stroke-width="1.5" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="lab-card glass-card" data-lab="3">
+                        <div class="glass-shine"></div>
+                        <div>
+                            <span class="lab-icon">🧪</span>
+                            <h3>Emerging Creative Technologies</h3>
+                            <p>Utilizing high-end layout styles, custom filters, and vector illustrations that render instantly on retina screens.</p>
+                        </div>
+                        <div class="lab-visual-thumb">
+                            <svg class="bento-diagram-svg css-svg" viewBox="0 0 250 80">
+                                <pattern id="canvas-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                                    <circle cx="2" cy="2" r="0.8" fill="rgba(168, 85, 247, 0.15)" />
+                                </pattern>
+                                <rect width="250" height="80" fill="url(#canvas-grid)" />
+                                <path class="handle-line-1" d="M 50,40 L 90,10" stroke="rgba(168, 85, 247, 0.45)" stroke-width="1.2" stroke-dasharray="2 2" />
+                                <path class="handle-line-2" d="M 200,40 L 160,70" stroke="rgba(168, 85, 247, 0.45)" stroke-width="1.2" stroke-dasharray="2 2" />
+                                <path class="morph-curve" d="M 50,40 C 90,10 160,70 200,40" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round" />
+                                <rect class="anchor-point" x="47" y="37" width="6" height="6" fill="#ffffff" stroke="#a855f7" stroke-width="1.5" />
+                                <rect class="anchor-point" x="197" y="37" width="6" height="6" fill="#ffffff" stroke="#a855f7" stroke-width="1.5" />
+                                <g class="handle-point-2" transform="translate(160, 70)">
+                                    <circle cx="0" cy="0" r="3.5" fill="#a855f7" stroke="#ffffff" stroke-width="1" />
+                                </g>
+                                <g class="handle-point-1" transform="translate(90, 10)">
+                                    <circle cx="0" cy="0" r="3.5" fill="#a855f7" stroke="#ffffff" stroke-width="1" />
+                                    <path d="M 0,0 L 10,12 L 5.5,10 L 8.5,17 L 6.5,18 L 3.5,11 L -1.5,13.5 Z" fill="#1b2acf" stroke="#ffffff" stroke-width="0.8" />
+                                </g>
+                                <text x="10" y="70" fill="rgba(168, 85, 247, 0.4)" font-size="7" font-family="monospace">d="M50,40 C90,10..."</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="lab-card glass-card" data-lab="4">
+                        <div class="glass-shine"></div>
+                        <div>
+                            <span class="lab-icon">📐</span>
+                            <h3>Dynamic Presentations</h3>
+                            <p>Moving beyond standard slide PDFs into interactive single-page experiences built to command attention.</p>
+                        </div>
+                        <div class="lab-visual-thumb">
+                            <svg class="bento-diagram-svg presentation-svg" viewBox="0 0 250 80">
+                                <rect class="deck-slide slide-back" x="70" y="16" width="90" height="45" rx="3" fill="none" stroke="rgba(99,102,241,0.2)" stroke-width="1.5" />
+                                <rect class="deck-slide slide-mid" x="80" y="21" width="90" height="45" rx="3" fill="none" stroke="rgba(99,102,241,0.4)" stroke-width="1.5" />
+                                <rect class="deck-slide slide-front" x="90" y="26" width="90" height="45" rx="3" fill="none" stroke="#6366f1" stroke-width="2.5" />
+                                <line x1="100" y1="36" x2="135" y2="36" stroke="#6366f1" stroke-width="2" stroke-linecap="round" />
+                                <line x1="100" y1="42" x2="120" y2="42" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="labs-conclusion glass-card reveal-text" style="margin-top: 3.5rem; text-align: center; border-radius: 20px; padding: 1.5rem; box-shadow: var(--glass-shadow);">
+                    <div class="glass-shine"></div>
+                    <p style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin: 0;">The future belongs to creatives who never stop learning.</p>
+                </div>
+
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 13 — THE FUTURE IS IN OUR HANDS -->
+        <section id="section-demo" class="section section-demo">
+            <div class="section-inner">
+                <div class="section-label">9. The Opportunity</div>
+                <h2 class="section-title reveal-text">THE FUTURE IS IN OUR HANDS</h2>
+                
+                <div class="demo-statements" style="max-width: 850px; margin-bottom: 2.5rem;">
+                    <p class="reveal-text demo-statement" style="font-size: 1.15rem; line-height: 1.6; color: var(--text-secondary);">The tools already exist. Smarter ways of working already exist. The opportunity already exists. But, can we adapt? This is what the future of Candour Creatives looks like.</p>
+                </div>
+                
+                <div class="demo-moment glass-card reveal-text" style="border-radius: 32px; padding: 24px 32px; box-shadow: var(--glass-shadow);">
+                    <div class="glass-shine"></div>
+                    <div class="demo-moment-grid">
+                        <div class="demo-text-box">
+                            <div class="demo-label" style="font-size: 0.85rem; letter-spacing: 0.15em; font-weight: 700; color: var(--accent-primary); margin-bottom: 0.75rem; text-transform: uppercase;">Meta AI Glasses Integration</div>
+                            <h3 class="demo-title" style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--text-primary); line-height: 1.25; margin: 0; max-width: 480px;">Meta AI Glasses Integration Demo</h3>
+                        </div>
+                        <div class="demo-3d-box">
+                            <div id="meta-glasses-canvas"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 14 — BECOMING THE AGENCY CLIENTS SEEK OUT -->
+        <section id="section-destination" class="section section-destination">
+            <div class="section-inner">
+                <div class="section-label">10. Goal</div>
+                <h2 class="section-title reveal-text">BECOMING THE AGENCY CLIENTS SEEK OUT</h2>
+                
+                <div class="destination-content" style="max-width: 850px; margin-bottom: 3.5rem;">
+                    <p class="reveal-text large-reveal-text" style="font-size: 1.25rem; font-weight: 700; line-height: 1.5; color: var(--text-primary); margin-bottom: 1rem;">The goal is not simply to deliver.</p>
+                    <p class="reveal-text" style="font-size: 1.15rem; line-height: 1.6; color: var(--text-secondary);">It is to build an agency known for creative excellence, distinctive thinking, and a reputation that speaks before we do. An agency clients seek out. Talent wants to join. And the agency that the industry looks to for what comes next.</p>
+                </div>
+                
+                <div class="destination-comparisons-v2" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-bottom: 3.5rem;">
+                    
+                    <!-- Apple Comparison -->
+                    <div class="glass-card comparison-card-v2" style="padding: 2.5rem; display: flex; flex-direction: column; gap: 16px; border-radius: 24px; position: relative; overflow: hidden; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s;">
+                        <div class="glass-shine"></div>
+                        <div class="comparison-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-primary); border: 1px solid rgba(27,42,207,0.25); background: rgba(27,42,207,0.04); padding: 4px 12px; border-radius: 100px;">Clarity</span>
+                            <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 26px; opacity: 0.85;">
+                                <svg viewBox="0 0 814 1000" style="width: 100%; height: 100%; fill: var(--text-primary);"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"/></svg>
+                            </span>
+                        </div>
+                        <div class="comparison-titles" style="margin-top: 0.5rem;">
+                            <h3 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 0; letter-spacing: -0.02em;">Design Authority</h3>
+                            <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em;">The Apple Standard</h4>
+                        </div>
+                        <p style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); margin: 0; margin-top: 8px;">You expect clarity, consistency, and purposeful design as standard baseline traits, creating confidence in the experience before it even begins.</p>
+                        
+                        <!-- Subtle background visual details (like wireframe lines) -->
+                        <div class="card-bg-lines" style="position: absolute; bottom: 0; right: 0; opacity: 0.03; pointer-events: none; transform: translate(10px, 10px);">
+                            <svg width="150" height="150" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="0.8" />
+                                <circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="0.5" />
+                                <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.5" />
+                                <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.5" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Ferrari Comparison -->
+                    <div class="glass-card comparison-card-v2" style="padding: 2.5rem; display: flex; flex-direction: column; gap: 16px; border-radius: 24px; position: relative; overflow: hidden; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s;">
+                        <div class="glass-shine"></div>
+                        <div class="comparison-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-orange); border: 1px solid rgba(234,88,12,0.25); background: rgba(234,88,12,0.04); padding: 4px 12px; border-radius: 100px;">Precision</span>
+                            <span style="display: flex; align-items: center; justify-content: center; width: 22px; height: 26px; opacity: 0.85;">
+                                <svg viewBox="0 0 162 224" style="width: 100%; height: 100%; fill: var(--text-primary);">
+                                    <path d="m76.6 5.5c.8.4 1.1.7 1.9.9.7.2 1.7.7 1.9.1.3-.6-.1-1.4-.6-2.1-.8-1.3-1.2-1.6-2.3-3.4-.2-.4-.4-.8-.8-.8 0 0-.1 1.3-.5 2.1-.3.7-1.1 1.2-1 1.7s.6 1.1 1.4 1.5z"/>
+                                    <path d="m160.2 91.2c-.9 1.2-1.3 3.6-2.6 5.6-1.8 2.8-4.4 6.2-5.7 6.2-.7 0-.9-1.6-.9-1.6s-.9-2.7.6-6.1c1.1-2.4 1.7-3.1 3.1-4.9 1.3-1.7 2.1-2.6 3-4.4.8-1.6 1-1.9 1.5-4.4.1-.6-.1-1.9-.7-1.8-.8 0-3 4.8-5.3 7.5-2.2 2.5-6.3 5.7-6.3 5.7s-.4.3-.4-.5c-.1-.7-.2-2.8.2-4.7s1-3.8 2.7-6.7c1.9-3.3 4.3-5.6 5.5-6.8.5-.5 2-1.4 1.2-1.9-.7-.4-2.8 1.4-4.4 2.6-2 1.5-2.7 1.9-4.7 4.3s-2.5 3.4-2.5 3.4-1.9 3.1-2.4 6.1-.5 4.7-.5 4.7 0 2.7.3 4.3c.2 1.7.9 4.3.9 4.3s1 2.9 1.4 4.7 1.1 7.1 1.1 7.1.5 3.8.2 7.4-.6 5.7-1 6.8-1.5 4-3.3 6c-1.7 1.9-2.1 2.2-2.1 2.2s-1.8 1.5-3.3 2.3-3.7 1.8-4.7 2.1c-1 .2-2.4.3-2.5.3h-1.3l-.4-.3-.2-.8s-1-3.9-2.2-6.4c-1-2.1-3.1-5-3.1-5s-3.6-4.9-6.4-7.6c-3.2-3.2-6.8-5.6-9-7.3-.8-.6-2.6-1.7-2.6-1.7s-7.3-7.3-9.9-13.1c-1.8-4-3-6.9-2.5-11.3.1-1 .5-2.9.7-2.9l1.3.4c.1.1 1.3 1.2 2.4 1.6.6.2 1.7.4 1.7.4s.9.1 1.4.2c.5.2 1.4.5 2 .8s1.5.9 1.5.9l1.7 1.3 1.8 1.4s1 .7 1.3.8.5.2.6.2h.4s.4-.1.5-.5c.1-.5-.5-.1-1.4-1.1-1-.9-1.4-1.7-1.4-1.7s-.2-.8-1-1.7-1.8-1.7-1.8-1.7-.7-.5-1.7-.8-1.3-.3-1.4-.7 1.2-.2 1.2-.2 1.5.2 2.7.8 1.9 1.3 1.9 1.3l.8.7.5.5.5.3s.5.5.6-.2c.1-.6-.1-1.1-.2-1.2l-.5-.5-2-1.7c-.6-.6-1-1-1.6-1.4s-1.5-1-2.6-1.4c-1-.4-1.6-.3-2.6-.8-.7-.3-1.3-.5-1.7-1.1-.1-.1-.6-.5.3-.3s1.5.5 2.5.7c1.6.4 2.6.4 4.1.9.6.2 1.4.6 1.4.6l1.9.8s2.6 1.4 4.4 1.5 3.3-.3 3.9-.6c.6-.2 1.7-.9 2-1.2s.5-.6.5-.6l.2-.5v-.4c-.5-.6-1.5 1-3.1 1.3-1.7.3-1.6.5-2.7.3-1.2-.2-1.9-.5-2.8-1.4-1.6-1.5-2.2-2.9-4.3-3.8-.9-.4-2.5-.8-2.5-.8s-2.2-.7-3.4-1.4c-.9-.5-2.8-.8-2.2-1.6.3-.4 2.7 1 4.5 1.2 1.3.2 2.2.1 3.2.1s2.4-.3 2.6-.3c.2-.1 1 0 1.7.2s1.1.5 1.8.8 1.5.8 1.7.8l.4.1.2-.2.1-.2-.1-.2-.3-.2-.6-.4s-.9-.5-1.7-1.3-1.5-1.7-2.7-2.1-2.6-.6-2.6-.6l-1.4-.1-.6-.1s-1-.3-.2-.5 1.2-.3 1.4-.3c.1-.1 1.5-.2 2.3.1s2.1 1 2.2 1c.1.1 1.3 1 2.6 1.3s3 .4 3 .4l.8-.2.4-.1.3-.2-.1-.5s0-.4-.6-.5-1.8-.3-2.9-1.1-1.9-1.6-1.9-1.6-.8-.7-2.4-1.1c-1.5-.4-2-.4-2-.4l-.5-.2-1.1-.5s-.5-.3-.9-.8-1-1.4.7-.9 2.1.8 2.1.8.9.9 1.7 1c.5.1.9.2 1.2-.2.5-.5-.9-1.1-1.9-1.8-.8-.5-1.6-1.8-1.6-1.8s-.6-.5.3-.3 2.5 1.2 2.5 1.2.8.4 1.2.5c.3.1 1.1.6 1.5.8.3.1 1.2.3 1.8.6.8.5 1.2 1.3 1.6 1.6s.7.8 1.2.9.6.3.9.1.4-.3.4-.3.1-.2-.4-.5-1.1-1.1-1.1-1.1l-.2-.4-.1-.4-.5-.8-.9-1.3s-1.4-1.9-2.7-2.6c-1.2-.7-2.1-1.1-2.1-1.1s-.6-.3-.9-.5c-.5-.4-.7-.7-1.1-1.2-.5-.6-.7-1-1.3-1.6-1.1-1.1-4.5-1.7-3.2-2.5.7-.4 1.6-.2 2-.1s1.3.5 2.2.8c.6.2 1 .2 1.6.4s1.3.3 1.6.5.6.6.8.7c.1.1.9 1.4 2.3 2.1s2.1 1.2 3.5 1.3c1.1.1 2.9-.3 2.9-.3s.5-.2.1-.7c-.5-.5-.5-.6-.9-.7-1.6-.6-2.9-.4-4.1-1.6-.5-.5-.7-.6-1.1-1.4s-.2-1-.5-1.5c-.2-.5-.7-1.2-.7-1.2s-1.5-1.8-3.1-2.7c-1.7-.9-2.9-1.8-3.1-2-.3-.2-.9-1-.9-1l-.5-.8-.3-.6c-.2-1.1 1.8.3 2.9.7 1.8.6 2.7 1.4 4.5 2 1 .3 1.6.3 2.6.7 1.7.7 2.2 2.4 4 2.6 1 .1 3 .5 2.6-.4-.4-1-2.4-1-3.4-2.2-.5-.5-.5-1-1-1.5-.8-1-2.7-1.9-2.7-1.9s-.6-.5-1.3-1.9c-.6-1.4-2.1-2.4-4.8-3.7-1.8-.9-5.4-1.1-4-2 .8-.6 1.5-.5 2.6-.2 1.1.4 1.5.9 2.4 1.3s1.3.5 1.5.6.9.4 1.2.4c.2.1 1.7.3 2.1.4l2 .5 1.6.6s.8.3 1.3.3 1.3-.2 1.3-.2l.6-.4.1-.2s.3-.5-.5-.6c-.7-.1-1.1-.1-1.2-.1l-.7-.2-.3-.1s-1.4-1.1-2.6-1.6c-1.3-.5-1.5-.6-1.5-.6l-.5-.1-.6-.1s-.5 0-1.3-.7-1.1-1.1-1.8-1.8l-.9-.9s-.8-.6-.8-1.1c.1-.8 1.8.9 1.8.9l1.2.8s1 .7 2.8.8 4-.5 4-.5.3-.2 1.3.1 1.8.9 1.8.9l.8.7 1.2 1.3.2-.1c.1-.1.6-.6-.3-1.7s-2.4-2.1-2.4-2.1-2-1.2-4-1.6-2.9-.4-2.9-.4-1.5 0-2.4-1-1.5-2-1.5-2l-.3-1.4s-.5-.6-1.5-1c-.9-.4-1.9-1-1.9-1s-1.5-.5-1.6-1.2c-.3-1.3 2.5 0 4 .3 1.4.3 2 .8 3.4 1.1 1.2.3 1.9.4 3.2.3.7 0 1.1-.1 1.8-.2.7 0 1.2-.1 1.9 0 1 .2 1.4.7 2.4 1.1.6.3.9.6 1.6.7.6.1 1.8.5 1.6-.1l-.3-.4c-.5-.7-1.1-.7-1.7-1.2-1.3-1-1.9-1.8-3.4-2.5-1-.5-1.6-.7-2.7-.9-.8-.1-1.4.1-2.2-.1-.9-.3-1.2-.7-2.1-1.2-1.4-.8-2.2-1.5-3.7-2.1-1-.4-2.7-.8-2.7-.8l-.7-.1-.3-.1c-1.4-.5 2.5-1.6 4.3-2.1.9-.2 1.3-.4 2.2-.3.8.1 1.7 1.2 2.6.7 1.3-.7-1.5-2.6-2.4-2.9-1.2-.5-3.3-.1-3.3-.1l-4.6-.1-1.3-.2s-.8 0-1.4-.7-2.9-3.5-5.5-3.9c-2.7-.4-3.5 0-3.7-.2-2.3-3.6-4.7-4.4-6.5-6.1-.5-.5-1.3-1.6-1.5-1.5s-.5 1.6-1 2.9c-.6 1.5-.2 2.2.1 2.8.4.6.9 1-.1 1.6s-2.3.4-2.3.4-1.1-.2-2-.7c-.9-.4-2.8-1.2-2.8-1.2s-1.8-.5-3-.4-1.3.2-2.2.3c-.5 0-.7 0-1.2.1-.4.1-.9-.2-.9.3s1 .5 1.7.8 2.3.3 2 .7c-.4.4-1.9.5-2 .4-.1 0-1.1-.2-1.9-.2-1.3.1-1.4.1-3.3 1-.3.1-.2.8.4.6.7-.2 1.7-.4 2.8-.4 1.2 0 1.9.4 3.1.7 1 .3 1.1.5 2.6.7.3 0 .9-.2.9.2 0 .2-.4.5-.4.5s-.9.2-.8.5c.2.4 1 0 1.4 0s1 .1.9.5l-.2.3c-1.1.3-1.7.5-2.7.9-2.5 1-3.5 2.2-5.9 3.4-2.3 1.1-6 2.5-6 2.5s-1.1.6-2.7 1-1.7.3-2.8.5c-1.1.1-1.6.3-2.5.8-.6.3-.9.6-1.4 1.1l-1.4 2.1-.8 1.2c-.2.4-.4.6-.5 1-.2.5-.3.7-.4 1.2-.3 1.2 0 1.9.2 3.1.1.3.1.5.2.8s.5.6.5.6l.4.1s1.4-.1 2.3-.3 2.2-.5 2.2-.5l1.7-.5 1.1-.4s.7 0 .8.4c.1.3-.2.8-.2.8s-.6.3-1.1.5-1.7.5-1.8.6l-1.3.4-1.1.1s-.2.1-.4.4-.2.3-.2.5c.2.2.3.4.5.6.4.3.6.5 1.1.6.7.3 1.1.2 1.8.2 1 0 1.6-.2 2.5-.6.8-.5 1.1-.5 2.2-.9.3-.1.9-.2 1.1-.2 1.9-.2 3 .1 4.9.4s2.8.9 4.7 1.2c2 .3 3.2.9 5.3.4 1-.2 1.6-.7 2.1.3.5.9.4 1.4.4 1.4s0 .6-.7 2.5-2.9 6.6-2.9 6.6l-1.5 3s-1.2 2.4-4 5.5-3 3.3-3 3.3-1.5 1.1-3 3-1.5 2.6-2.9 4c-.9.9-1.4 1.4-2.5 2.1s-2.4.5-5.9 2.9c-3 2.1-4.6 3.8-4.8 3.7s-1.2-.9-1.6-1.1c-.3-.2-6.1-4.1-6.1-4.1l-2.4-1.6-1.1-.7-.2-.4-.6-.8s-.9-1.1-2-2c-1.1-1-2.3-1.8-4.1-2.2-1.7-.5-2.8-.8-4.5-.2-1.1.4-1.7.8-2.5 1.6-1 1-1.2 1.8-2 3s-1.6 2.3-2 2.9-1.2 2.2-1.2 2.2-2 3.2-3.1 5.3c-1.3 2.3-1.8 3.7-3 5.9-1.9 3.5-4.6 7.1-5.3 8.7s-.8 1.8-.8 1.8-.2.9-.3 1.5-.1 1.6-.2 2c-.1.5-.4 1-.5 1.1s-1.2 2.4-1.6 3.9-1.3 6.2-.2 6.8 9.2-2.9 10.3-6.3c.7-2.2-2.2-3.3-1.4-5.3.3-.7.5-.8 1-1.5.8-1.3.5-4 2-6.5 1.1-1.8 3.3-4.1 6.3-7.5 1.9-2.1 3.7-5.5 3.7-5.5s.4-1.2 1.2-1c.9.2 1.7.1 1.7.1l.4.3.8.8 1.2 1.8s2 2.9 2.7 3.7 1.4 1.4 2.4 2.2c1.1 1 1.5 1.5 2.9 2.6 2 1.6 1.3 2.2-1.3.8-.9-.5-2.3-1-3.4-1.3-1.2-.3-5.7-1.5-8-1.8-2.2-.3-2.6-.2-2.6-.2s-1.1-.1-2.4.7-2 1.4-2 1.4-1.5 1.7-1.6 2-.8 1.5-.8 1.5-.4.6-.5 1.3c-.2.7-.1 1.4-.1 1.4l.1 1.5.1 1.4s.3 3.5 1 7c.2 1 .4 2.6.4 2.6l.5 3.6s.3 3.8.6 5.1c.3 1.2.5 1.3.7 2.1.4 1.5-.3 2.2.4 4s1.3 1.6 2 2.7c.5.8.7 1 1.1 2s1.7 4.3 3.2 6.7c1.6 2.5 3.7 5.6 5.1 5.3s2.4-2.5 2.4-2.5 1.6-4.3.6-8.5c-1-4.3-5.6-2.3-6.2-5.4-.1-.7 0-1.8 0-1.8s-.1-1.3-.3-1.7-1.8-3.4-2.4-5.9c-.5-1.9-.4-8-.8-9.7-1.1-4.4-1.2-4-.6-4.8.7-.8 1.3-.6 1.3-.6l.9.1.7.3s.8.5 1.3.8c.4.3 1.8 1.4 1.8 1.4l3.4 2.2s1.9 1.1 2.7 1.5 1.5.9 1.5.9l.9.6 1.5 1.1.3.3.2.4s.7 1.6 3.7 3.3c2.4 1.4 4.5 1 5.4 2.1.2.2 1.9 2.5 2.7 3.9 1 1.6 2.2 3.5 2.6 4.1s2.9 3.7 2.9 3.7l3.3 3.6 4.3 4 3.9 3.3 2.5 2s2.2 2.1 4.7 3.8c2.4 1.6 2.5 1.8 4.1 2.9 1.2.8 2.8 1.9 4.4 3.1 1.6 1.3 3.4 3.7 2.7 4.5-.5.3-1.4-1-3.1-2.5-1.4-1.2-2.1-1.8-3.5-2.8-1.8-1.4-2.7-2.1-4.7-3.3-1-.6-2.8-1.7-2.9-1.5-.7 2.1-.6 4.1-.5 6.7.1 1.8.4 3.6 1 5.9.5 2.2 1 3.4 1.8 5.5s2.3 5.4 2.3 5.4l2.3 4.6 2.1 3.5 1.1 1.8.4.6s.5 1.2 0 2-1.1 2.5-2 2.6c-.9.2-3 .3-3 .3l-11.9-.2-6.2-.5s-.7-.4-4.3-.4c-2.1 0-3.8.9-5 1-1 .1-5.9-.3-9.2 1-3.1 1.3-4.5 1.6-5.6 3.6-.8 1.5 3.9 3.9 7.8 4.8 6.3 1.4 4.5-1.3 6.9-3 .3-.2.4-.4.7-.5 1.6-.5 2.5.8 4.1.8 1.8 0 2.8-.6 4.6-.9 9.1-1.2 23.3 3.1 23.3 3.1s3.5 1.1 5.1.8c1.9-.4 1.5-1.1 2.1-2.2.5-.9.3-1.1.4-2.1 0-.6-.1-.9-.2-1.5-.4-1.7-1.5-4.1-1.5-4.1s-.8-1.8-1.1-2.7c-.4-1.3-.8-2.1-1-3.5-.6-3.7-.5-3.4-.5-5.5 0-3.8.4-5.9 1.4-9.6 1.5-5.4 4.3-7.7 6.4-12.9.6-1.4.6-3.4 1.3-3.6.8-.1.7 2.5.3 4-1.3 5.2-4.5 7.4-6 12.7-1.1 4.1-1.7 6.5-1.4 10.7.1 2.3 1 5.9 1 5.9s1.2 4 1.8 5.5 1.8 4 1.8 4l2.7 4.8 1.4 2.3s1 .9.5 2.4-1.5 2.4-2.7 3.7c-3.4 4-11.3 9.9-13.3 11.3-2.8 2.1-2.7 2.7-2.9 3.3-1.1 3.2-4.3 3.3-7.8 7.1-.8.8-2.9 3-2.5 4.9.2.7 8.8 2.2 13.8.1 3.9-1.7.5-3.6 1.6-5.5.8-1.4 2.8-1.4 3.7-2.6 1.5-2 .5-1.9 1.8-3.5 4.3-5.2 7.1-8.2 14.8-12.9.7-.4 2-1 2-1s1.1-.5 1.5-1.1c.5-.8.4-1.5.4-2.4 0-.6-.1-.9-.1-1.5 0-.7.1-1.1-.1-1.8-.2-1.1-.9-2-1.3-2.6-.4-.5-1.1-1.4-1.5-3.3-.5-1.9-.5-3.5.3-5.6s2.6-3.8 2.6-3.8l4.5-3s3.9-2.8 5.1-3.9c1.3-1.1 3.8-3.4 5.6-6 2.1-2.9 3.2-4.7 4.1-8.2.3-1.3.6-3.3.6-3.3s0-1.4.8-1.5 1 .2 1 .2.7.4.9 2.4c.1 2-.5 4.3-.5 4.3s-.6 2.3-.8 3.7c-.1.9-.1 1.4-.1 2.4 0 1.7.7 3.1.7 3.1s.4.3.4-.4c0-.8.2-2 .5-3.2.3-1 .5-.8 1.1-2.5.8-2.2.1-2 .5-3.3.2-.6.7-1.2 1.3-1.2s.7.8.7.8.6 2.6.1 5-2.3 5.7-2.3 5.7l-1.4 2.4s-1 1.7-1.4 2.8c-.4 1.2-.5 1.7-.3 2.8.3 1.2 1.2 2.8 1.7 2.5.4-.3-.6-1.3.6-3.7s2.8-3.9 2.8-3.9 2.2-2.6 3.2-4.6c.9-1.8 1.8-4.7 1.8-4.7s.7-2.6.5-4.8c-.1-2.1-.5-3.2-.5-3.2l-.9-1.6-.5-1.2.2-.7c.2-.1.9.4 1.5 1.2s1.2 1.8 1.5 3.2c.3 1 .4 1.9.4 2.8 0 .8-.3 4.1.9 6.2.5 1 1.7 3.3 1.8 2.3.2-2.3-.8-3.4-.7-5.5.1-2.4.7-1.8.9-3 .2-1.3.5-1.6.3-3.3-.2-1.6-.9-3.7-.9-3.7l-.7-1.6-.3-.6s.2-.3.5-.3l2.4-.8s3.1-1.4 4.3-2.4c1.3-.9 2.8-2.5 2.8-2.5s2-2.5 3-4.3c2.4-4.5 2.4-10.2 2.3-12.8-.1-2.5-.8-5.8-.8-5.8s-.8-4-.6-6.6.4-3.8.4-3.8-.1-2.6 2.1-5.4 3.2-4.6 3.6-6.7c.4-1.8-.2-4.7-1-3.6zm-66.2-18c-.3 0-.7-.4-.7-.4s-.1-.1.2-.3.7-.1.7-.1l.3.1.5.7c-.1.3-.7.1-1 0zm1.2-3.3c-.3-.1-.8-.4-.8-.4s-.1-.2.2-.4.8-.1.8-.1l.3.2c.1.1.6.6.6.8 0 .3-.7 0-1.1-.1zm1.1-3.4c-.4-.1-1-.5-1-.5s-.1-.2.3-.4 1-.1 1-.1l.4.2c.2.2.7.7.7 1-.1.3-1-.1-1.4-.2zm.9-3.1c-.4-.1-1-.5-1-.5s-.1-.2.3-.4 1-.1 1-.1l.4.2c.2.2.7.7.7 1-.1.2-1-.2-1.4-.2zm.9-3.7c-.5-.1-1.1-.6-1.1-.6s-.1-.2.3-.5 1.1-.1 1.1-.1l.4.2c.2.2.8.8.8 1.1 0 .4-1.1-.1-1.5-.1zm.6-4c-.6-.1-1.4-.7-1.4-.7s-.2-.3.4-.6c.5-.3 1.3-.2 1.3-.2l.5.3c.2.2.9 1 1 1.4 0 .4-1.2-.1-1.8-.2zm.4-4c-.7-.1-1.7-.9-1.7-.9s-.2-.3.4-.7 1.6-.2 1.6-.2.3.1.6.3c.3.3 1.1 1.2 1.2 1.7s-1.4-.1-2.1-.2zm.6-4.6c-.8-.1-1.9-1-1.9-1s-.2-.4.5-.8c.7-.5 1.8-.2 1.8-.2s.4.1.7.4 1.3 1.4 1.4 1.9c0 .6-1.7-.2-2.5-.3zm-.4-18.6c-.6-.1-1.4-.7-1.4-.7s-.2-.2.4-.5 1.4-.1 1.4-.1.3.1.5.3 1 .9 1 1.3c0 .3-1.3-.2-1.9-.3zm2.2 4.5c.1.4-1.3-.1-2-.2-.6-.1-1.5-.8-1.5-.8s-.2-.3.4-.6c.6-.4 1.4-.2 1.4-.2s.3.1.6.3c.3.3 1 1.1 1.1 1.5zm-2.9 7.4c.6-.4 1.6-.2 1.6-.2s.3.1.6.3c.3.3 1.1 1.2 1.2 1.7s-1.4-.1-2.1-.3c-.7-.1-1.7-.9-1.7-.9s-.2-.2.4-.6zm1.3-3.4c-.7-.1-1.7-.9-1.7-.9s-.2-.3.4-.7 1.6-.2 1.6-.2.3.1.6.3c.3.3 1.1 1.2 1.2 1.7.1.6-1.4 0-2.1-.2zm1.3-15c.8.2 1 .7.6.7-.4.1-.6.1-.9.1-.9 0-.8-.4-2 .2s-.3.3-2 .9c-1.6.6-1.2-1-1.2-1s.1-.3.3-1.1 1.2 0 1.9 0c1.3 0 2.4 0 3.3.2zm-4.5-6.2.5.3c.2.2.9 1 1 1.4s-1.2-.1-1.7-.2c-.6-.1-1.4-.7-1.4-.7s-.2-.3.4-.6c.5-.4 1.2-.2 1.2-.2zm-3.6-4.8c.5-.3 1.3-.2 1.3-.2l.5.3c.2.2.9 1 1 1.4s-1.2-.1-1.7-.2c-.6-.1-1.4-.7-1.4-.7s-.2-.3.3-.6zm-1 64.8c.3-.2.7-.1.7-.1l.3.1.5.7c0 .2-.6-.1-.9-.1s-.7-.4-.7-.4-.2-.1.1-.2zm-40.1-47.6c-.3.2-.5.3-.9.6-.5.4-1 1.4-1.3 1.1-.4-.3-.2-1.4-.2-1.4s.3-.8.7-1.6c.5-.8 1.1-.8 1.1-.8.6 0 1.7.4 1.7 1.3.1.9-.6.5-1.1.8zm8.2 3.1s-.4.1-.5-.6.5-.8.5-.8 1.2-.6 1.2.2c.1.7-1.2 1.2-1.2 1.2zm10.7-13.6s-1.3 2.1-3.1 2.9-3 1.2-6.4 1.5c-.5 0-.3-.3-.3-.3s3.9-1.1 6.1-2.3c1.2-.7 2.6-1.6 3-2 1.4-1.2.7.2.7.2zm-67.2 86.6c0 .5-.6 1.4-.8 1.4s-.6-.9-.5-1.4.2-1.9 1-1.7c.6.1.3 1.2.3 1.7zm2.6-11.3s-.9 1.9-1.2 1.1c-.3-.7.3-2 .3-2 .8-.7 1.1-1.7 1.5-1.3.3.4-.6 2.2-.6 2.2zm12.4-19.5c-.9 1-3.7 6.3-4.3 5.4-.6-.7 2.7-5.7 3.4-6.7.7-1.1 1.3-.9 1.3-.9l.2.2c-.1 0 .3 1-.6 2zm7.5-7.9s-2 .4-1.7-.3c.4-.7 1.8-1 1.8-1 1.1.2 1.3.3 1.2.8.1.5-1.3.5-1.3.5zm8.1 14c-.9.9-1.2-.3-2.5-1.8-1.3-1.4-1-2.6-1-2.6h.2l.2.1.5.2.3.3 1 1c.4.6 1.5 2.6 1.3 2.8zm-15.5 29.9c-.3 0-.6-.6-.6-.6s-.8-1.2-1.1-2.1c-.3-.8-.4-2.1-.4-2.1s-.2-1.7-.2-2.3c.1-.8.1-1.5.2-1.9s.5-.3.5-.3c.6 0 .6.5.6.5v.3s0 1.8.1 3.2c0 .4 1.1 4.9 1.1 4.9s.2.4-.2.4zm-.2-21c-.7 1.1-1.2 1.1-1.2 1.1 0-.1-.2-.5.4-1.7s1.2-1.1 1.2-1.1l.2.2s.1.4-.6 1.5zm7.1 41.9c.2-.4 1.5.6 1.5.6.5.1 1 1 1 1s.2.7-.4.9c-.6.3-1-.3-1-.3s-1.3-1.8-1.1-2.2zm9.4-30.6c-1.4-.3-4.4-2.6-5.6-3.2s-3.2-.8-2.3-1.6c.1-.1.2-.3.4-.3s1.1.3 1.1.3l2.2.9c.1 0 1.2.5 2.1 1 .8.5 2.2 1.4 2.2 1.4l.6.5c0 .2.7 1.3-.7 1zm12.2-19.9s-1.7 2.3-2.7 3.7c-1.3 1.9-2.9 4.8-3.2 4.5s1.4-3.5 2.3-5.2c1-2.1 2.5-3.2 3.1-3.4 1.3-.6.5.4.5.4zm-5.4 100.1s0 .4-.7.9-1 .2-1.1.2-.8-.4-.8-.8c.1-.4 1.2-.7 1.2-.7 1.9-.1 1.4.4 1.4.4zm15.5-.6c-.7-.1-.8-.3-.7-.4 0-.1.2-.3 1-.3s.8.4.8.4c0 .3-.3.4-1.1.3zm17.8 1c-1.5.4-2.1.2-3.4.3-1.1.1-1.6.2-2.7.2-1.9 0-2.1.1-4.8-.7-.5-.2-1.1-.8-.9-1 .2-.3.6-.2.6-.2s3.4.6 5.6.7c1.6.1 2.4.2 4 .1.9 0 .4-.1 1.8-.1.5-.1.2.6-.2.7zm9.5-2.8c-.1.1-.7.3-1.2.4-.6.1-.3-.4-.3-.4s.4-.6.9-.9c.6-.3.9 0 .9 0 .2.4-.2.8-.3.9zm7.4-19.2c-.7 1.5-.9 2-1 3.4-.2 1.5.7 5.7-.7 4.1-.5-.7-1-4-.6-5.6.7-3.6 3.6-4.6 2.3-1.9zm-20.2 61.1c-.6.4.6 1.6-1.3 1.5-1.1-.1-.5-1.1-.4-1.2l.7-1c.5-.7.8-.8 1.3-1.1s.9.5.9.5.2.3.2.7c0 .3-.9.2-1.4.6zm10.5-10.1-.9.7c-.1 0-.7.5-.9.2s.1-.7.1-.8.6-.8 1.1-1c.5-.3.8 0 .8 0 .3.7-.2.9-.2.9zm4.7-175.2s-.4 1.3-1.2 1.6c-1 .3-4.8.4-4.9.1s4.4-.7 6.1-2.4c.4-.4 0 .7 0 .7zm-1.4-3.3c.3-.5.1.8.1.8s-.3 1.3-1 1.7c-.9.5-3.1 1.1-3.3.8 0-.2 2.9-1.1 4.2-3.3zm-6.2-15s.4 0 1 .3c.6.4 1 1.6 1 1.6s.1.2-.4.2c-.3 0-.3-.5-.6-.7-.4-.3-.7-.4-1.2-.6s-1.2.1-1.3-.4c0-.6 1.5-.4 1.5-.4zm-4.6 3.3s.2-.6 1.1-1.1c.8-.5 1.9-.5 1.9-.5s.6 0 1.3.5 1.3 2.2 1.3 2.2.2 1.1-.3 1.5-1.3-.3-1.7-.9c-.5-.6-.8-.8-1.5-1-.8-.3-2 .6-2.2 0 0-.2.1-.7.1-.7zm-.3 13.8c-.6.1-.2-.5-.2-.5s1.7-.7 2.8-1.3c1.8-.9 5.2-4.5 4.3-2.8-.4.8-1.6 1.8-1.6 1.8s-1.4 2-1.7 2.3c-1.3 1-2.9.4-3.6.5zm-14.1 38.8.1-.2s3-2 7.7-1.4c2.8.4 5.5 2.9 5.1 3.2s-1 0-1.2 0l-1-.5-1.5-.4s-2.7-.6-4.7-.5-3.8.8-3.8.8-.8.4-1-.1c-.1-.6.3-.9.3-.9zm7.4 56.3c-6.9-5.3-15.3-16.1-14.3-17.1.9-.8 4.3 4.2 9.4 9.7 5.4 5.8 11.7 11.3 11.9 12 .4 1.2-4.4-2.6-7-4.6zm15.7-74.7c-2.9 5-6.9 8.8-6.9 8.8-1.4 1-.5-.8-.5-.8s3.9-5.4 5.7-9.2c1.3-2.7 2.1-6.3 2.7-7 1.4-1.7.7 5.2-1 8.2zm8 54.8c-3-3.6-5.2-7.5-5.9-12.4-.2-1.1-.2-2.7.8-2.5.9.1.8 1.8.8 2.2.3 2.9 1.5 5.8 3.7 9.3 3.1 4.9 8.1 8.7 7.9 9-.5.5-5.5-3.4-7.3-5.6zm.9 93.5c-1.7 1.6-4.6 3.8-4.6 3.8h-.4v-.5l.1-.2.2-.3.2-.3.2-.3.6-.7 1.4-1.3 1.4-1.3 2.2-2.2s.8-.9 1.1-1.1.5-.4.8-.6c.4-.2.9-.5 1.1-.3v.4c.1.3-2.5 3.2-4.3 4.9zm6.2-74c-1.3.9-1.8.8-2.6 1.7-.9 1.1-1.2 4.8-2.1 3.3s-.3-3.6 1.2-5.2c1.8-2.1 5.7-1.4 3.5.2zm4.7 65.8c.6-.2.9-.1.9-.1l.2.4c0 .1-.8 1.2-1.2 1.2-.5-.1-.3-.7-.3-.7s-.2-.6.4-.8zm17.1-40.7c-.9-.6.5-2.4.5-3.9 0-1.2-.2-2.1-.2-3.1s1-1.3 1-1.3c.2 0 .6.2 1.1 1.2s-.8 8.1-2.4 7.1zm30.6-28.6c-.2 4.2-.4 7.2-2.9 10.4-3 3.9-8.2 7.9-7.1 4.7.7-1.9 5.3-4.3 7.1-9.6 1-3.2 1.2-6.2 1.2-6.2l-.2-6.1s-.1-.5-.1-1.2c.3-.8.7-.2.7-.2l.2.3c0 .2 1.2 4.9 1.1 7.9z"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="comparison-titles" style="margin-top: 0.5rem;">
+                            <h3 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin: 0; letter-spacing: -0.02em;">Mechanical Craftsmanship</h3>
+                            <h4 style="font-size: 0.95rem; font-weight: 600; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Like Ferrari Engineering</h4>
+                        </div>
+                        <p style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); margin: 0; margin-top: 8px;">You expect structural power, meticulous assembly, and uncompromised detail as standard baseline traits, establishing immediate trust in the craftsmanship.</p>
+                        
+                        <!-- Subtle background visual details (like wireframe lines) -->
+                        <div class="card-bg-lines" style="position: absolute; bottom: 0; right: 0; opacity: 0.03; pointer-events: none; transform: translate(10px, 10px);">
+                            <svg width="150" height="150" viewBox="0 0 100 100">
+                                <rect x="15" y="15" width="70" height="70" rx="4" fill="none" stroke="currentColor" stroke-width="0.8" />
+                                <rect x="30" y="30" width="40" height="40" rx="2" fill="none" stroke="currentColor" stroke-width="0.5" />
+                                <line x1="0" y1="0" x2="100" y2="100" stroke="currentColor" stroke-width="0.5" />
+                                <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" stroke-width="0.5" />
+                            </svg>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="destination-vision glass-card reveal-text" style="border-radius: 24px; text-align: center; margin: 3.5rem auto; max-width: 750px; padding: 2.5rem 3rem; border: 1px solid rgba(27,42,207,0.1); background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); box-shadow: 0 20px 40px rgba(0,0,0,0.03);">
+                    <div class="glass-shine"></div>
+                    <p style="font-size: 1.15rem; font-weight: 500; line-height: 1.7; color: var(--text-primary); margin: 0; letter-spacing: -0.01em;">
+                        Our goal is to become the <span style="font-weight: 700; color: var(--accent-primary);">default choice</span> in marketing and communications, where clients seek out <span style="font-weight: 700; color: var(--accent-primary);">Candour</span> because <span style="font-weight: 700; color: var(--accent-orange);">excellence</span> is the standard.
+                    </p>
+                </div>
+                
+                <div class="destination-closing">
+                    <p class="reveal-text large-reveal-text">The agencies people remember in 2030 will not be the ones that generated the highest volume.</p>
+                    <p class="reveal-text large-reveal-text accent-text"><strong>They will be the ones that left the deepest impression.</strong></p>
+                </div>
+                <!-- Section Divider -->
+                <div class="section-divider">
+                    <div class="divider-badge">
+                        <span class="divider-diamond"></span>
+                        <span class="divider-dot"></span>
+                        <span class="divider-diamond"></span>
+                    </div>
+                </div>
+            </div></section>
+
+        <!-- SECTION 15 — CLOSING -->
+        <section id="section-closing" class="section section-closing">
+            <div class="section-inner">
+                <div class="section-label">11. Closing</div>
+                
+                <h2 class="closing-title reveal-text">THE CREATIVE ENGINE OF CANDOUR 2030</h2>
+                
+                <div class="closing-content">
+                    <p class="reveal-text large-reveal-text">We may not be able to predict exactly what 2030 looks like.</p>
+                    <p class="reveal-text">But we can decide what kind of creative organization we will be.</p>
+                </div>
+                
+                <div class="closing-choice reveal-text">
+                    <div class="choice-card glass-card choice-passive">
+                        <div class="glass-shine"></div>
+                        <p>One that keeps up with change.</p>
+                    </div>
+                    
+                    <div class="choice-divider">OR</div>
+                    
+                    <div class="choice-card glass-card choice-active">
+                        <div class="glass-shine"></div>
+                        <p>One that gives others something to <strong>catch up to</strong>.</p>
+                    </div>
+                </div>
+                
+                <div class="closing-tagline reveal-text">
+                    <p class="tagline">Creative-first. Future-ready.</p>
+                </div>
+                
+                <div class="closing-brand">
+                    <img src="assets/candour svg.svg" class="brand-logo-img" alt="Candour Logo">
+                    <span class="brand-year">2030</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Cinematic Fullscreen Video Modal Overlay -->
+    <div id="video-cinema-overlay" class="video-cinema-overlay">
+        <div class="cinema-backdrop"></div>
+        <button class="exit-cinema-btn">
+            <span>Exit Full Screen</span>
+            <span class="exit-icon">✕</span>
+        </button>
+        <div class="cinema-player-card">
+            <div class="video-header-bar">
+                <span class="dot-red"></span>
+                <span class="dot-yellow"></span>
+                <span class="dot-green"></span>
+                <span class="bar-title">Introducing Candour Creative Engine (Cinematic Mode)</span>
+            </div>
+            <div class="cinema-video-frame">
+                <!-- Canvas will be dynamically appended here when active -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Fullscreen Modal Overlay (Light Mode & Frosted Glass Optimized) -->
+    <div id="comparison-cinema-overlay" class="comparison-cinema-overlay">
+        <div class="cinema-backdrop"></div>
+        <button class="exit-comparison-btn">
+            <span>Close Comparison</span>
+            <span class="exit-icon">✕</span>
+        </button>
+        <div class="comparison-modal-card glass-card">
+            <div class="comparison-modal-header">
+                <h3 id="comparison-modal-title">Design Facelift</h3>
+                <p id="comparison-modal-desc" class="description">Visual cleanup, modern fonts, clean alignment, and refined color balance.</p>
+            </div>
+            <div class="comparison-modal-body">
+                <div class="comparison-large-grid">
+                    <div class="comparison-large-item">
+                        <div class="comparison-large-media">
+                            <img id="comparison-img-before" src="" alt="Before">
+                            <span class="comparison-badge before-badge" id="comparison-badge-before">Legacy Design</span>
+                        </div>
+                    </div>
+                    <div class="comparison-large-item">
+                        <div class="comparison-large-media">
+                            <img id="comparison-img-after" src="" alt="After">
+                            <span class="comparison-badge after-badge" id="comparison-badge-after">Modernized</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Logic -->
+    <script src="script.js?v=4.28" defer></script>
+</body>
+</html>

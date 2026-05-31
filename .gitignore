@@ -1,0 +1,4 @@
+# Backups and temporary files
+*.bak
+*.tmp
+*.temp

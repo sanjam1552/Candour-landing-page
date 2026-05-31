@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candour 2030 — Asset Manager Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-blue: #2563eb;
+            --accent-orange: #ea580c;
+            --border-color: rgba(15, 23, 42, 0.06);
+            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.03);
+            --shadow-md: 0 12px 24px -4px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 20px 32px -8px rgba(15, 23, 42, 0.08);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Spotlight Header background */
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 380px;
+            background: radial-gradient(circle 800px at 50% -100px, rgba(37, 99, 235, 0.05), transparent 80%),
+                        radial-gradient(circle 400px at 90% 100px, rgba(234, 88, 12, 0.03), transparent 70%);
+            border-bottom: 1px solid var(--border-color);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 5rem;
+        }
+
+        /* Top Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .brand-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 1.7rem;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-badge {
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--accent-blue);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(37, 99, 235, 0.12);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 12px 24px;
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(15, 23, 42, 0.15);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: #ffffff;
+            border-color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-outline {
+            border: 1.5px solid var(--accent-blue);
+            color: var(--accent-blue);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(37, 99, 235, 0.05);
+            border-color: var(--accent-blue);
+        }
+
+        /* Stats Panel */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 2.5rem;
+        }
+
+        .info-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            max-width: 650px;
+        }
+
+        /* Cleanup Widget styling */
+        .cleanup-panel {
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.01), rgba(234, 88, 12, 0.03));
+            border-color: rgba(234, 88, 12, 0.15);
+        }
+
+        .cleanup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .cleanup-count {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-orange);
+            line-height: 1;
+        }
+
+        .cleanup-list {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            max-height: 55px;
+            overflow-y: auto;
+            margin: 10px 0 16px;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .cleanup-tag {
+            background: rgba(234, 88, 12, 0.08);
+            border: 1px solid rgba(234, 88, 12, 0.15);
+            color: var(--accent-orange);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .btn-cleanup {
+            border: 1px solid var(--accent-orange);
+            color: var(--accent-orange);
+            background: transparent;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            border-radius: 100px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-cleanup:hover:not(:disabled) {
+            background: var(--accent-orange);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .btn-cleanup:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+        }
+
+        /* Slots Grid Section */
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+        }
+
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        /* Individual Card Slot */
+        .slot-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .slot-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(37, 99, 235, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .slot-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .slot-section {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .slot-status-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 2px 8px;
+            border-radius: 100px;
+        }
+
+        .status-linked {
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+            color: #15803d;
+        }
+
+        .status-missing {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            color: #b91c1c;
+        }
+
+        /* Image Preview Box */
+        .preview-box {
+            height: 180px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #f1f5f9;
+            border: 1px solid var(--border-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+
+        .slot-card:hover .preview-img {
+            transform: scale(1.02);
+        }
+
+        .preview-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-icon {
+            font-size: 2.2rem;
+            opacity: 0.6;
+        }
+
+        /* Upload Overlay / Drag-and-drop target */
+        .dropzone-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-md);
+            background: rgba(37, 99, 235, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #ffffff;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10;
+        }
+
+        .slot-card.drag-over .dropzone-overlay {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .dropzone-icon {
+            font-size: 3rem;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Details */
+        .slot-details {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+        }
+
+        .detail-value {
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .filename-code {
+            font-family: monospace;
+            background: #f1f5f9;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+        }
+
+        /* Action Buttons */
+        .card-actions {
+            margin-top: auto;
+            position: relative;
+        }
+
+        .upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn-upload {
+            width: 100%;
+            justify-content: center;
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .slot-card:hover .btn-upload {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .btn-upload:hover {
+            background-color: rgba(37, 99, 235, 0.04);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background-color: #f1f5f9;
+            border-radius: 100px;
+            overflow: hidden;
+            display: none;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-blue);
+            transition: width 0.2s;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 10000;
+        }
+
+        .toast {
+            background: #ffffff;
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 16px 20px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success {
+            border-left-color: #22c55e;
+        }
+
+        .toast-error {
+            border-left-color: #ef4444;
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-bg"></div>
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <div class="brand-meta">
+                <div class="brand-logo">CANDOUR</div>
+                <div class="brand-badge">2030 Presentation</div>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" target="_blank" class="btn btn-outline">
+                    <span>Open Presentation Site</span>
+                    <span>↗</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Stats and Tools Grid -->
+        <div class="stats-grid">
+            <div class="info-card">
+                <div>
+                    <h2>Asset Manager Panel</h2>
+                    <p style="margin-top: 6px;">Welcome! This control dashboard lets you visual-manage the images used in your offsite presentation. Drag and drop any new photo or logo onto the slots below to replace them instantly on the site. No filename changes required.</p>
+                </div>
+                <div style="display: flex; gap: 16px; margin-top: 20px;">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                        <strong style="color: var(--text-primary); font-family: 'Outfit'; font-size: 1.1rem; display: block;" id="total-slots">13</strong> Image Slots
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); border-left: 1px solid var(--border-color); padding-left: 16px;">
+                        <strong style="color: var(--text-primary); font-family: 'Outfit'; font-size: 1.1rem; display: block;" id="active-slots">0</strong> Configured
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cleanup Widget -->
+            <div class="info-card cleanup-panel">
+                <div class="cleanup-header">
+                    <div>
+                        <h2>Folder Cleanup</h2>
+                        <p style="font-size: 0.85rem; margin-top: 4px;">Unused files inside the <code style="font-family: monospace;">assets/</code> folder.</p>
+                    </div>
+                    <div class="cleanup-count" id="unused-count">0</div>
+                </div>
+                <ul class="cleanup-list" id="unused-list">
+                    <!-- Loaded dynamically -->
+                </ul>
+                <div>
+                    <button class="btn-cleanup" id="btn-cleanup" disabled onclick="cleanupAssets()">
+                        <span>Clean Unused Assets</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main section -->
+        <div class="section-title">
+            <span class="section-title-dot"></span>
+            <h2>Active Presentation Slots</h2>
+        </div>
+
+        <div class="slots-grid" id="slots-container">
+            <!-- Loading indicator or dynamic slot cards go here -->
+        </div>
+
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        let slotsData = [];
+
+        // Init page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSlots();
+            fetchUnused();
+        });
+
+        // Load active slots from Server API
+        async function fetchSlots() {
+            try {
+                const response = await fetch('/api/slots');
+                slotsData = await response.json();
+                renderSlots();
+            } catch (error) {
+                console.error("Error fetching slots:", error);
+                showToast("Error communicating with Python server. Is it running?", "error");
+            }
+        }
+
+        // Load unused assets from Server API
+        async function fetchUnused() {
+            try {
+                const response = await fetch('/api/unused');
+                const unused = await response.json();
+                
+                const countEl = document.getElementById('unused-count');
+                const listEl = document.getElementById('unused-list');
+                const btnEl = document.getElementById('btn-cleanup');
+                
+                countEl.textContent = unused.length;
+                listEl.innerHTML = '';
+                
+                if (unused.length > 0) {
+                    btnEl.removeAttribute('disabled');
+                    unused.forEach(file => {
+                        const li = document.createElement('li');
+                        li.className = 'cleanup-tag';
+                        li.textContent = file;
+                        listEl.appendChild(li);
+                    });
+                } else {
+                    btnEl.setAttribute('disabled', 'true');
+                    const li = document.createElement('li');
+                    li.style.color = 'var(--text-muted)';
+                    li.textContent = "Folder is completely clean!";
+                    listEl.appendChild(li);
+                }
+            } catch (error) {
+                console.error("Error fetching unused assets:", error);
+            }
+        }
+
+        // Render card layouts
+        function renderSlots() {
+            const container = document.getElementById('slots-container');
+            container.innerHTML = '';
+            
+            let activeCount = 0;
+            
+            slotsData.forEach(slot => {
+                if (slot.exists) activeCount++;
+                
+                const card = document.createElement('div');
+                card.className = `slot-card ${slot.exists ? '' : 'missing'}`;
+                card.id = `card-${slot.id}`;
+                
+                // Add cache buster query string to image path to force browser reload on updates
+                const imagePath = `assets/${slot.filename}?t=${new Date().getTime()}`;
+                
+                const statusBadge = slot.exists 
+                    ? `<span class="slot-status-badge status-linked">Configured</span>`
+                    : `<span class="slot-status-badge status-missing">No Image (Fallback Active)</span>`;
+
+                const previewContent = slot.exists
+                    ? `<img src="${imagePath}" class="preview-img" alt="${slot.name}">`
+                    : `<div class="preview-placeholder">
+                         <span class="preview-icon">🖼️</span>
+                         <span>No image loaded</span>
+                       </div>`;
+
+                card.innerHTML = `
+                    <div class="dropzone-overlay">
+                        <span class="dropzone-icon">📥</span>
+                        <strong style="font-family: 'Outfit'; font-size: 1.1rem;">Release to Upload</strong>
+                        <span style="font-size: 0.8rem; opacity: 0.8;">Overwrites ${slot.filename}</span>
+                    </div>
+                    
+                    <div class="card-header">
+                        <div>
+                            <h3 class="slot-name">${slot.name}</h3>
+                            <span class="slot-section">${slot.section}</span>
+                        </div>
+                        ${statusBadge}
+                    </div>
+                    
+                    <div class="preview-box" id="preview-box-${slot.id}">
+                        ${previewContent}
+                    </div>
+                    
+                    <div class="slot-details">
+                        <div class="detail-row">
+                            <span class="detail-label">File Name:</span>
+                            <span class="detail-value filename-code">${slot.filename}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Recommended:</span>
+                            <span class="detail-value" style="font-weight: 600;">${slot.recommend}</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; line-height: 1.4;">${slot.desc}</p>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="btn btn-upload">Choose Image File</button>
+                        <input type="file" class="upload-input" accept="image/*,.svg" onchange="handleFileSelect(event, '${slot.filename}', '${slot.id}')">
+                    </div>
+                    <div class="progress-bar-container" id="progress-${slot.id}">
+                        <div class="progress-fill" id="progress-fill-${slot.id}"></div>
+                    </div>
+                `;
+                
+                setupDragAndDrop(card, slot.filename, slot.id);
+                container.appendChild(card);
+            });
+            
+            document.getElementById('total-slots').textContent = slotsData.length;
+            document.getElementById('active-slots').textContent = activeCount;
+        }
+
+        // Set up HTML5 drag and drop events for the card
+        function setupDragAndDrop(card, filename, slotId) {
+            ['dragenter', 'dragover'].forEach(eventName => {
+                card.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    card.classList.add('drag-over');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                card.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    card.classList.remove('drag-over');
+                }, false);
+            });
+
+            card.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    uploadFile(files[0], filename, slotId);
+                }
+            }, false);
+        }
+
+        // File picker listener
+        function handleFileSelect(e, filename, slotId) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                uploadFile(files[0], filename, slotId);
+            }
+        }
+
+        // Upload handler using AJAX + Base64 JSON POST
+        function uploadFile(file, filename, slotId) {
+            const progressBar = document.getElementById(`progress-${slotId}`);
+            const progressFill = document.getElementById(`progress-fill-${slotId}`);
+            
+            progressBar.style.display = 'block';
+            progressFill.style.width = '20%';
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            
+            reader.onload = async function () {
+                progressFill.style.width = '50%';
+                
+                const base64Data = reader.result;
+                const payload = {
+                    filename: filename,
+                    data: base64Data
+                };
+
+                try {
+                    const response = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        progressFill.style.width = '100%';
+                        setTimeout(() => {
+                            progressBar.style.display = 'none';
+                            showToast(`Successfully uploaded ${filename}!`, "success");
+                            // Reload slot data and re-render slots
+                            fetchSlots();
+                            fetchUnused();
+                        }, 400);
+                    } else {
+                        throw new Error("Upload failed");
+                    }
+                } catch (error) {
+                    progressBar.style.display = 'none';
+                    showToast(`Error uploading ${filename}`, "error");
+                    console.error(error);
+                }
+            };
+
+            reader.onerror = function (error) {
+                progressBar.style.display = 'none';
+                showToast("Error reading file data", "error");
+                console.error(error);
+            };
+        }
+
+        // Cleanup unused folder images API trigger
+        async function cleanupAssets() {
+            if (!confirm("Are you sure you want to clean up unused assets? This will permanently delete extra images in your assets/ folder.")) return;
+            
+            try {
+                const response = await fetch('/api/cleanup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showToast(`Cleaned up assets! Deleted ${result.deleted.length} files.`, "success");
+                    fetchUnused();
+                } else {
+                    showToast("Cleanup operation failed", "error");
+                }
+            } catch (error) {
+                showToast("Error communicating during cleanup", "error");
+                console.error(error);
+            }
+        }
+
+        // Show a custom Toast notification
+        function showToast(message, type = "success") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            
+            const icon = type === "success" ? "✓" : "✕";
+            toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation frame to sliding in
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remove toast after delay
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
