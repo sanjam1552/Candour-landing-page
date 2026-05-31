@@ -4262,3 +4262,22 @@ button:focus-visible {
 .expanded-comparison {
   display: none !important;
 }
+
+/* Dashboard Demo Card (Link Banner) Hover Effect */
+a.dashboard-demo-card {
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease !important;
+}
+
+a.dashboard-demo-card:hover {
+  transform: translateY(-5px) scale(1.01) !important;
+  border-color: rgba(27, 42, 207, 0.35) !important;
+  box-shadow: 
+    0 25px 60px rgba(27, 42, 207, 0.08),
+    0 8px 20px rgba(13, 12, 27, 0.02),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+a.dashboard-demo-card:active {
+  transform: translateY(-2px) scale(0.99) !important;
+}
+
