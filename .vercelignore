@@ -1,0 +1,5 @@
+# Exclude local management tools and scripts from Vercel deployment
+manage_assets.py
+dashboard.html
+scratch/
+*.py
