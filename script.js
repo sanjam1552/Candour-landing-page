@@ -1917,7 +1917,8 @@ function startExperience() {
       if (ytId) {
         // Create YouTube iframe player
         videoElement = document.createElement('iframe');
-        videoElement.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+        videoElement.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&rel=0`;
+        videoElement.referrerPolicy = "strict-origin-when-cross-origin";
         videoElement.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
         videoElement.allowFullscreen = true;
         videoElement.style.border = "none";
