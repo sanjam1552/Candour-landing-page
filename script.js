@@ -7,6 +7,11 @@
 function startExperience() {
   'use strict';
 
+  // Force page scroll to top on fresh load/reload and prevent browser restoration
+  if (window.history.scrollRestoration) {
+    window.history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
 
   // Lock body scrolling during load
   document.body.style.overflow = 'hidden';
@@ -58,6 +63,9 @@ function startExperience() {
       lenisInstance.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+
+    // Force scroll to top on initialization to prevent scroll restoration jumps
+    lenisInstance.scrollTo(0, { immediate: true });
 
     return lenisInstance;
   }
@@ -156,6 +164,7 @@ function startExperience() {
   // ─────────────────────────────────────────────
   function initScrollAnimations() {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    ScrollTrigger.clearScrollMemory();
 
     // Staggered character reveals are now handled separately by initTextReveals() to allow high-end letter blur-ins.
 
