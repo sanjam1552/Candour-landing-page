@@ -96,9 +96,9 @@ body {
   height: 700px;
   background: radial-gradient(
     circle,
-    var(--spotlight-color-1, rgba(27, 42, 207, 0.16)) 0%,
-    var(--spotlight-color-2, rgba(234, 88, 12, 0.08)) 40%,
-    transparent 85%
+    var(--spotlight-color-1, rgba(162, 63, 135, 0.10)) 0%,
+    var(--spotlight-color-2, rgba(234, 88, 12, 0.05)) 40%,
+    transparent 75%
   );
   pointer-events: none;
   z-index: -1;
@@ -114,7 +114,7 @@ body {
   bottom: -40px;
   z-index: -2;
   pointer-events: none;
-  transform: translate3d(var(--bg-shift-x, 0px), var(--bg-shift-y, 0px), 0px);
+  transform: translate3d(0px, 0px, 0px);
   will-change: transform;
   
   /* Static mask of the background grid pattern */
@@ -133,15 +133,15 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 500px;
-  height: 500px;
-  /* Toned down subtle radial gradient of our blue and orange */
+  width: 600px;
+  height: 600px;
+  /* Toned down subtle radial gradient of our pink and orange with faded outer feathering */
   background: radial-gradient(
     circle,
-    rgba(27, 42, 207, 0.45) 0%,
-    rgba(234, 88, 12, 0.35) 45%,
-    rgba(27, 42, 207, 0.05) 70%,
-    transparent 100%
+    rgba(162, 63, 135, 0.22) 0%,
+    rgba(234, 88, 12, 0.15) 35%,
+    rgba(162, 63, 135, 0.02) 60%,
+    transparent 80%
   );
   pointer-events: none;
   will-change: transform;
@@ -339,6 +339,14 @@ button {
 }
 
 .nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--accent-primary);
+}
+
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -2620,6 +2628,20 @@ button {
 
   .slider-card {
     width: 90vw; /* Fit card width on small tablet */
+  }
+}
+
+@media (max-width: 1024px) {
+  .glass-nav {
+    padding: 10px 20px;
+    gap: 20px;
+  }
+  .nav-links {
+    gap: 16px;
+  }
+  .nav-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
   }
 }
 

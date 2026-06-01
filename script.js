@@ -80,9 +80,6 @@ function startExperience() {
     const gridGlowSpotlight = document.getElementById('grid-glow-spotlight');
     if (!follower || !dot) return;
 
-    const bgPattern = document.querySelector('.bg-pattern');
-    const bgGridGlow = document.querySelector('.bg-grid-glow');
-
     let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2;
     let currentFollowerX = targetX, currentFollowerY = targetY;
     let currentDotX = targetX, currentDotY = targetY;
@@ -91,14 +88,6 @@ function startExperience() {
     document.addEventListener('mousemove', (e) => {
       targetX = e.clientX;
       targetY = e.clientY;
-
-      // Calculate background parallax drift (-12px to 12px)
-      const shiftX = (e.clientX / window.innerWidth - 0.5) * -24;
-      const shiftY = (e.clientY / window.innerHeight - 0.5) * -24;
-
-      const transformString = `translate3d(${shiftX}px, ${shiftY}px, 0px)`;
-      if (bgPattern) bgPattern.style.transform = transformString;
-      if (bgGridGlow) bgGridGlow.style.transform = transformString;
     });
 
     function updateCursor() {
@@ -116,7 +105,7 @@ function startExperience() {
         spotlight.style.transform = `translate3d(${currentSpotlightX}px, ${currentSpotlightY}px, 0px) translate(-50%, -50%)`;
       }
       if (gridGlowSpotlight) {
-        gridGlowSpotlight.style.transform = `translate3d(${currentSpotlightX + 40 - 250}px, ${currentSpotlightY + 40 - 250}px, 0px)`;
+        gridGlowSpotlight.style.transform = `translate3d(${currentSpotlightX + 40 - 300}px, ${currentSpotlightY + 40 - 300}px, 0px)`;
       }
 
       requestAnimationFrame(updateCursor);
@@ -1116,20 +1105,20 @@ function startExperience() {
     const sections = document.querySelectorAll('section');
     const spotlight = document.getElementById('bg-spotlight');
     
-    // HSL/RGB colors tailored to each slide
+    // HSL/RGB colors tailored to each slide (Toned down opacity values & Blue replaced with Pink #a23f87)
     const sectionColors = {
-      'section-hero': ['rgba(27, 42, 207, 0.16)', 'rgba(234, 88, 12, 0.08)'],
-      'section-question': ['rgba(27, 42, 207, 0.16)', 'rgba(234, 88, 12, 0.08)'],
-      'section-shift': ['rgba(244, 63, 94, 0.16)', 'rgba(236, 72, 153, 0.08)'],
-      'section-challenge': ['rgba(244, 63, 94, 0.16)', 'rgba(236, 72, 153, 0.08)'],
-      'section-engine': ['rgba(234, 88, 12, 0.16)', 'rgba(249, 115, 22, 0.08)'],
-      'section-memory': ['rgba(234, 88, 12, 0.16)', 'rgba(249, 115, 22, 0.08)'],
-      'section-scaling': ['rgba(168, 85, 247, 0.16)', 'rgba(99, 102, 241, 0.08)'],
-      'section-culture': ['rgba(168, 85, 247, 0.16)', 'rgba(99, 102, 241, 0.08)'],
-      'section-labs': ['rgba(16, 185, 129, 0.16)', 'rgba(14, 165, 233, 0.08)'],
-      'section-demo': ['rgba(27, 42, 207, 0.16)', 'rgba(79, 70, 229, 0.08)'],
-      'section-destination': ['rgba(27, 42, 207, 0.16)', 'rgba(79, 70, 229, 0.08)'],
-      'section-closing': ['rgba(99, 102, 241, 0.16)', 'rgba(168, 85, 247, 0.08)']
+      'section-hero': ['rgba(162, 63, 135, 0.10)', 'rgba(234, 88, 12, 0.05)'],
+      'section-question': ['rgba(162, 63, 135, 0.10)', 'rgba(234, 88, 12, 0.05)'],
+      'section-shift': ['rgba(244, 63, 94, 0.10)', 'rgba(236, 72, 153, 0.05)'],
+      'section-challenge': ['rgba(244, 63, 94, 0.10)', 'rgba(236, 72, 153, 0.05)'],
+      'section-engine': ['rgba(234, 88, 12, 0.10)', 'rgba(249, 115, 22, 0.05)'],
+      'section-memory': ['rgba(234, 88, 12, 0.10)', 'rgba(249, 115, 22, 0.05)'],
+      'section-scaling': ['rgba(168, 85, 247, 0.10)', 'rgba(99, 102, 241, 0.05)'],
+      'section-culture': ['rgba(168, 85, 247, 0.10)', 'rgba(99, 102, 241, 0.05)'],
+      'section-labs': ['rgba(16, 185, 129, 0.10)', 'rgba(14, 165, 233, 0.05)'],
+      'section-demo': ['rgba(162, 63, 135, 0.10)', 'rgba(79, 70, 229, 0.05)'],
+      'section-destination': ['rgba(162, 63, 135, 0.10)', 'rgba(79, 70, 229, 0.05)'],
+      'section-closing': ['rgba(99, 102, 241, 0.10)', 'rgba(168, 85, 247, 0.05)']
     };
     
     if (!spotlight) return;
@@ -1137,7 +1126,7 @@ function startExperience() {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const colors = sectionColors[entry.target.id] || ['rgba(27, 42, 207, 0.05)', 'rgba(79, 70, 229, 0.02)'];
+          const colors = sectionColors[entry.target.id] || ['rgba(162, 63, 135, 0.03)', 'rgba(79, 70, 229, 0.01)'];
           spotlight.style.setProperty('--spotlight-color-1', colors[0]);
           spotlight.style.setProperty('--spotlight-color-2', colors[1]);
         }
