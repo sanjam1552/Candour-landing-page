@@ -520,6 +520,17 @@ function startExperience() {
         }
       });
     }
+
+    const exploreBtn = document.getElementById('explore-btn');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById('live-demo-card');
+        if (target && lenisInstance) {
+          lenisInstance.scrollTo(target, { offset: -100, duration: 1.2 });
+        }
+      });
+    }
   }
 
   // ─────────────────────────────────────────────
