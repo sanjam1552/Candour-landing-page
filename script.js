@@ -2183,7 +2183,14 @@ function startExperience() {
     let width = canvas.width = container ? container.offsetWidth || 500 : 500;
     let height = canvas.height = container ? container.offsetHeight || 420 : 420;
     
-    let mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2, active: false };
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    
+    let targetPitch = 0.15; // Natural baseline tilt
+    let targetYaw = -0.3;   // Initial angle showing 3D depth
+    
+    let currentPitch = 0.15;
+    let currentYaw = -0.3;
     
     function resize() {
       if (!canvas || !container) return;
@@ -2192,20 +2199,52 @@ function startExperience() {
     }
     window.addEventListener('resize', resize);
     
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.targetX = e.clientX - rect.left;
-      mouse.targetY = e.clientY - rect.top;
-      mouse.active = true;
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
     });
     
-    canvas.addEventListener('mouseleave', () => {
-      mouse.active = false;
-      mouse.targetX = width / 2;
-      mouse.targetY = height / 2;
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        isDragging = true;
+        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    }, { passive: true });
+    
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - previousMousePosition.x;
+      const deltaY = e.clientY - previousMousePosition.y;
+      
+      targetYaw += deltaX * 0.008;
+      targetPitch += deltaY * 0.008;
+      
+      // Clamp pitch to prevent turning fully upside down
+      targetPitch = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, targetPitch));
+      
+      previousMousePosition = { x: e.clientX, y: e.clientY };
     });
     
-    // Neural flow nodes drifting in background
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length === 0) return;
+      const deltaX = e.touches[0].clientX - previousMousePosition.x;
+      const deltaY = e.touches[0].clientY - previousMousePosition.y;
+      
+      targetYaw += deltaX * 0.008;
+      targetPitch += deltaY * 0.008;
+      
+      targetPitch = Math.max(-Math.PI / 2.2, Math.min(Math.PI / 2.2, targetPitch));
+      
+      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }, { passive: true });
+    
+    const stopDragging = () => {
+      isDragging = false;
+    };
+    window.addEventListener('mouseup', stopDragging);
+    window.addEventListener('touchend', stopDragging);
+    
+    // Background neural/grid nodes for connection blueprint
     const neuralNodes = [];
     for (let i = 0; i < 20; i++) {
       neuralNodes.push({
@@ -2213,230 +2252,539 @@ function startExperience() {
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.4,
         vy: (Math.random() - 0.5) * 0.4,
-        size: 1 + Math.random() * 2,
+        size: 1 + Math.random() * 1.5,
         color: Math.random() > 0.4 ? 'rgba(27, 42, 207, ' : 'rgba(234, 88, 12, '
       });
     }
 
-    // Mathematically accurate gear drawing function with 3D metal/gold/obsidian bevels and thickness
-    function draw3DGear(ctx, x, y, radius, teeth, rotationAngle, type) {
-      const toothDepth = radius * 0.14;
-      const angleStep = (Math.PI * 2) / teeth;
+    // 3D Perspective Projection helper
+    function project3D(x, y, z, pitch, yaw) {
+      // 1. Rotate around Y-axis (yaw)
+      const cosY = Math.cos(yaw);
+      const sinY = Math.sin(yaw);
+      const x1 = x * cosY + z * sinY;
+      const y1 = y;
+      const z1 = -x * sinY + z * cosY;
+
+      // 2. Rotate around X-axis (pitch)
+      const cosX = Math.cos(pitch);
+      const sinX = Math.sin(pitch);
+      const x2 = x1;
+      const y2 = y1 * cosX - z1 * sinX;
+      const z2 = y1 * sinX + z1 * cosX;
+
+      // 3. Perspective projection
+      const cameraDistance = 1350;
+      const scale = cameraDistance / (cameraDistance - z2);
+      return {
+        x: x2 * scale,
+        y: y2 * scale,
+        z: z2,
+        scale: scale
+      };
+    }
+
+    // Mathematically accurate 3D gear drawing function with blueprint vectors and solid shaded sides
+    function draw3DGear(ctx, gx, gy, radius, teeth, rotationAngle, type, pitch, yaw, cx, cy) {
+      const toothDepth = radius * 0.13;
+      const numSamples = teeth * 4;
       const innerRadius = radius * 0.55;
-
-      // Helper path function relative to gear center
-      function pathGear(rot) {
-        ctx.beginPath();
-        for (let i = 0; i < teeth; i++) {
-          const angle = i * angleStep + rot;
-          
-          const x1 = Math.cos(angle - angleStep * 0.22) * radius;
-          const y1 = Math.sin(angle - angleStep * 0.22) * radius;
-          const x2 = Math.cos(angle + angleStep * 0.22) * radius;
-          const y2 = Math.sin(angle + angleStep * 0.22) * radius;
-          
-          const x3 = Math.cos(angle + angleStep * 0.35) * (radius - toothDepth);
-          const y3 = Math.sin(angle + angleStep * 0.35) * (radius - toothDepth);
-          const x4 = Math.cos(angle - angleStep * 0.35) * (radius - toothDepth);
-          const y4 = Math.sin(angle - angleStep * 0.35) * (radius - toothDepth);
-          
-          if (i === 0) {
-            ctx.moveTo(x1, y1);
-          } else {
-            ctx.lineTo(x1, y1);
-          }
-          ctx.lineTo(x2, y2);
-          ctx.lineTo(x3, y3);
-          ctx.lineTo(x4, y4);
-        }
-        ctx.closePath();
-      }
-
-      ctx.save();
-      ctx.translate(x, y);
       
-      // 1. Draw 3D side extrusion (thickness) in screen space (downwards shadow look)
-      const extrudeDepth = 6;
-      ctx.fillStyle = type === 'chrome' ? '#374151' : (type === 'copper' ? '#7c2d12' : '#0f172a');
-      for (let h = extrudeDepth; h > 0; h--) {
-        ctx.save();
-        ctx.translate(h * 0.25, h * 0.6); // extrude down-right
-        pathGear(rotationAngle);
-        // Cut out inner structure to keep spokes and hubs hollow
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.beginPath();
-        ctx.arc(0, 0, innerRadius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.fill();
-        ctx.restore();
-      }
-      
-      // 2. Setup Top Face Gradient and colors
-      let baseGrad = ctx.createLinearGradient(-radius, -radius, radius, radius);
+      const thickness = type === 'chrome' ? 36 : (type === 'indigo' ? 28 : 20);
       let strokeColor = '';
       
-      if (type === 'chrome') { // Silver/Platinum (Main Cog)
-        baseGrad.addColorStop(0, '#f9fafb');
-        baseGrad.addColorStop(0.3, '#d1d5db');
-        baseGrad.addColorStop(0.7, '#9ca3af');
-        baseGrad.addColorStop(1, '#4b5563');
-        strokeColor = '#9ca3af';
-      } else if (type === 'copper') { // Copper/Rose Gold (Medium Cog)
-        baseGrad.addColorStop(0, '#ffedd5');
-        baseGrad.addColorStop(0.3, '#fed7aa');
-        baseGrad.addColorStop(0.7, '#f97316');
-        baseGrad.addColorStop(1, '#c2410c');
-        strokeColor = '#ea580c';
-      } else { // Obsidian/Dark Slate (Small Cog)
-        baseGrad.addColorStop(0, '#94a3b8');
-        baseGrad.addColorStop(0.3, '#475569');
-        baseGrad.addColorStop(0.7, '#334155');
-        baseGrad.addColorStop(1, '#0f172a');
-        strokeColor = '#334155';
+      if (type === 'chrome') {
+        strokeColor = 'rgba(27, 42, 207, '; // Indigo
+      } else if (type === 'indigo') {
+        strokeColor = 'rgba(79, 70, 229, '; // Vivid Indigo
+      } else {
+        strokeColor = 'rgba(168, 85, 247, '; // Violet
       }
       
-      // 3. Draw top face (rotated)
-      ctx.save();
-      ctx.rotate(rotationAngle);
+      const frontPts = [];
+      const backPts = [];
+      const frontInnerPts = [];
+      const backInnerPts = [];
       
-      // Drop Shadow for 3D depth relative to the whole assembly, dynamically shifting with mouse
-      ctx.shadowColor = 'rgba(13, 12, 27, 0.16)';
-      ctx.shadowBlur = 12;
-      ctx.shadowOffsetX = 3 - dx * 8; // shadow shifts opposite to tilt
-      ctx.shadowOffsetY = 6 - dy * 8;
-      
-      pathGear(0);
-      ctx.fillStyle = baseGrad;
-      ctx.fill();
-      
-      // Reset shadow for outline
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 0;
-      
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = 1.5;
+      // 1. Generate and project 3D vertices of the gear perimeter (outer and inner)
+      for (let i = 0; i < numSamples; i++) {
+        const angle = (i * Math.PI * 2) / numSamples + rotationAngle;
+        const k = i % 4;
+        const r = (k === 0 || k === 1) ? radius : (radius - toothDepth);
+        
+        const lx = Math.cos(angle) * r;
+        const ly = Math.sin(angle) * r;
+        
+        const pFront = project3D(gx + lx - cx, gy + ly - cy, thickness / 2, pitch, yaw);
+        frontPts.push({ x: cx + pFront.x, y: cy + pFront.y, scale: pFront.scale });
+        
+        const pBack = project3D(gx + lx - cx, gy + ly - cy, -thickness / 2, pitch, yaw);
+        backPts.push({ x: cx + pBack.x, y: cy + pBack.y, scale: pBack.scale });
+
+        // Inner circle coordinates
+        const ilx = Math.cos(angle) * innerRadius;
+        const ily = Math.sin(angle) * innerRadius;
+
+        const pFrontInner = project3D(gx + ilx - cx, gy + ily - cy, thickness / 2, pitch, yaw);
+        frontInnerPts.push({ x: cx + pFrontInner.x, y: cy + pFrontInner.y });
+
+        const pBackInner = project3D(gx + ilx - cx, gy + ily - cy, -thickness / 2, pitch, yaw);
+        backInnerPts.push({ x: cx + pBackInner.x, y: cy + pBackInner.y });
+      }
+
+
+      // 2. Draw Back Face Outlines (Outer and Inner)
+      ctx.beginPath();
+      ctx.moveTo(backPts[0].x, backPts[0].y);
+      for (let i = 1; i < numSamples; i++) {
+        ctx.lineTo(backPts[i].x, backPts[i].y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = strokeColor + '0.15)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(backInnerPts[0].x, backInnerPts[0].y);
+      for (let i = 1; i < numSamples; i++) {
+        ctx.lineTo(backInnerPts[i].x, backInnerPts[i].y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = strokeColor + '0.12)';
+      ctx.lineWidth = 1;
       ctx.stroke();
       
-      // Inner structure cutout
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.beginPath();
-      ctx.arc(0, 0, innerRadius, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalCompositeOperation = 'source-over';
+      // 3. Draw and fill 3D Side Quads (painter's algorithm style)
+      // Shading based on orientation to simulated light source from top-right (-Math.PI / 3)
+      const lightAngle = -Math.PI / 3;
       
-      // Draw internal spokes (mechanical structure)
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = 4;
-      const spokes = type === 'chrome' ? 6 : 4;
-      for (let s = 0; s < spokes; s++) {
-        const angle = (s / spokes) * Math.PI * 2;
+      for (let i = 0; i < numSamples; i++) {
+        const next_i = (i + 1) % numSamples;
+        const angle = ((i + 0.5) * Math.PI * 2) / numSamples + rotationAngle;
+        const dot = Math.cos(angle - lightAngle);
+        const intensity = 0.25 + 0.75 * (dot * 0.5 + 0.5); // 0.25 to 1.0 (deeper shadows!)
+        
+        let sideColor = '';
+        if (type === 'chrome') {
+          // Polished Indigo/Silver metal
+          const r = Math.floor(190 + intensity * 65);
+          const g = Math.floor(195 + intensity * 60);
+          const b = Math.floor(225 + intensity * 30);
+          sideColor = `rgb(${r}, ${g}, ${b})`;
+        } else if (type === 'indigo') {
+          // Rich Vivid Indigo
+          const r = Math.floor(40 + intensity * 60);
+          const g = Math.floor(40 + intensity * 60);
+          const b = Math.floor(180 + intensity * 75);
+          sideColor = `rgb(${r}, ${g}, ${b})`;
+        } else {
+          // Vibrant Violet-Purple
+          const r = Math.floor(120 + intensity * 60);
+          const g = Math.floor(30 + intensity * 40);
+          const b = Math.floor(180 + intensity * 75);
+          sideColor = `rgb(${r}, ${g}, ${b})`;
+        }
+        
         ctx.beginPath();
-        ctx.moveTo(Math.cos(angle) * (innerRadius - 2), Math.sin(angle) * (innerRadius - 2));
-        ctx.lineTo(Math.cos(angle) * (radius - toothDepth - 4), Math.sin(angle) * (radius - toothDepth - 4));
+        ctx.moveTo(frontPts[i].x, frontPts[i].y);
+        ctx.lineTo(frontPts[next_i].x, frontPts[next_i].y);
+        ctx.lineTo(backPts[next_i].x, backPts[next_i].y);
+        ctx.lineTo(backPts[i].x, backPts[i].y);
+        ctx.closePath();
+        
+        ctx.fillStyle = sideColor;
+        ctx.fill();
+        
+        // Faint segment outline for technical details
+        ctx.strokeStyle = strokeColor + '0.22)';
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+
+      // 3.5. Draw and fill 3D Inner Wall Side Quads (gives real volumetric thickness to the hole!)
+      for (let i = 0; i < numSamples; i++) {
+        const next_i = (i + 1) % numSamples;
+        const angle = ((i + 0.5) * Math.PI * 2) / numSamples + rotationAngle;
+        const dot = Math.cos(angle - lightAngle + Math.PI); // Inverted normal for inside wall
+        const intensity = 0.20 + 0.6 * (dot * 0.5 + 0.5);
+        
+        let sideColor = '';
+        if (type === 'chrome') {
+          const r = Math.floor(150 + intensity * 65);
+          const g = Math.floor(155 + intensity * 60);
+          const b = Math.floor(185 + intensity * 30);
+          sideColor = `rgb(${r}, ${g}, ${b})`;
+        } else if (type === 'indigo') {
+          const r = Math.floor(30 + intensity * 50);
+          const g = Math.floor(30 + intensity * 50);
+          const b = Math.floor(140 + intensity * 65);
+          sideColor = `rgb(${r}, ${g}, ${b})`;
+        } else {
+          const r = Math.floor(90 + intensity * 50);
+          const g = Math.floor(20 + intensity * 30);
+          const b = Math.floor(140 + intensity * 65);
+          sideColor = `rgb(${r}, ${g}, ${b})`;
+        }
+        
+        ctx.beginPath();
+        ctx.moveTo(frontInnerPts[i].x, frontInnerPts[i].y);
+        ctx.lineTo(frontInnerPts[next_i].x, frontInnerPts[next_i].y);
+        ctx.lineTo(backInnerPts[next_i].x, backInnerPts[next_i].y);
+        ctx.lineTo(backInnerPts[i].x, backInnerPts[i].y);
+        ctx.closePath();
+        
+        ctx.fillStyle = sideColor;
+        ctx.fill();
+        
+        ctx.strokeStyle = strokeColor + '0.15)';
+        ctx.lineWidth = 0.5;
         ctx.stroke();
       }
       
-      // Draw metallic central hub side shadow
-      ctx.fillStyle = '#020617';
+      // 4. Draw Front Face Ring (Using evenodd fill rule to keep center open)
       ctx.beginPath();
-      ctx.arc(0.5, 1.2, innerRadius * 0.45, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Draw metallic central hub top face
-      let hubGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, innerRadius * 0.5);
-      hubGrad.addColorStop(0, '#ffffff');
-      hubGrad.addColorStop(0.7, strokeColor);
-      hubGrad.addColorStop(1, '#1e293b');
-      ctx.fillStyle = hubGrad;
-      ctx.beginPath();
-      ctx.arc(0, 0, innerRadius * 0.45, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(0, 0, innerRadius * 0.45, 0, Math.PI * 2);
-      ctx.stroke();
-      
-      ctx.restore(); // restore top face rotate
-      ctx.restore(); // restore translation
-    }    // Creative Thinking Idea Bulb Core (drawn exactly relative to central 0, 0 hub)
-    function drawIdeaBulbCore(ctx, x, y, size, pulse) {
-      ctx.save();
-      ctx.translate(x, y);
-      
-      // Radial glow effect centered at 0, 0
-      const bulbGlow = ctx.createRadialGradient(0, 0, 0, 0, 0, size * (1.25 + pulse * 0.15));
-      bulbGlow.addColorStop(0, 'rgba(255, 230, 0, 0.7)');
-      bulbGlow.addColorStop(0.35, 'rgba(234, 88, 12, 0.25)');
-      bulbGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
-      ctx.fillStyle = bulbGlow;
-      ctx.beginPath();
-      ctx.arc(0, 0, size * 1.35, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Draw outer bulb glass shell centered at 0, 0
-      ctx.beginPath();
-      ctx.arc(0, 0, size * 0.42, Math.PI * 0.75, Math.PI * 0.25, false);
-      ctx.bezierCurveTo(size * 0.3, size * 0.35, size * 0.18, size * 0.55, size * 0.18, size * 0.65);
-      ctx.lineTo(-size * 0.18, size * 0.65);
-      ctx.bezierCurveTo(-size * 0.18, size * 0.55, -size * 0.3, size * 0.35, -size * 0.42, 0);
+      // Outer path (clockwise)
+      ctx.moveTo(frontPts[0].x, frontPts[0].y);
+      for (let i = 1; i < numSamples; i++) {
+        ctx.lineTo(frontPts[i].x, frontPts[i].y);
+      }
+      ctx.closePath();
+
+      // Inner path (counter-clockwise)
+      ctx.moveTo(frontInnerPts[numSamples - 1].x, frontInnerPts[numSamples - 1].y);
+      for (let i = numSamples - 2; i >= 0; i--) {
+        ctx.lineTo(frontInnerPts[i].x, frontInnerPts[i].y);
+      }
       ctx.closePath();
       
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2.5;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
-      ctx.shadowBlur = 4;
-      ctx.stroke();
-      ctx.shadowColor = 'transparent';
-      ctx.shadowBlur = 0;
+      let faceGrad = ctx.createLinearGradient(frontPts[0].x, frontPts[0].y, frontPts[Math.floor(numSamples/2)].x, frontPts[Math.floor(numSamples/2)].y);
+      if (type === 'chrome') {
+        faceGrad.addColorStop(0, '#ffffff');
+        faceGrad.addColorStop(0.2, '#eef2ff'); // Light indigo sheen
+        faceGrad.addColorStop(0.45, '#cbd5e1');
+        faceGrad.addColorStop(0.5, '#f8fafc'); // specular highlight stop
+        faceGrad.addColorStop(0.55, '#94a3b8');
+        faceGrad.addColorStop(0.8, '#4f46e5'); // Electric Indigo reflect
+        faceGrad.addColorStop(1, '#1e1b4b');
+      } else if (type === 'indigo') {
+        faceGrad.addColorStop(0, '#eef2ff');
+        faceGrad.addColorStop(0.2, '#c7d2fe');
+        faceGrad.addColorStop(0.45, '#6366f1');
+        faceGrad.addColorStop(0.5, '#c7d2fe'); // specular highlight stop
+        faceGrad.addColorStop(0.55, '#4f46e5');
+        faceGrad.addColorStop(0.8, '#3730a3');
+        faceGrad.addColorStop(1, '#1e1b4b');
+      } else {
+        faceGrad.addColorStop(0, '#faf5ff');
+        faceGrad.addColorStop(0.2, '#f3e8ff');
+        faceGrad.addColorStop(0.45, '#c084fc');
+        faceGrad.addColorStop(0.5, '#f3e8ff'); // specular highlight stop
+        faceGrad.addColorStop(0.55, '#a855f7');
+        faceGrad.addColorStop(0.8, '#7e22ce');
+        faceGrad.addColorStop(1, '#3b0764');
+      }
+      ctx.fillStyle = faceGrad;
+      ctx.fill('evenodd');
       
-      // Screw threads base centered below bulb
-      ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 3;
+      // Outline the front face rings
       ctx.beginPath();
-      ctx.moveTo(-size * 0.14, size * 0.70);
-      ctx.lineTo(size * 0.14, size * 0.70);
-      ctx.moveTo(-size * 0.10, size * 0.77);
-      ctx.lineTo(size * 0.10, size * 0.77);
+      ctx.moveTo(frontPts[0].x, frontPts[0].y);
+      for (let i = 1; i < numSamples; i++) {
+        ctx.lineTo(frontPts[i].x, frontPts[i].y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = strokeColor + '0.95)';
+      ctx.lineWidth = 1.75;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(frontInnerPts[0].x, frontInnerPts[0].y);
+      for (let i = 1; i < numSamples; i++) {
+        ctx.lineTo(frontInnerPts[i].x, frontInnerPts[i].y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = strokeColor + '0.85)';
+      ctx.lineWidth = 1.2;
       ctx.stroke();
       
-      // Contact tip
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-      ctx.beginPath();
-      ctx.moveTo(-size * 0.07, size * 0.77);
-      ctx.bezierCurveTo(-size * 0.07, size * 0.84, size * 0.07, size * 0.84, size * 0.07, size * 0.77);
-      ctx.fill();
-      
-      // Brain filament loop
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 2.0;
-      ctx.beginPath();
-      ctx.moveTo(-size * 0.08, size * 0.45);
-      ctx.lineTo(-size * 0.08, size * 0.20);
-      ctx.bezierCurveTo(-size * 0.18, size * 0.12, -size * 0.12, -size * 0.18, 0, -size * 0.12);
-      ctx.bezierCurveTo(size * 0.12, -size * 0.18, size * 0.18, size * 0.12, size * 0.08, size * 0.20);
-      ctx.lineTo(size * 0.08, size * 0.45);
-      ctx.stroke();
-      
-      // Emission rays
-      const rayCount = 8;
-      ctx.strokeStyle = `rgba(255, 225, 0, ${0.45 + pulse * 0.25})`;
-      ctx.lineWidth = 2.0;
-      for (let r = 0; r < rayCount; r++) {
-        const angle = (r / rayCount) * Math.PI * 2;
-        const startRad = size * 0.58;
-        const endRad = size * (0.78 + pulse * 0.15);
+      // Helper to draw concentric circles projected in 3D
+      function drawConcentricCircle(rad, strokeStyle, lineWidth, lineDash) {
         ctx.beginPath();
-        ctx.moveTo(Math.cos(angle) * startRad, Math.sin(angle) * startRad);
-        ctx.lineTo(Math.cos(angle) * endRad, Math.sin(angle) * endRad);
+        if (lineDash) ctx.setLineDash(lineDash);
+        
+        for (let j = 0; j <= 64; j++) {
+          const theta = (j * Math.PI * 2) / 64;
+          const lx = Math.cos(theta) * rad;
+          const ly = Math.sin(theta) * rad;
+          const p = project3D(gx + lx - cx, gy + ly - cy, thickness / 2, pitch, yaw);
+          const sx = cx + p.x;
+          const sy = cy + p.y;
+          
+          if (j === 0) {
+            ctx.moveTo(sx, sy);
+          } else {
+            ctx.lineTo(sx, sy);
+          }
+        }
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      
+      // Pitch circle
+      drawConcentricCircle(radius - toothDepth / 2, strokeColor + '0.35)', 1, [2, 4]);
+      
+      // 5. Draw Spokes in the hollow gap (connecting hub and inner rim)
+      const spokes = type === 'chrome' ? 6 : 4;
+      for (let s = 0; s < spokes; s++) {
+        const angle = (s / spokes) * Math.PI * 2 + rotationAngle;
+        const lx1 = Math.cos(angle) * (radius * 0.18);
+        const ly1 = Math.sin(angle) * (radius * 0.18);
+        const lx2 = Math.cos(angle) * (radius * 0.53);
+        const ly2 = Math.sin(angle) * (radius * 0.53);
+        
+        const p1 = project3D(gx + lx1 - cx, gy + ly1 - cy, thickness / 2, pitch, yaw);
+        const p2 = project3D(gx + lx2 - cx, gy + ly2 - cy, thickness / 2, pitch, yaw);
+        
+        // Shadow line
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(cx + p1.x - 0.7, cy + p1.y + 0.7);
+        ctx.lineTo(cx + p2.x - 0.7, cy + p2.y + 0.7);
+        ctx.stroke();
+
+        // Highlight line
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(cx + p1.x + 0.7, cy + p1.y - 0.7);
+        ctx.lineTo(cx + p2.x + 0.7, cy + p2.y - 0.7);
+        ctx.stroke();
+
+        // Center line
+        ctx.strokeStyle = strokeColor + '0.85)';
+        ctx.lineWidth = 1.75;
+        ctx.beginPath();
+        ctx.moveTo(cx + p1.x, cy + p1.y);
+        ctx.lineTo(cx + p2.x, cy + p2.y);
         ctx.stroke();
       }
       
-      ctx.restore();
+      // 6. Draw 3D Hub (Embossed concentric hub in center with gradient, bore hole, and axle pin)
+      const pHub = project3D(gx - cx, gy - cy, thickness / 2, pitch, yaw);
+      const hcx = cx + pHub.x;
+      const hcy = cy + pHub.y;
+      const hRad = radius * 0.18 * pHub.scale;
+      
+      const hubGrad = ctx.createRadialGradient(hcx, hcy, 0, hcx, hcy, hRad);
+      if (type === 'chrome') {
+        hubGrad.addColorStop(0, '#ffffff');
+        hubGrad.addColorStop(0.7, '#cbd5e1');
+        hubGrad.addColorStop(1, '#94a3b8');
+      } else if (type === 'indigo') {
+        hubGrad.addColorStop(0, '#eef2ff');
+        hubGrad.addColorStop(0.7, '#6366f1');
+        hubGrad.addColorStop(1, '#1e1b4b');
+      } else {
+        hubGrad.addColorStop(0, '#faf5ff');
+        hubGrad.addColorStop(0.7, '#c084fc');
+        hubGrad.addColorStop(1, '#3b0764');
+      }
+      
+      // Hub flange
+      ctx.fillStyle = hubGrad;
+      ctx.beginPath();
+      ctx.arc(hcx, hcy, hRad, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.strokeStyle = strokeColor + '0.85)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      // Recessed bore hole (shaft opening)
+      const boreRad = radius * 0.075 * pHub.scale;
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.beginPath();
+      ctx.arc(hcx, hcy, boreRad, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = strokeColor + '0.4)';
+      ctx.lineWidth = 0.75;
+      ctx.stroke();
+
+      // Axle pin (center shaft)
+      const pinRad = radius * 0.04 * pHub.scale;
+      const pinGrad = ctx.createLinearGradient(hcx - pinRad, hcy - pinRad, hcx + pinRad, hcy + pinRad);
+      if (type === 'chrome') {
+        pinGrad.addColorStop(0, '#cbd5e1');
+        pinGrad.addColorStop(1, '#334155');
+      } else if (type === 'indigo') {
+        pinGrad.addColorStop(0, '#c7d2fe');
+        pinGrad.addColorStop(1, '#1e1b4b');
+      } else {
+        pinGrad.addColorStop(0, '#f3e8ff');
+        pinGrad.addColorStop(1, '#3b0764');
+      }
+      ctx.fillStyle = pinGrad;
+      ctx.beginPath();
+      ctx.arc(hcx, hcy, pinRad, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Mathematically accurate 3D blueprint-style wireframe lightbulb with internal pulsing brain geodesic core
+    function drawIdeaBulbCore3D(ctx, mainX, mainY, pitch, yaw, cx, cy, pulse, g1RotationAngle) {
+      const ringYs = [-28, -18, -6, 8, 20, 28];
+      const ringRs = [10, 18, 21.5, 17.5, 11, 8.5];
+      const bulbRot = g1RotationAngle * 0.18;
+      
+      // Latitude Rings
+      ctx.strokeStyle = 'rgba(255, 200, 0, 0.25)';
+      ctx.lineWidth = 0.75;
+      ringYs.forEach((ly, rIdx) => {
+        const lr = ringRs[rIdx];
+        ctx.beginPath();
+        for (let j = 0; j <= 40; j++) {
+          const theta = (j * Math.PI * 2) / 40 + bulbRot;
+          const lx = Math.cos(theta) * lr;
+          const lz = Math.sin(theta) * lr;
+          const p = project3D(mainX + lx - cx, mainY + ly - cy, lz, pitch, yaw);
+          if (j === 0) {
+            ctx.moveTo(cx + p.x, cy + p.y);
+          } else {
+            ctx.lineTo(cx + p.x, cy + p.y);
+          }
+        }
+        ctx.stroke();
+      });
+      
+      // Longitude Ribs
+      ctx.strokeStyle = 'rgba(255, 200, 0, 0.35)';
+      ctx.lineWidth = 0.75;
+      for (let c = 0; c < 8; c++) {
+        const phi = (c * Math.PI * 2) / 8 + bulbRot;
+        ctx.beginPath();
+        ringYs.forEach((ly, rIdx) => {
+          const lr = ringRs[rIdx];
+          const lx = Math.cos(phi) * lr;
+          const lz = Math.sin(phi) * lr;
+          const p = project3D(mainX + lx - cx, mainY + ly - cy, lz, pitch, yaw);
+          if (rIdx === 0) {
+            ctx.moveTo(cx + p.x, cy + p.y);
+          } else {
+            ctx.lineTo(cx + p.x, cy + p.y);
+          }
+        });
+        ctx.stroke();
+      }
+      
+      // Base threads
+      const baseYs = [28, 32, 36];
+      const baseR = 7;
+      ctx.strokeStyle = 'rgba(234, 88, 12, 0.5)';
+      ctx.lineWidth = 1.75;
+      baseYs.forEach(ly => {
+        ctx.beginPath();
+        for (let j = 0; j <= 20; j++) {
+          const theta = (j * Math.PI * 2) / 20 + bulbRot;
+          const lx = Math.cos(theta) * baseR;
+          const lz = Math.sin(theta) * baseR;
+          const p = project3D(mainX + lx - cx, mainY + ly - cy, lz, pitch, yaw);
+          if (j === 0) {
+            ctx.moveTo(cx + p.x, cy + p.y);
+          } else {
+            ctx.lineTo(cx + p.x, cy + p.y);
+          }
+        }
+        ctx.stroke();
+      });
+      
+      // Geodesic Constellation Core
+      const t = (1 + Math.sqrt(5)) / 2;
+      const vertices = [
+        [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
+        [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
+        [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]
+      ];
+      
+      const rCore = 12 * (1 + pulse * 0.08);
+      const coreCenterY = mainY - 6;
+      
+      const coreRotY = g1RotationAngle * 1.5;
+      const coreRotZ = g1RotationAngle * 0.7;
+      const projectedVerts = [];
+      
+      vertices.forEach(v => {
+        const len = Math.hypot(v[0], v[1], v[2]);
+        const x = (v[0] / len) * rCore;
+        const y = (v[1] / len) * rCore;
+        const z = (v[2] / len) * rCore;
+        
+        const cosY = Math.cos(coreRotY);
+        const sinY = Math.sin(coreRotY);
+        const x1 = x * cosY + z * sinY;
+        const y1 = y;
+        const z1 = -x * sinY + z * cosY;
+        
+        const cosZ = Math.cos(coreRotZ);
+        const sinZ = Math.sin(coreRotZ);
+        const x2 = x1 * cosZ - y1 * sinZ;
+        const y2 = x1 * sinZ + y1 * cosZ;
+        const z2 = z1;
+        
+        const p = project3D(mainX + x2 - cx, coreCenterY + y2 - cy, z2, pitch, yaw);
+        projectedVerts.push({ x: cx + p.x, y: cy + p.y, z: p.z, scale: p.scale }); // Store Z depth
+      });
+      
+      const projCenter = project3D(mainX - cx, coreCenterY - cy, 0, pitch, yaw);
+      const pcx = cx + projCenter.x;
+      const pcy = cy + projCenter.y;
+      
+      const radGlow = ctx.createRadialGradient(pcx, pcy, 0, pcx, pcy, rCore * 2.2);
+      radGlow.addColorStop(0, 'rgba(255, 230, 0, 0.65)');
+      radGlow.addColorStop(0.35, 'rgba(234, 88, 12, 0.28)');
+      radGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = radGlow;
+      ctx.beginPath();
+      ctx.arc(pcx, pcy, rCore * 2.2, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Draw Geodesic Lines with depth-based opacity
+      const maxEdgeDist = rCore * 1.25;
+      for (let i = 0; i < 12; i++) {
+        for (let j = i + 1; j < 12; j++) {
+          const dx = vertices[i][0] - vertices[j][0];
+          const dy = vertices[i][1] - vertices[j][1];
+          const dz = vertices[i][2] - vertices[j][2];
+          const dist = Math.hypot(dx, dy, dz);
+          
+          if (dist < maxEdgeDist) {
+            const avgZ = (projectedVerts[i].z + projectedVerts[j].z) / 2; // ranges from -rCore to +rCore
+            const opacity = 0.2 + 0.6 * ((avgZ + rCore) / (2 * rCore));
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.lineWidth = 0.75;
+            ctx.beginPath();
+            ctx.moveTo(projectedVerts[i].x, projectedVerts[i].y);
+            ctx.lineTo(projectedVerts[j].x, projectedVerts[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      // Draw Geodesic Vertices with depth-based opacity and size
+      projectedVerts.forEach(v => {
+        const opacity = 0.3 + 0.7 * ((v.z + rCore) / (2 * rCore));
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.beginPath();
+        ctx.arc(v.x, v.y, 2.5 * v.scale, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.strokeStyle = `rgba(255, 225, 0, ${opacity * 0.8})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.arc(v.x, v.y, 4.5 * v.scale, 0, Math.PI * 2);
+        ctx.stroke();
+      });
     }
     
     let lastTime = performance.now();
@@ -2450,28 +2798,58 @@ function startExperience() {
       const dt = (now - lastTime) * 0.001;
       lastTime = now;
       
-      // Limit delta-time to avoid jumps on tab freeze
       const delta = Math.min(dt, 0.1);
-      g1RotationAngle += delta * 0.85; // Faster, highly visible rotation speed
+      g1RotationAngle += delta * 0.45; // Smooth rotation speed
       
-      mouse.x += (mouse.targetX - mouse.x) * 0.08;
-      mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      if (!isDragging) {
+        // Gently spring pitch back to flat when not dragging
+        targetPitch += (0 - targetPitch) * 0.05;
+        // targetYaw is left unchanged — scene stays where the user leaves it
+      }
+      
+      // Lerp target pitch and yaw for buttery smooth physics
+      currentPitch += (targetPitch - currentPitch) * 0.085;
+      currentYaw += (targetYaw - currentYaw) * 0.085;
       
       ctx.clearRect(0, 0, width, height);
       
       const cx = width / 2;
       const cy = height / 2;
       
-      // Calculate 3D tilt angles based on mouse position relative to canvas center
-      dx = (mouse.x - cx) / cx;
-      dy = (mouse.y - cy) / cy;
-      const tiltX = -dy * 12; // Max 12 degrees X tilt
-      const tiltY = dx * 12;  // Max 12 degrees Y tilt
-      canvas.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      const pitch = currentPitch;
+      const yaw = currentYaw;
       
-      // 1. Draw neural drift pathways in background
+      canvas.style.transform = ''; // pure canvas 3D projection — no conflicting CSS perspective
+      
+      // 1. Draw blueprint-style coordinate grid circles in 3D background (Z = -25)
       ctx.globalCompositeOperation = 'source-over';
-      ctx.lineWidth = 0.5;
+      const gridRadii = [160, 240, 320];
+      const mainX = cx - 75;
+      const mainY = cy + 10;
+      
+      gridRadii.forEach(gr => {
+        ctx.beginPath();
+        ctx.setLineDash([2, 5]);
+        for (let j = 0; j <= 80; j++) {
+          const theta = (j * Math.PI * 2) / 80;
+          const lx = Math.cos(theta) * gr;
+          const ly = Math.sin(theta) * gr;
+          const p = project3D(mainX + lx - cx, mainY + ly - cy, -25, pitch, yaw);
+          const sx = cx + p.x;
+          const sy = cy + p.y;
+          if (j === 0) {
+            ctx.moveTo(sx, sy);
+          } else {
+            ctx.lineTo(sx, sy);
+          }
+        }
+        ctx.strokeStyle = 'rgba(27, 42, 207, 0.06)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.setLineDash([]);
+      });
+      
+      // 2. Draw drifting blueprint network nodes
       neuralNodes.forEach((node, idx) => {
         node.x += node.vx;
         node.y += node.vy;
@@ -2479,18 +2857,17 @@ function startExperience() {
         if (node.x < 10 || node.x > width - 10) node.vx *= -1;
         if (node.y < 10 || node.y > height - 10) node.vy *= -1;
         
-        ctx.fillStyle = node.color + '0.2)';
+        ctx.fillStyle = node.color + '0.12)';
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.size * 2, 0, Math.PI * 2);
         ctx.fill();
         
         for (let j = idx + 1; j < neuralNodes.length; j++) {
           const nextNode = neuralNodes[j];
-          const dx = node.x - nextNode.x;
-          const dy = node.y - nextNode.y;
-          const dist = Math.hypot(dx, dy);
-          if (dist < 120) {
-            ctx.strokeStyle = `rgba(27, 42, 207, ${(1 - (dist / 120)) * 0.08})`;
+          const dist = Math.hypot(node.x - nextNode.x, node.y - nextNode.y);
+          if (dist < 110) {
+            ctx.strokeStyle = `rgba(27, 42, 207, ${(1 - (dist / 110)) * 0.06})`;
+            ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(node.x, node.y);
             ctx.lineTo(nextNode.x, nextNode.y);
@@ -2499,44 +2876,93 @@ function startExperience() {
         }
       });
       
-      // 2. Interlocking Gears Mathematically Calculated meshing points (1.2x scaled up)
-      const mainX = cx - 70;
-      const mainY = cy + 15;
-      
-      // Gear 1 (Main Big Gear - Chrome Platinum)
-      const g1Radius = 105;
+      // 3. Define Gears layout
+      const g1Radius = 100;
       const g1Teeth = 18;
       const g1Rotation = g1RotationAngle;
       
-      // Calculate Gear 2 position exactly meshed at 30 deg up-right
-      const g2Angle = -Math.PI / 6; // -30 degrees
-      const g2Radius = 72;
+      // Gear 2 (Indigo/Blue) at -30 deg
+      const g2Angle = -Math.PI / 6;
+      const g2Radius = 66.67; // mathematically matched tooth module
       const g2Teeth = 12;
-      const g2Distance = g1Radius + g2Radius - 7.5; // Account for teeth interleave depth
+      const g2Distance = (g1Radius + g2Radius) * 0.935; // mathematically meshed distance
       const g2X = mainX + Math.cos(g2Angle) * g2Distance;
       const g2Y = mainY + Math.sin(g2Angle) * g2Distance;
+      // Phase offset (0) meshing teeth perfectly due to exact pitch module match
+      const g2Rotation = g2Angle + Math.PI - (g1Rotation - g2Angle) * (g1Teeth / g2Teeth);
       
-      // Meshing sync rotation formula (physical opposite rotation)
-      const g2Rotation = g2Angle + Math.PI - (g1Rotation - g2Angle) * (g1Teeth / g2Teeth) + (Math.PI / g2Teeth);
-      
-      // Calculate Gear 3 position exactly meshed at 60 deg down-right
-      const g3Angle = Math.PI / 3; // 60 degrees
-      const g3Radius = 56;
+      // Gear 3 (Violet/Purple) at 60 deg
+      const g3Angle = Math.PI / 3;
+      const g3Radius = 50.0; // mathematically matched tooth module
       const g3Teeth = 9;
-      const g3Distance = g1Radius + g3Radius - 7.5;
+      const g3Distance = (g1Radius + g3Radius) * 0.935; // mathematically meshed distance
       const g3X = mainX + Math.cos(g3Angle) * g3Distance;
       const g3Y = mainY + Math.sin(g3Angle) * g3Distance;
+      // Phase offset (0) meshing teeth perfectly due to exact pitch module match
+      const g3Rotation = g3Angle + Math.PI - (g1Rotation - g3Angle) * (g1Teeth / g3Teeth);
       
-      const g3Rotation = g3Angle + Math.PI - (g1Rotation - g3Angle) * (g1Teeth / g3Teeth) + (Math.PI / g3Teeth);
+      // 4. Draw meshing grid outline lines (blueprint lines connecting gear hubs)
+      ctx.beginPath();
+      ctx.setLineDash([3, 4]);
+      const pMain = project3D(mainX - cx, mainY - cy, 0, pitch, yaw);
+      const pG2 = project3D(g2X - cx, g2Y - cy, 0, pitch, yaw);
+      const pG3 = project3D(g3X - cx, g3Y - cy, 0, pitch, yaw);
+      ctx.moveTo(cx + pMain.x, cy + pMain.y);
+      ctx.lineTo(cx + pG2.x, cy + pG2.y);
+      ctx.lineTo(cx + pG3.x, cy + pG3.y);
+      ctx.lineTo(cx + pMain.x, cy + pMain.y);
+      ctx.strokeStyle = 'rgba(27, 42, 207, 0.12)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.setLineDash([]);
       
-      // Draw Cogs in correct layering order
-      draw3DGear(ctx, g3X, g3Y, g3Radius, g3Teeth, g3Rotation, 'obsidian');
-      draw3DGear(ctx, g2X, g2Y, g2Radius, g2Teeth, g2Rotation, 'copper');
-      draw3DGear(ctx, mainX, mainY, g1Radius, g1Teeth, g1Rotation, 'chrome');
+      // 4.5 Draw flat 2D screen-space drop shadows before gear geometry
+      // Shadow X-offset swings with yaw so the brain can anchor rotation direction
+      const shadowDX = 10 - Math.sin(currentYaw) * 22; // shifts left/right as scene rotates
+      const shadowDY = 14;
+      ctx.save();
+      ctx.filter = 'blur(13px)';
+      [
+        { gx: g3X, gy: g3Y, r: g3Radius },
+        { gx: g2X, gy: g2Y, r: g2Radius },
+        { gx: mainX, gy: mainY, r: g1Radius },
+      ].forEach(({ gx, gy, r }) => {
+        const proj = project3D(gx - cx, gy - cy, 0, pitch, yaw);
+        const sx = cx + proj.x + shadowDX;
+        const sy = cy + proj.y + shadowDY;
+        const sr = r * proj.scale;
+        ctx.beginPath();
+        ctx.ellipse(sx, sy, sr * 1.08, sr * 0.35, 0, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
+        ctx.fill();
+      });
+      ctx.restore();
+      ctx.filter = 'none';
       
-      // 3. Central pulsing Idea Bulb Core inside Main Gear (54px size scaled)
-      const bulbPulse = Math.sin(g1RotationAngle * 3.5) * 0.35 + 0.65;
-      drawIdeaBulbCore(ctx, mainX, mainY, 54, bulbPulse);
+      // 5. Draw 3D Gears (depth sorting: Gear 3 -> Gear 2 -> Gear 1)
+      draw3DGear(ctx, g3X, g3Y, g3Radius, g3Teeth, g3Rotation, 'violet', pitch, yaw, cx, cy);
+      draw3DGear(ctx, g2X, g2Y, g2Radius, g2Teeth, g2Rotation, 'indigo', pitch, yaw, cx, cy);
+      draw3DGear(ctx, mainX, mainY, g1Radius, g1Teeth, g1Rotation, 'chrome', pitch, yaw, cx, cy);
+      
+      // 6. Draw 3D Idea bulb and constellation core
+      const bulbPulse = Math.sin(g1RotationAngle * 3.0) * 0.35 + 0.65;
+      drawIdeaBulbCore3D(ctx, mainX, mainY, pitch, yaw, cx, cy, bulbPulse, g1RotationAngle);
+      
+      // 8. Render technical blueprint text labels floating in 3D space
+      ctx.fillStyle = 'rgba(27, 42, 207, 0.45)';
+      ctx.font = '700 8px monospace';
+      ctx.textAlign = 'center';
+      
+      const pLabelMain = project3D(mainX - cx, mainY - cy - g1Radius - 22, 0, pitch, yaw);
+      ctx.fillText(`ENGINE: CORE_PT // ROT: ${(g1RotationAngle % (Math.PI * 2)).toFixed(2)}rad`, cx + pLabelMain.x, cy + pLabelMain.y);
+      
+      const pLabelG2 = project3D(g2X - cx, g2Y - cy - g2Radius - 16, 0, pitch, yaw);
+      ctx.fillStyle = 'rgba(79, 70, 229, 0.45)';
+      ctx.fillText(`AUX_B: INDIGO_WAVE`, cx + pLabelG2.x, cy + pLabelG2.y);
+      
+      const pLabelG3 = project3D(g3X - cx, g3Y - cy - g3Radius - 12, 0, pitch, yaw);
+      ctx.fillStyle = 'rgba(168, 85, 247, 0.45)';
+      ctx.fillText(`AUX_C: VIOLET_CORE`, cx + pLabelG3.x, cy + pLabelG3.y);
     }
     
     let isVisible = false;
