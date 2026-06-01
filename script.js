@@ -2197,11 +2197,11 @@ function startExperience() {
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
     
-    let targetPitch = 0.15; // Natural baseline tilt
-    let targetYaw = -0.3;   // Initial angle showing 3D depth
+    let targetPitch = 0.45; // Natural baseline tilt
+    let targetYaw = 0.45;   // Initial angle showing 3D depth
     
-    let currentPitch = 0.15;
-    let currentYaw = -0.3;
+    let currentPitch = 0.45;
+    let currentYaw = 0.45;
     
     function resize() {
       if (!canvas || !container) return;
@@ -2211,16 +2211,20 @@ function startExperience() {
     window.addEventListener('resize', resize);
     
     canvas.addEventListener('mousedown', (e) => {
+      e.preventDefault();
       isDragging = true;
+      canvas.style.cursor = 'grabbing';
       previousMousePosition = { x: e.clientX, y: e.clientY };
     });
     
     canvas.addEventListener('touchstart', (e) => {
       if (e.touches.length > 0) {
+        e.preventDefault();
         isDragging = true;
+        canvas.style.cursor = 'grabbing';
         previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
-    }, { passive: true });
+    }, { passive: false });
     
     window.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
@@ -2250,10 +2254,19 @@ function startExperience() {
     }, { passive: true });
     
     const stopDragging = () => {
-      isDragging = false;
+      if (isDragging) {
+        isDragging = false;
+        canvas.style.cursor = 'grab';
+      }
     };
-    window.addEventListener('mouseup', stopDragging);
-    window.addEventListener('touchend', stopDragging);
+    
+    window.addEventListener('mouseup', stopDragging, { capture: true });
+    window.addEventListener('touchend', stopDragging, { capture: true });
+    window.addEventListener('touchcancel', stopDragging, { capture: true });
+    canvas.addEventListener('mouseup', stopDragging);
+    canvas.addEventListener('touchend', stopDragging);
+    canvas.addEventListener('touchcancel', stopDragging);
+    window.addEventListener('blur', stopDragging);
     
     // Background neural/grid nodes for connection blueprint
     const neuralNodes = [];
@@ -2813,9 +2826,9 @@ function startExperience() {
       g1RotationAngle += delta * 0.45; // Smooth rotation speed
       
       if (!isDragging) {
-        // Gently spring pitch back to flat when not dragging
-        targetPitch += (0 - targetPitch) * 0.05;
-        // targetYaw is left unchanged — scene stays where the user leaves it
+        // Gently spring pitch and yaw back to default orientation when not dragging
+        targetPitch += (0.45 - targetPitch) * 0.08;
+        targetYaw += (0.45 - targetYaw) * 0.08;
       }
       
       // Lerp target pitch and yaw for buttery smooth physics
