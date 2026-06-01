@@ -18,7 +18,8 @@
 </head>
 
 <body>
-    <!-- Background grid spotlight follow -->
+    <!-- Background pattern & grid spotlight follow -->
+    <div class="bg-pattern"></div>
     <div id="bg-spotlight" class="bg-spotlight"></div>
     <div id="bg-grid-glow" class="bg-grid-glow">
         <div id="grid-glow-spotlight" class="grid-glow-spotlight"></div>
@@ -1286,70 +1287,10 @@
                 </div>
 
                 <div class="scaling-pipeline">
-                    <!-- Stage 1 (originally Stage 3: B2B Trend Research) -->
+                    <!-- Stage 1 -->
                     <div class="pipeline-card-wrapper">
                         <div class="pipeline-badge bento-gradient-1">01</div>
                         <div class="pipeline-stage glass-card" data-stage="1">
-                            <div class="glass-shine"></div>
-                            <div class="pipeline-icon-box">
-                                <svg viewBox="0 0 64 64" class="pipeline-svg research-svg">
-                                    <defs>
-                                        <linearGradient id="research-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#6366f1" />
-                                            <stop offset="100%" stop-color="#0ea5e9" />
-                                        </linearGradient>
-                                    </defs>
-                                    <rect class="trend-bar-1" x="12" y="32" width="6" height="18"
-                                        fill="url(#research-grad)" rx="1.5" />
-                                    <rect class="trend-bar-2" x="22" y="24" width="6" height="26"
-                                        fill="url(#research-grad)" rx="1.5" />
-                                    <rect class="trend-bar-3" x="32" y="16" width="6" height="34"
-                                        fill="url(#research-grad)" rx="1.5" />
-                                    <circle class="glass-lens" cx="42" cy="24" r="8" fill="none"
-                                        stroke="url(#research-grad)" stroke-width="2.5" />
-                                    <line class="glass-handle" x1="48" y1="30" x2="55" y2="37"
-                                        stroke="url(#research-grad)" stroke-width="2.5" stroke-linecap="round" />
-                                </svg>
-                            </div>
-                            <h3>B2B Trend Research</h3>
-                            <p>Analyzes top industry campaigns to help you stay ahead of market trends.</p>
-                        </div>
-                    </div>
-
-                    <!-- Stage 2 (originally Stage 2: Copy Calibration) -->
-                    <div class="pipeline-card-wrapper">
-                        <div class="pipeline-badge bento-gradient-2">02</div>
-                        <div class="pipeline-stage glass-card" data-stage="2">
-                            <div class="glass-shine"></div>
-                            <div class="pipeline-icon-box">
-                                <svg viewBox="0 0 64 64" class="pipeline-svg editor-svg">
-                                    <defs>
-                                        <linearGradient id="edit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#a855f7" />
-                                            <stop offset="100%" stop-color="#6366f1" />
-                                        </linearGradient>
-                                    </defs>
-                                    <rect x="14" y="10" width="36" height="44" rx="4" fill="none"
-                                        stroke="url(#edit-grad)" stroke-width="2.5" />
-                                    <line x1="20" y1="20" x2="38" y2="20" stroke="url(#edit-grad)" stroke-width="2.2"
-                                        stroke-linecap="round" />
-                                    <line x1="20" y1="28" x2="34" y2="28" stroke="url(#edit-grad)" stroke-width="2.2"
-                                        stroke-linecap="round" />
-                                    <line x1="20" y1="36" x2="44" y2="36" stroke="url(#edit-grad)" stroke-width="2.2"
-                                        stroke-linecap="round" />
-                                    <path class="edit-pencil" d="M42,12 L50,20 L30,40 H22 V32 Z" fill="none"
-                                        stroke="#a855f7" stroke-width="2" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                            <h3>Copy Calibration</h3>
-                            <p>Polishes messaging to keep your brand voice clear, sharp, and correct.</p>
-                        </div>
-                    </div>
-
-                    <!-- Stage 3 (originally Stage 1: Visual Audit) -->
-                    <div class="pipeline-card-wrapper">
-                        <div class="pipeline-badge bento-gradient-3">03</div>
-                        <div class="pipeline-stage glass-card" data-stage="3">
                             <div class="glass-shine"></div>
                             <div class="pipeline-icon-box">
                                 <svg viewBox="0 0 64 64" class="pipeline-svg scanner-svg">
@@ -1379,7 +1320,67 @@
                         </div>
                     </div>
 
-                    <!-- Stage 4 (originally Stage 4: Asset Generation) -->
+                    <!-- Stage 2 -->
+                    <div class="pipeline-card-wrapper">
+                        <div class="pipeline-badge bento-gradient-2">02</div>
+                        <div class="pipeline-stage glass-card" data-stage="2">
+                            <div class="glass-shine"></div>
+                            <div class="pipeline-icon-box">
+                                <svg viewBox="0 0 64 64" class="pipeline-svg editor-svg">
+                                    <defs>
+                                        <linearGradient id="edit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#a855f7" />
+                                            <stop offset="100%" stop-color="#6366f1" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect x="14" y="10" width="36" height="44" rx="4" fill="none"
+                                        stroke="url(#edit-grad)" stroke-width="2.5" />
+                                    <line x1="20" y1="20" x2="38" y2="20" stroke="url(#edit-grad)" stroke-width="2.2"
+                                        stroke-linecap="round" />
+                                    <line x1="20" y1="28" x2="34" y2="28" stroke="url(#edit-grad)" stroke-width="2.2"
+                                        stroke-linecap="round" />
+                                    <line x1="20" y1="36" x2="44" y2="36" stroke="url(#edit-grad)" stroke-width="2.2"
+                                        stroke-linecap="round" />
+                                    <path class="edit-pencil" d="M42,12 L50,20 L30,40 H22 V32 Z" fill="none"
+                                        stroke="#a855f7" stroke-width="2" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <h3>Copy Calibration</h3>
+                            <p>Polishes messaging to keep your brand voice clear, sharp, and correct.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div class="pipeline-card-wrapper">
+                        <div class="pipeline-badge bento-gradient-3">03</div>
+                        <div class="pipeline-stage glass-card" data-stage="3">
+                            <div class="glass-shine"></div>
+                            <div class="pipeline-icon-box">
+                                <svg viewBox="0 0 64 64" class="pipeline-svg research-svg">
+                                    <defs>
+                                        <linearGradient id="research-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#6366f1" />
+                                            <stop offset="100%" stop-color="#0ea5e9" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect class="trend-bar-1" x="12" y="32" width="6" height="18"
+                                        fill="url(#research-grad)" rx="1.5" />
+                                    <rect class="trend-bar-2" x="22" y="24" width="6" height="26"
+                                        fill="url(#research-grad)" rx="1.5" />
+                                    <rect class="trend-bar-3" x="32" y="16" width="6" height="34"
+                                        fill="url(#research-grad)" rx="1.5" />
+                                    <circle class="glass-lens" cx="42" cy="24" r="8" fill="none"
+                                        stroke="url(#research-grad)" stroke-width="2.5" />
+                                    <line class="glass-handle" x1="48" y1="30" x2="55" y2="37"
+                                        stroke="url(#research-grad)" stroke-width="2.5" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <h3>B2B Trend Research</h3>
+                            <p>Analyzes top industry campaigns to help you stay ahead of market trends.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stage 4 -->
                     <div class="pipeline-card-wrapper">
                         <div class="pipeline-badge bento-gradient-4">04</div>
                         <div class="pipeline-stage glass-card" data-stage="4">

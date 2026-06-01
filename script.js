@@ -80,6 +80,9 @@ function startExperience() {
     const gridGlowSpotlight = document.getElementById('grid-glow-spotlight');
     if (!follower || !dot) return;
 
+    const bgPattern = document.querySelector('.bg-pattern');
+    const bgGridGlow = document.querySelector('.bg-grid-glow');
+
     let targetX = window.innerWidth / 2, targetY = window.innerHeight / 2;
     let currentFollowerX = targetX, currentFollowerY = targetY;
     let currentDotX = targetX, currentDotY = targetY;
@@ -93,8 +96,9 @@ function startExperience() {
       const shiftX = (e.clientX / window.innerWidth - 0.5) * -24;
       const shiftY = (e.clientY / window.innerHeight - 0.5) * -24;
 
-      document.body.style.setProperty('--bg-shift-x', `${shiftX}px`);
-      document.body.style.setProperty('--bg-shift-y', `${shiftY}px`);
+      const transformString = `translate3d(${shiftX}px, ${shiftY}px, 0px)`;
+      if (bgPattern) bgPattern.style.transform = transformString;
+      if (bgGridGlow) bgGridGlow.style.transform = transformString;
     });
 
     function updateCursor() {
@@ -105,10 +109,8 @@ function startExperience() {
       currentSpotlightX += (targetX - currentSpotlightX) * 0.08;
       currentSpotlightY += (targetY - currentSpotlightY) * 0.08;
 
-      follower.style.left = currentFollowerX + 'px';
-      follower.style.top = currentFollowerY + 'px';
-      dot.style.left = currentDotX + 'px';
-      dot.style.top = currentDotY + 'px';
+      follower.style.transform = `translate3d(${currentFollowerX}px, ${currentFollowerY}px, 0px) translate(-50%, -50%)`;
+      dot.style.transform = `translate3d(${currentDotX}px, ${currentDotY}px, 0px) translate(-50%, -50%)`;
 
       if (spotlight) {
         spotlight.style.transform = `translate3d(${currentSpotlightX}px, ${currentSpotlightY}px, 0px) translate(-50%, -50%)`;
@@ -418,14 +420,18 @@ function startExperience() {
       
       cardsState.push(state);
       
+      let rect = null;
       card.addEventListener('mouseenter', () => {
         state.isHovered = true;
         state.isAnimating = true;
         state.targetGlareOpacity = 1;
+        rect = card.getBoundingClientRect();
       });
       
       card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
+        if (!rect) {
+          rect = card.getBoundingClientRect();
+        }
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         card.style.setProperty('--mouse-x', `${x}px`);
@@ -445,6 +451,7 @@ function startExperience() {
       });
 
       card.addEventListener('mouseleave', () => {
+        rect = null;
         if (card.classList.contains('dashboard-demo-card')) {
           return;
         }
@@ -755,9 +762,21 @@ function startExperience() {
       ctx.textAlign = 'center';
       ctx.fillText(centerNode.label, cx, cy + centerNode.radius + 18);
 
-      requestAnimationFrame(draw);
+      frameId = requestAnimationFrame(draw);
     }
-    draw();
+    
+    let isVisible = false;
+    let frameId = null;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(frameId);
+          draw();
+        }
+      });
+    }, { threshold: 0.01 });
+    observer.observe(canvas);
   }
 
   // ─────────────────────────────────────────────
@@ -961,9 +980,21 @@ function startExperience() {
         ctx.fillText(p.label, p.x, p.y);
       });
 
-      requestAnimationFrame(update);
+      frameId = requestAnimationFrame(update);
     }
-    update();
+
+    let isVisible = false;
+    let frameId = null;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(frameId);
+          update();
+        }
+      });
+    }, { threshold: 0.01 });
+    observer.observe(canvas);
   }
 
   // ─────────────────────────────────────────────
@@ -1042,8 +1073,15 @@ function startExperience() {
   function initMagnetButtons() {
     const magnets = document.querySelectorAll('.cta-button, .cta-secondary-button, .slider-arrow-btn, .nav-link');
     magnets.forEach((btn) => {
+      let rect = null;
+      btn.addEventListener('mouseenter', () => {
+        rect = btn.getBoundingClientRect();
+      });
+
       btn.addEventListener('mousemove', (e) => {
-        const rect = btn.getBoundingClientRect();
+        if (!rect) {
+          rect = btn.getBoundingClientRect();
+        }
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
         
@@ -1058,6 +1096,7 @@ function startExperience() {
       });
       
       btn.addEventListener('mouseleave', () => {
+        rect = null;
         // Elastic rebound snap back
         gsap.to(btn, {
           x: 0,
@@ -1075,6 +1114,7 @@ function startExperience() {
   // ─────────────────────────────────────────────
   function initColorShiftingSpotlight() {
     const sections = document.querySelectorAll('section');
+    const spotlight = document.getElementById('bg-spotlight');
     
     // HSL/RGB colors tailored to each slide
     const sectionColors = {
@@ -1092,27 +1132,19 @@ function startExperience() {
       'section-closing': ['rgba(99, 102, 241, 0.16)', 'rgba(168, 85, 247, 0.08)']
     };
     
-    function checkSpotlightColor() {
-      let currentSectionId = 'section-hero';
-      let minDistance = Infinity;
-      
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        // Check relative scroll distance from center viewport
-        const distance = Math.abs(rect.top - window.innerHeight * 0.35);
-        if (distance < minDistance) {
-          minDistance = distance;
-          currentSectionId = section.id;
+    if (!spotlight) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const colors = sectionColors[entry.target.id] || ['rgba(27, 42, 207, 0.05)', 'rgba(79, 70, 229, 0.02)'];
+          spotlight.style.setProperty('--spotlight-color-1', colors[0]);
+          spotlight.style.setProperty('--spotlight-color-2', colors[1]);
         }
       });
-      
-      const colors = sectionColors[currentSectionId] || ['rgba(27, 42, 207, 0.05)', 'rgba(79, 70, 229, 0.02)'];
-      document.body.style.setProperty('--spotlight-color-1', colors[0]);
-      document.body.style.setProperty('--spotlight-color-2', colors[1]);
-    }
-    
-    window.addEventListener('scroll', checkSpotlightColor);
-    checkSpotlightColor();
+    }, { rootMargin: '-40% 0px -40% 0px' });
+
+    sections.forEach((section) => observer.observe(section));
   }
 
   // ─────────────────────────────────────────────
@@ -1732,9 +1764,12 @@ function startExperience() {
     }
     window.addEventListener('resize', onWindowResize);
 
+    let isVisible = false;
+    let frameId = null;
     // Animation Loop with Lerped Spring Physics
     function renderLoop() {
-      requestAnimationFrame(renderLoop);
+      if (!isVisible) return;
+      frameId = requestAnimationFrame(renderLoop);
 
       if (!isDragging) {
         // Slow automatic rotation when idle
@@ -1756,7 +1791,17 @@ function startExperience() {
 
       renderer.render(scene, camera);
     }
-    renderLoop();
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(frameId);
+          renderLoop();
+        }
+      });
+    }, { threshold: 0.01 });
+    observer.observe(renderer.domElement);
   }
 
   // ─────────────────────────────────────────────
@@ -1889,7 +1934,17 @@ function startExperience() {
         pCtx.fill();
       }
       
-      drawPreview();
+      let isVisible = false;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+          if (isVisible) {
+            cancelAnimationFrame(previewFrameId);
+            drawPreview();
+          }
+        });
+      }, { threshold: 0.01 });
+      observer.observe(previewCanvas);
     }
 
     let videoElement = null;
@@ -2112,7 +2167,17 @@ function startExperience() {
       ctx.fill();
     }
     
-    draw();
+    let isVisible = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(frameId);
+          draw();
+        }
+      });
+    }, { threshold: 0.01 });
+    observer.observe(canvas);
   }
 
   // ─────────────────────────────────────────────
@@ -2485,7 +2550,18 @@ function startExperience() {
       drawIdeaBulbCore(ctx, mainX, mainY, 54, bulbPulse);
     }
     
-    draw();
+    let isVisible = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          cancelAnimationFrame(frameId);
+          lastTime = performance.now();
+          draw();
+        }
+      });
+    }, { threshold: 0.01 });
+    observer.observe(canvas);
   }
 }
 
